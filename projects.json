@@ -1,22 +1,253 @@
 {
   "tags": {
-    "web": "Web",
-    "mobile": "Mobile",
-    "branding": "Branding",
-    "ux": "UX"
+    "health": "Health",
+    "events": "Events",
+    "arts-culture": "Arts & Culture",
+    "science": "Science",
+    "real-estate": "Real Estate",
+    "legal": "Legal",
+    "sustainability": "Sustainability",
+    "hospitality": "Hospitality"
   },
   "categories": {
-    "product": "Product",
-    "client": "Client Work",
-    "side": "Side Projects"
+    "corporate": "Corporate",
+    "institutional": "Institutional",
+    "ecommerce": "E-commerce / Real Estate",
+    "webapps": "Web Applications",
+    "arts": "Arts",
+    "other": "Other"
   },
   "projects": [
     {
-      "title": "Example Project",
-      "url": "https://example.com",
-      "description": "A short description of what this project is and why it matters.",
-      "category": "product",
-      "tags": ["web", "ux"]
+      "title": "Amaro-VanVeggel",
+      "url": "https://amaro-vanveggel.com",
+      "description": "Website for a consultancy specialising in REITs, construction, and real estate.",
+      "category": "corporate",
+      "tags": ["real-estate"]
+    },
+    {
+      "title": "NovaSotecma",
+      "url": "https://novasotecma.com",
+      "description": "Website for an Angolan industrial distributor supplying equipment, tools, and technical solutions across multiple sectors.",
+      "category": "corporate",
+      "tags": []
+    },
+    {
+      "title": "J. Justino das Neves",
+      "url": "https://jjustinodasneves.pt",
+      "description": "Corporate website for a steel products manufacturer and supplier.",
+      "category": "corporate",
+      "tags": []
+    },
+    {
+      "title": "IME Engineering",
+      "url": "https://ime-engineering.pt",
+      "description": "Website for an engineering firm specialising in consulting, equipment, and production planning solutions.",
+      "category": "corporate",
+      "tags": []
+    },
+    {
+      "title": "Eduardo Paz Ferreira & Associados",
+      "url": "https://eduardopazferreira.pt",
+      "description": "Website for a law firm founded by Professor Eduardo Paz Ferreira, a leading figure in Portuguese tax law, public finance, and civic life.",
+      "category": "corporate",
+      "tags": ["legal"]
+    },
+    {
+      "title": "Livrecampo",
+      "url": "https://livrecampo.com",
+      "description": "Website for an authorised distributor and repair specialist for agricultural, forestry, garden, and construction machinery.",
+      "category": "corporate",
+      "tags": []
+    },
+    {
+      "title": "JoMI – Santa Maria",
+      "url": "https://jomi-santamaria.pt",
+      "description": "Event website for the Internal Medicine conference series at Hospital de Santa Maria.",
+      "category": "institutional",
+      "tags": ["health", "events"]
+    },
+    {
+      "title": "Confiar",
+      "url": "http://dev.plura.pt/confiar/",
+      "description": "Website for a Portuguese non-profit dedicated to the social reintegration of people with histories of incarceration and their families.",
+      "category": "institutional",
+      "tags": []
+    },
+    {
+      "title": "São Bernardo Parish Centre",
+      "url": "https://cpsb.pt",
+      "description": "Website for a parish community centre serving its local congregation.",
+      "category": "institutional",
+      "tags": []
+    },
+    {
+      "title": "LUMU",
+      "url": "https://lumu.pt",
+      "description": "Website for a non-profit platform promoting culture, solidarity, and knowledge-sharing among the Guinean diaspora.",
+      "category": "institutional",
+      "tags": ["arts-culture"]
+    },
+    {
+      "title": "Lisbon Geographical Society",
+      "url": "https://socgeografialisboa.pt",
+      "description": "Institutional website for one of Portugal's oldest scientific and cultural societies.",
+      "category": "institutional",
+      "tags": []
+    },
+    {
+      "title": "LGS – Museum",
+      "url": "https://museu.socgeografialisboa.pt",
+      "description": "Dedicated museum site showcasing the Society's collections and exhibitions.",
+      "category": "institutional",
+      "tags": []
+    },
+    {
+      "title": "InnovPlantProtect",
+      "url": "http://iplantprotect.pt",
+      "description": "Website for a collaborative laboratory focused on plant protection research and innovation.",
+      "category": "institutional",
+      "tags": ["science"]
+    },
+    {
+      "title": "Portuguese Society for Spine Pathology",
+      "url": "https://sppcv.org",
+      "description": "Institutional website for a medical society specialising in spine pathology.",
+      "category": "institutional",
+      "tags": ["health"]
+    },
+    {
+      "title": "Biotechnology Information Centre",
+      "url": "https://cibpt.org",
+      "description": "Institutional website for a centre dedicated to biotechnology information and outreach.",
+      "category": "institutional",
+      "tags": ["science"]
+    },
+    {
+      "title": "Cetera – AIDFM",
+      "url": "https://aidfm-cetera.com",
+      "description": "Website for a research initiative linked to the Faculty of Medicine, University of Lisbon.",
+      "category": "institutional",
+      "tags": ["health", "science"]
+    },
+    {
+      "title": "CCUL",
+      "url": "https://ccul.pt",
+      "description": "Institutional website for the cardiovascular research centre of the University of Lisbon.",
+      "category": "institutional",
+      "tags": ["health", "science"]
+    },
+    {
+      "title": "3 Wheeler",
+      "url": "https://3e-cargo.com",
+      "description": "E-commerce and showcase for a cargo bike and light electric vehicle brand.",
+      "category": "ecommerce",
+      "tags": ["sustainability"]
+    },
+    {
+      "title": "Basecamp",
+      "url": "https://basecamportugal.com",
+      "description": "Website for a production services company supplying equipment, crew, and logistics to the film and advertising industry in Portugal.",
+      "category": "ecommerce",
+      "tags": []
+    },
+    {
+      "title": "Portugalocations",
+      "url": "https://portugalocations.com",
+      "description": "Real estate and holiday rental platform focused on properties in Portugal.",
+      "category": "ecommerce",
+      "tags": ["real-estate"]
+    },
+    {
+      "title": "DrawNext",
+      "url": "http://osaka.toyno.com/",
+      "description": "Custom React web app with integrated admin system, built for the Portuguese Pavilion at Expo Osaka 2025.",
+      "category": "webapps",
+      "tags": []
+    },
+    {
+      "title": "Cardio Genomics 2025",
+      "url": "http://dev.plura.pt/esc/cardio-genomics-2025/",
+      "description": "Conference platform with abstract submission, author registration, and presentation upload modules.",
+      "category": "webapps",
+      "tags": ["health", "events"]
+    },
+    {
+      "title": "Galeria Reverso",
+      "url": "https://galeriareverso.com",
+      "description": "Website for a contemporary art gallery.",
+      "category": "arts",
+      "tags": ["arts-culture"]
+    },
+    {
+      "title": "Diogo Stilwell",
+      "url": "https://www.diogostilwell.com",
+      "description": "Personal portfolio for an award-winning copywriter with experience at Ogilvy, Wunderman Thompson, and Dentsu Creative.",
+      "category": "arts",
+      "tags": ["arts-culture"]
+    },
+    {
+      "title": "Cri.Ar.Te",
+      "url": "https://cri-ar-te.com",
+      "description": "Website for a children's arts and wellbeing studio promoting emotional development through creative and sensory activities.",
+      "category": "arts",
+      "tags": ["arts-culture"]
+    },
+    {
+      "title": "Agnes Kolignan",
+      "url": "https://agneskolignan.com",
+      "description": "Personal portfolio website for a fashion artist and creative professional.",
+      "category": "arts",
+      "tags": ["arts-culture"]
+    },
+    {
+      "title": "Mangu",
+      "url": "https://mangu.buscardini.net",
+      "description": "Website for a B2B exporter of fresh fruit from Guinea-Bissau, representing local farmers in international distribution networks.",
+      "category": "other",
+      "tags": []
+    },
+    {
+      "title": "Matize Atelier",
+      "url": "https://matizeatelier.pt/wp/",
+      "description": "Website for an interior design studio.",
+      "category": "other",
+      "tags": []
+    },
+    {
+      "title": "Vetocular",
+      "url": "https://vetocular.com",
+      "description": "Website for a specialist clinic dedicated exclusively to veterinary ophthalmology.",
+      "category": "other",
+      "tags": []
+    },
+    {
+      "title": "Comunica",
+      "url": "https://comunica.global",
+      "description": "Website for a communications consultancy firm with international reach.",
+      "category": "other",
+      "tags": []
+    },
+    {
+      "title": "Toyno",
+      "url": "https://toyno.com",
+      "description": "Website for a design studio specialising in experiences for public, work, education, and leisure spaces.",
+      "category": "other",
+      "tags": []
+    },
+    {
+      "title": "Publibalão",
+      "url": "https://publibalao.com",
+      "description": "Website for Portugal's pioneering hot air balloon company, active since 1994 — covering flights, events, and training. Includes FIBAQ, one of Europe's largest ballooning festivals.",
+      "category": "other",
+      "tags": ["events"]
+    },
+    {
+      "title": "Hotel Convento de São Paulo",
+      "url": "http://hotelconventosaopaulo.com",
+      "description": "Website for a historic convent hotel in Portugal.",
+      "category": "other",
+      "tags": ["hospitality"]
     }
   ]
 }
