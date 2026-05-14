@@ -1,0 +1,4 @@
+# IDE
+.vscode/sftp.json
+!.vscode/sftp.json.example
+v2-temp.code-workspace

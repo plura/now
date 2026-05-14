@@ -1,0 +1,12 @@
+{
+    "name": "Plura | Now",
+    "host": "",
+    "protocol": "ftp",
+    "port": 21,
+    "username": "",
+    "password": "",
+    "remotePath": "",
+    "uploadOnSave": false,
+    "useTempFile": false,
+    "openSsh": false
+}
