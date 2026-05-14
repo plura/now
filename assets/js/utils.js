@@ -7,6 +7,9 @@ export async function img2svg(img) {
   const svg = doc.querySelector('svg');
   if (!svg) return;
 
+  if (img.id) svg.id = img.id;
+  img.classList.forEach(cls => svg.classList.add(cls));
+
   img.replaceWith(svg);
   return svg;
 }

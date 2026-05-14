@@ -1,5 +1,6 @@
 /* ─── Color scheme ─────────────────────────────────────────── */
 
 :root {
-  --color-dark: #0f0f0f;
+  --plura-color-dark:  #0f0f0f;
+  --plura-color-light: #ffffff;
 }
