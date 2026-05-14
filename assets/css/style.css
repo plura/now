@@ -1,0 +1,29 @@
+/* ─── Layout ───────────────────────────────────────────────── */
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+
+/* ─── Logo ─────────────────────────────────────────────────── */
+
+#plura-logo {
+  width: min(560px, 85dvw);
+}
+
+#plura-anim-l {
+  overflow: visible;
+}
+
+#plura-anim-l path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4px;
+  visibility: hidden;
+}
