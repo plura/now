@@ -1,0 +1,22 @@
+{
+  "tags": {
+    "web": "Web",
+    "mobile": "Mobile",
+    "branding": "Branding",
+    "ux": "UX"
+  },
+  "categories": {
+    "product": "Product",
+    "client": "Client Work",
+    "side": "Side Projects"
+  },
+  "projects": [
+    {
+      "title": "Example Project",
+      "url": "https://example.com",
+      "description": "A short description of what this project is and why it matters.",
+      "category": "product",
+      "tags": ["web", "ux"]
+    }
+  ]
+}
