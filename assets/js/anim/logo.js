@@ -14,15 +14,16 @@ const SEQUENCE_START = {
 	a: 'arc-tr',
 };
 
+// Large gap prevents the dash pattern from repeating within any path,
+// eliminating round-cap dot artifacts at the hidden boundary.
+const DASH_GAP = 1e6;
+
 const INTRO_DRAW_DURATION   = 3;
 const INTRO_BETWEEN_DELAY   = 0.5;
 const INTRO_PHASE3_DURATION = 1;
 const INTRO_PHASE4_DELAY    = 0.5;
-const HEADER_SEG_DURATION   = 0.15;
 
-// Large gap prevents the dash pattern from repeating within any path,
-// eliminating round-cap dot artifacts at the hidden boundary.
-const DASH_GAP = 1e6;
+const HEADER_SEG_DURATION = 0.15;
 
 export function getCapOverhang(path) {
 	const svg = path.closest('svg');
@@ -119,16 +120,17 @@ export function animatePluraLogoIntro(logo) {
 		}
 
 		const startIdx = SEGMENT_ORDER.indexOf(startSeg);
-		const orderedSegs = [
+		const drawnEls = [
 			...SEGMENT_ORDER.slice(startIdx),
 			...SEGMENT_ORDER.slice(0, startIdx),
-		].reverse();
+		]
+			.map(seg => logo.querySelector(`#plura-anim-l-${letter}-${seg}`))
+			.filter(Boolean)
+			.reverse();
 
 		const letterTl = gsap.timeline({ paused: true });
 
-		for (const seg of orderedSegs) {
-			const el = logo.querySelector(`#plura-anim-l-${letter}-${seg}`);
-			if (!el) continue;
+		for (const el of drawnEls) {
 			const len = el.getTotalLength();
 			letterTl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: 1 });
 		}
