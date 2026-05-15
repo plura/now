@@ -14,10 +14,10 @@ const SEQUENCE_START = {
 	a: 'arc-tr',
 };
 
-const INTRO_INTRO_DRAW_DURATION   = 3;
-const INTRO_INTRO_BETWEEN_DELAY   = 0.5;
-const INTRO_INTRO_PHASE3_DURATION = 1;
-const INTRO_INTRO_PHASE4_DELAY    = 0.5;
+const INTRO_DRAW_DURATION   = 3;
+const INTRO_BETWEEN_DELAY   = 0.5;
+const INTRO_PHASE3_DURATION = 1;
+const INTRO_PHASE4_DELAY    = 0.5;
 const HEADER_SEG_DURATION   = 0.15;
 
 // Large gap prevents the dash pattern from repeating within any path,
