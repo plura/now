@@ -8,7 +8,7 @@ const SEGMENT_ORDER = [
 
 const SEQUENCE_START = {
 	p: 'arc-tl',
-	l: 'line-bottom',
+	l: 'arc-tl',
 	u: 'arc-br',
 	r: 'line-top',
 	a: 'arc-tr',
