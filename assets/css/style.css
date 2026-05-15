@@ -16,12 +16,14 @@ body {
 
 header {
   height: var(--plura-layout-header-h);
-  border: 1px solid var(--plura-color-dark);
+  border: 1px solid var(--plura-color-border);
+  border-radius: var(--plura-radius);
 }
 
 main {
   flex: 1;
-  border: 1px solid var(--plura-color-dark);
+  border: 1px solid var(--plura-color-border);
+  border-radius: var(--plura-radius);
 }
 
 

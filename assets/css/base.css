@@ -9,8 +9,12 @@
 
 :root {
   /* Colors */
-  --plura-color-dark:  #0f0f0f;
-  --plura-color-light: #ffffff;
+  --plura-color-dark:   #0f0f0f;
+  --plura-color-light:  #ffffff;
+  --plura-color-border: #e0e0e0;
+
+  /* Shape */
+  --plura-radius: 12px;
 
   /* Layout */
   --plura-layout-header-h: 60px;
