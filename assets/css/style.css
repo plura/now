@@ -6,14 +6,22 @@ body {
   background: var(--plura-color-light);
 }
 
+#plura-stage {
+  width: var(--plura-layout-width);
+  height: calc(100dvh - 2 * var(--plura-layout-pad));
+  display: flex;
+  flex-direction: column;
+  gap: var(--plura-layout-gap);
+}
+
 header {
   height: var(--plura-layout-header-h);
-  border: 1px solid red;
+  border: 1px solid var(--plura-color-dark);
 }
 
 main {
-  height: calc(100dvh - var(--plura-layout-header-h) - 2 * var(--plura-layout-pad));
-  border: 1px solid red;
+  flex: 1;
+  border: 1px solid var(--plura-color-dark);
 }
 
 
