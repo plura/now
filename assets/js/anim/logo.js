@@ -167,9 +167,10 @@ export function animatePluraLogoHeader(logo) {
 		tl.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: HEADER_SEG_DURATION * SEGMENT_ORDER.length }, 0);
 	}
 
-	// Legs after letters
+	// Legs after letters, all simultaneously
+	tl.addLabel('legs');
 	logo.querySelectorAll(`path${LEGS}`).forEach(el => {
-		tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION * 2 });
+		tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION * 2 }, 'legs');
 	});
 
 	return tl;
