@@ -24,7 +24,8 @@ const INTRO_BETWEEN_DELAY   = 0.5;
 const INTRO_PHASE3_DURATION = 1;
 const INTRO_PHASE4_DELAY    = 0.5;
 
-const HEADER_SEG_DURATION = 0.15;
+const HEADER_DRAW_DURATION = 1.5;
+const HEADER_LEG_DURATION  = 0.5;
 
 export function getCapOverhang(path) {
 	const svg = path.closest('svg');
@@ -164,14 +165,15 @@ export function animatePluraLogoHeader(logo) {
 			letterTl.to(el, { strokeDashoffset: 0, ease: 'none', duration: 1 });
 		}
 
-		tl.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: HEADER_SEG_DURATION * SEGMENT_ORDER.length }, 0);
+		tl.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: HEADER_DRAW_DURATION }, 0);
 	}
 
 	// Legs after letters, all simultaneously
-	tl.addLabel('legs');
+	const legsTl = gsap.timeline({ paused: true });
 	logo.querySelectorAll(`path${LEGS}`).forEach(el => {
-		tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION * 2 }, 'legs');
+		legsTl.to(el, { strokeDashoffset: 0, ease: 'none', duration: 1 }, 0);
 	});
+	tl.to(legsTl, { progress: 1, ease: 'power2.inOut', duration: HEADER_LEG_DURATION });
 
 	return tl;
 }
