@@ -104,11 +104,14 @@ export function animatePluraLogoIntro(logo) {
 
 	const phase4Tl = gsap.timeline({ paused: true });
 
-	// Legs undraw simultaneously
-	const legEls = [...logo.querySelectorAll(`path${LEGS}`)];
-	legEls.forEach(el => {
+	// Legs undraw simultaneously at position 0
+	logo.querySelectorAll(`path${LEGS}`).forEach(el => {
 		const len = el.getTotalLength();
-		phase4Tl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: INTRO_PHASE3_DURATION }, 0);
+		phase4Tl.fromTo(el,
+			{ strokeDashoffset: 0 },
+			{ strokeDashoffset: len + capOverhang, ease: 'none', duration: INTRO_PHASE3_DURATION },
+			0
+		);
 	});
 
 	// Letters undraw simultaneously after legs, segment by segment in reverse
@@ -126,16 +129,14 @@ export function animatePluraLogoIntro(logo) {
 			...SEGMENT_ORDER.slice(0, startIdx),
 		].reverse();
 
-		const letterTl = gsap.timeline({ paused: true });
-
+		let pos = INTRO_PHASE3_DURATION;
 		for (const seg of orderedSegs) {
 			const el = logo.querySelector(`#plura-anim-l-${letter}-${seg}`);
 			if (!el) continue;
 			const len = el.getTotalLength();
-			letterTl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: 1 });
+			phase4Tl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: 1 }, pos);
+			pos += 1;
 		}
-
-		phase4Tl.to(letterTl, { progress: 1, ease: 'none', duration: INTRO_DRAW_DURATION }, INTRO_PHASE3_DURATION);
 	}
 
 	master.to(phase4Tl, { progress: 1, ease: 'power2.inOut', duration: INTRO_PHASE3_DURATION + INTRO_DRAW_DURATION }, 'phase4');
