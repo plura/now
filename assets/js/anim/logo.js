@@ -23,7 +23,7 @@ const HEADER_SEG_DURATION = 0.15;
 // eliminating round-cap dot artifacts at the hidden boundary.
 const DASH_GAP = 1e6;
 
-function getCapOverhang(path) {
+export function getCapOverhang(path) {
 	const svg = path.closest('svg');
 	const scale = svg.viewBox.baseVal.width / svg.getBoundingClientRect().width;
 	return (parseFloat(getComputedStyle(path).strokeWidth) || 0) * scale / 2;
