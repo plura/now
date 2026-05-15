@@ -1,5 +1,5 @@
 const REMOVALS = '[id$="-x"]';
-const LEGS = '[id*="-leg-"]';
+const LEGS     = '[id*="-leg-"]';
 
 const SEGMENT_ORDER = [
 	'arc-tl', 'line-left', 'arc-bl', 'line-bottom',
@@ -27,12 +27,24 @@ const INTRO_PHASE4_DELAY    = 0.5;
 const HEADER_DRAW_DURATION = 1.5;
 const HEADER_LEG_DURATION  = 0.5;
 
+
+// ─── Utils ───────────────────────────────────────────────────
+
+// Returns SEGMENT_ORDER rotated so startSeg is first, wrapping around.
+function getOrderedSegs(startSeg) {
+	const i = SEGMENT_ORDER.indexOf(startSeg);
+	return [...SEGMENT_ORDER.slice(i), ...SEGMENT_ORDER.slice(0, i)];
+}
+
+// Returns half the stroke-width in SVG user units — used to extend dashoffset
+// so round caps don't leave a visible dot at the hidden end of a path.
 export function getCapOverhang(path) {
 	const svg = path.closest('svg');
 	const scale = svg.viewBox.baseVal.width / svg.getBoundingClientRect().width;
 	return (parseFloat(getComputedStyle(path).strokeWidth) || 0) * scale / 2;
 }
 
+// Hides all paths via dashoffset and makes them visible so GSAP can animate them in.
 function initPaths(logo, capOverhang) {
 	logo.querySelectorAll('path').forEach(el => {
 		const len = el.getTotalLength();
@@ -42,6 +54,9 @@ function initPaths(logo, capOverhang) {
 	});
 }
 
+
+// ─── Animations ──────────────────────────────────────────────
+
 export function animatePluraLogoIntro(logo) {
 	const capOverhang = getCapOverhang(logo.querySelector('path'));
 	initPaths(logo, capOverhang);
@@ -50,15 +65,9 @@ export function animatePluraLogoIntro(logo) {
 
 	// Phase 1 — all letters draw in simultaneously
 	for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
-		const startIdx = SEGMENT_ORDER.indexOf(startSeg);
-		const orderedSegs = [
-			...SEGMENT_ORDER.slice(startIdx),
-			...SEGMENT_ORDER.slice(0, startIdx),
-		];
-
 		const letterTl = gsap.timeline({ paused: true });
 
-		for (const seg of orderedSegs) {
+		for (const seg of getOrderedSegs(startSeg)) {
 			const el =
 				logo.querySelector(`#plura-anim-l-${letter}-${seg}`) ??
 				logo.querySelector(`#plura-anim-l-${letter}-${seg}-x`);
@@ -79,13 +88,7 @@ export function animatePluraLogoIntro(logo) {
 	});
 
 	for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
-		const startIdx = SEGMENT_ORDER.indexOf(startSeg);
-		const orderedSegs = [
-			...SEGMENT_ORDER.slice(startIdx),
-			...SEGMENT_ORDER.slice(0, startIdx),
-		];
-
-		const removalEls = orderedSegs
+		const removalEls = getOrderedSegs(startSeg)
 			.map(seg => logo.querySelector(`#plura-anim-l-${letter}-${seg}-x`))
 			.filter(Boolean)
 			.reverse();
@@ -121,17 +124,12 @@ export function animatePluraLogoIntro(logo) {
 			continue;
 		}
 
-		const startIdx = SEGMENT_ORDER.indexOf(startSeg);
-		const drawnEls = [
-			...SEGMENT_ORDER.slice(startIdx),
-			...SEGMENT_ORDER.slice(0, startIdx),
-		]
+		const drawnEls = getOrderedSegs(startSeg)
 			.map(seg => logo.querySelector(`#plura-anim-l-${letter}-${seg}`))
 			.filter(Boolean)
 			.reverse();
 
 		const letterTl = gsap.timeline({ paused: true });
-
 		for (const el of drawnEls) {
 			const len = el.getTotalLength();
 			letterTl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: 1 });
@@ -151,15 +149,9 @@ export function animatePluraLogoHeader(logo) {
 
 	// All letters draw in simultaneously, segment by segment — removal segments skipped
 	for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
-		const startIdx = SEGMENT_ORDER.indexOf(startSeg);
-		const orderedSegs = [
-			...SEGMENT_ORDER.slice(startIdx),
-			...SEGMENT_ORDER.slice(0, startIdx),
-		];
-
 		const letterTl = gsap.timeline({ paused: true });
 
-		for (const seg of orderedSegs) {
+		for (const seg of getOrderedSegs(startSeg)) {
 			const el = logo.querySelector(`#plura-anim-l-${letter}-${seg}`);
 			if (!el) continue;
 			letterTl.to(el, { strokeDashoffset: 0, ease: 'none', duration: 1 });
