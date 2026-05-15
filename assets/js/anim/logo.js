@@ -6,9 +6,10 @@ const SEGMENT_ORDER = [
 	'arc-br', 'line-right', 'arc-tr', 'line-top',
 ];
 
+// Start segment per letter — determines both draw order (phase 1) and undraw order (phase 4)
 const SEQUENCE_START = {
 	p: 'arc-tl',
-	l: 'arc-tl',
+	l: 'arc-tl', // arc-tl gives correct undraw continuity given L's missing segments
 	u: 'arc-br',
 	r: 'line-top',
 	a: 'arc-tr',
@@ -145,9 +146,9 @@ export function animatePluraLogoHeader(logo) {
 	const capOverhang = getCapOverhang(logo.querySelector('path'));
 	initPaths(logo, capOverhang);
 
-	const tl = gsap.timeline({ repeat: -1, yoyo: true });
+	const tl = gsap.timeline();
 
-	// Letters sequentially, segment by segment — removal segments skipped
+	// All letters draw in simultaneously, segment by segment — removal segments skipped
 	for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
 		const startIdx = SEGMENT_ORDER.indexOf(startSeg);
 		const orderedSegs = [
@@ -155,16 +156,20 @@ export function animatePluraLogoHeader(logo) {
 			...SEGMENT_ORDER.slice(0, startIdx),
 		];
 
+		const letterTl = gsap.timeline({ paused: true });
+
 		for (const seg of orderedSegs) {
 			const el = logo.querySelector(`#plura-anim-l-${letter}-${seg}`);
 			if (!el) continue;
-			tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION });
+			letterTl.to(el, { strokeDashoffset: 0, ease: 'none', duration: 1 });
 		}
+
+		tl.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: HEADER_SEG_DURATION * SEGMENT_ORDER.length }, 0);
 	}
 
-	// Legs after all letters
+	// Legs after letters
 	logo.querySelectorAll(`path${LEGS}`).forEach(el => {
-		tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION });
+		tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION * 2 });
 	});
 
 	return tl;
