@@ -99,24 +99,23 @@ export function animatePluraLogoIntro(logo) {
 		master.to(removalTl, { progress: 1, ease: 'power2.inOut', duration: INTRO_PHASE3_DURATION }, 'phase3');
 	}
 
-	// Phase 4 — brief pause, then reversal as one continuous eased motion
-	master.addLabel('phase4', `+=${INTRO_PHASE4_DELAY}`);
+	// Phase 4 — brief pause, then reversal
+	master.addLabel('phase4a', `+=${INTRO_PHASE4_DELAY}`);
 
-	const phase4Tl = gsap.timeline({ paused: true });
-
-	// Legs undraw simultaneously
-	const legEls = [...logo.querySelectorAll(`path${LEGS}`)];
-	legEls.forEach(el => {
+	// Phase 4a — legs undraw simultaneously
+	logo.querySelectorAll(`path${LEGS}`).forEach(el => {
 		const len = el.getTotalLength();
-		phase4Tl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: INTRO_PHASE3_DURATION }, 0);
+		master.to(el, { strokeDashoffset: len + capOverhang, ease: 'power2.inOut', duration: INTRO_PHASE3_DURATION }, 'phase4a');
 	});
 
-	// Letters undraw simultaneously after legs, segment by segment in reverse
+	master.addLabel('phase4b', `phase4a+=${INTRO_PHASE3_DURATION}`);
+
+	// Phase 4b — letters undraw simultaneously, segment by segment in reverse
 	// Exception: U only draws its closing line-top segment
 	for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
 		if (letter === 'u') {
 			const el = logo.querySelector('#plura-anim-l-u-line-top');
-			if (el) phase4Tl.to(el, { strokeDashoffset: 0, ease: 'none', duration: INTRO_DRAW_DURATION }, INTRO_PHASE3_DURATION);
+			if (el) master.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: INTRO_DRAW_DURATION }, 'phase4b');
 			continue;
 		}
 
@@ -135,10 +134,8 @@ export function animatePluraLogoIntro(logo) {
 			letterTl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: 1 });
 		}
 
-		phase4Tl.to(letterTl, { progress: 1, ease: 'none', duration: INTRO_DRAW_DURATION }, INTRO_PHASE3_DURATION);
+		master.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: INTRO_DRAW_DURATION }, 'phase4b');
 	}
-
-	master.to(phase4Tl, { progress: 1, ease: 'power2.inOut', duration: INTRO_PHASE3_DURATION + INTRO_DRAW_DURATION }, 'phase4');
 
 	return master;
 }
