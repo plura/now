@@ -1,5 +1,9 @@
-import { animatePluraLogoIntro } from './anim/logo.js';
+import { animatePluraLogoIntro, animatePluraLogoHeader } from './anim/logo.js';
 
 export function runIntroAnimation() {
   return animatePluraLogoIntro();
+}
+
+export function runHeaderAnimation() {
+  return animatePluraLogoHeader();
 }

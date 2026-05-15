@@ -14,9 +14,10 @@ const SEQUENCE_START = {
   a: 'arc-tr',
 };
 
-const DRAW_DURATION   = 3;
-const BETWEEN_DELAY   = 0.5;
-const PHASE3_DURATION = 1;
+const DRAW_DURATION        = 3;
+const BETWEEN_DELAY        = 0.5;
+const PHASE3_DURATION      = 1;
+const HEADER_SEG_DURATION  = 0.15;
 
 // Large gap prevents the dash pattern from repeating within any path,
 // eliminating round-cap dot artifacts at the hidden boundary.
@@ -28,17 +29,19 @@ function getCapOverhang(path) {
   return (parseFloat(getComputedStyle(path).strokeWidth) || 0) * scale / 2;
 }
 
-export function animatePluraLogoIntro() {
-  const logo = document.querySelector('#plura-anim-l');
-  const paths = logo.querySelectorAll('path');
-  const capOverhang = getCapOverhang(paths[0]);
-
-  paths.forEach(el => {
+function initPaths(logo, capOverhang) {
+  logo.querySelectorAll('path').forEach(el => {
     const len = el.getTotalLength();
     // Set dasharray as a raw SVG attribute — two-value strings can confuse GSAP's parser
     el.setAttribute('stroke-dasharray', `${len} ${DASH_GAP}`);
     gsap.set(el, { strokeDashoffset: len + capOverhang, visibility: 'visible' });
   });
+}
+
+export function animatePluraLogoIntro() {
+  const logo = document.querySelector('#plura-intro svg');
+  const capOverhang = getCapOverhang(logo.querySelector('path'));
+  initPaths(logo, capOverhang);
 
   const master = gsap.timeline();
 
@@ -99,4 +102,31 @@ export function animatePluraLogoIntro() {
 }
 
 export function animatePluraLogoHeader() {
+  const logo = document.querySelector('header svg');
+  const capOverhang = getCapOverhang(logo.querySelector('path'));
+  initPaths(logo, capOverhang);
+
+  const tl = gsap.timeline({ repeat: -1, yoyo: true });
+
+  // Letters sequentially, segment by segment — removal segments skipped
+  for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
+    const startIdx = SEGMENT_ORDER.indexOf(startSeg);
+    const orderedSegs = [
+      ...SEGMENT_ORDER.slice(startIdx),
+      ...SEGMENT_ORDER.slice(0, startIdx),
+    ];
+
+    for (const seg of orderedSegs) {
+      const el = logo.querySelector(`#plura-anim-l-${letter}-${seg}`);
+      if (!el) continue;
+      tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION });
+    }
+  }
+
+  // Legs after all letters
+  logo.querySelectorAll(`path${LEGS}`).forEach(el => {
+    tl.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: HEADER_SEG_DURATION });
+  });
+
+  return tl;
 }
