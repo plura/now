@@ -29,7 +29,8 @@ function getCapOverhang(path) {
 }
 
 export function animatePluraLogoIntro() {
-  const paths = document.querySelectorAll('#plura-anim-l path');
+  const logo = document.querySelector('#plura-anim-l');
+  const paths = logo.querySelectorAll('path');
   const capOverhang = getCapOverhang(paths[0]);
 
   paths.forEach(el => {
@@ -53,8 +54,8 @@ export function animatePluraLogoIntro() {
 
     for (const seg of orderedSegs) {
       const el =
-        document.getElementById(`plura-anim-l-${letter}-${seg}`) ??
-        document.getElementById(`plura-anim-l-${letter}-${seg}-x`);
+        logo.querySelector(`#plura-anim-l-${letter}-${seg}`) ??
+        logo.querySelector(`#plura-anim-l-${letter}-${seg}-x`);
       if (!el) continue;
       letterTl.to(el, { strokeDashoffset: 0, ease: 'none', duration: 1 });
     }
@@ -67,7 +68,7 @@ export function animatePluraLogoIntro() {
   master.addLabel('phase3', `+=${BETWEEN_DELAY}`);
 
   // Phase 3 — legs draw in, removal segments draw out, same duration
-  document.querySelectorAll(`#plura-anim-l path${LEGS}`).forEach(el => {
+  logo.querySelectorAll(`path${LEGS}`).forEach(el => {
     master.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: PHASE3_DURATION }, 'phase3');
   });
 
@@ -79,7 +80,7 @@ export function animatePluraLogoIntro() {
     ];
 
     const removalEls = orderedSegs
-      .map(seg => document.getElementById(`plura-anim-l-${letter}-${seg}-x`))
+      .map(seg => logo.querySelector(`#plura-anim-l-${letter}-${seg}-x`))
       .filter(Boolean)
       .reverse();
 
@@ -95,4 +96,7 @@ export function animatePluraLogoIntro() {
   }
 
   return master;
+}
+
+export function animatePluraLogoHeader() {
 }
