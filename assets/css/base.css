@@ -14,14 +14,12 @@
 
   /* Layout */
   --plura-layout-header-h: 60px;
-  --plura-layout-pad:      20px;
-  --plura-layout-pad-top:  calc(var(--plura-layout-pad) / 2);
+  --plura-layout-pad:      10px;
   --plura-layout-width:    calc(100dvw - 2 * var(--plura-layout-pad));
-  --plura-layout-gap:      16px;
 }
 
 @media (min-width: 768px) {
   :root {
-    --plura-layout-pad: 40px;
+    --plura-layout-pad: 20px;
   }
 }

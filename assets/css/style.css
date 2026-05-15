@@ -2,16 +2,16 @@
 
 body {
   min-height: 100dvh;
-  padding: var(--plura-layout-pad-top) var(--plura-layout-pad) var(--plura-layout-pad);
+  padding: var(--plura-layout-pad);
   background: var(--plura-color-light);
 }
 
 #plura-stage {
   width: var(--plura-layout-width);
-  height: calc(100dvh - var(--plura-layout-pad-top) - var(--plura-layout-pad));
+  height: calc(100dvh - 2 * var(--plura-layout-pad));
   display: flex;
   flex-direction: column;
-  gap: var(--plura-layout-gap);
+  gap: var(--plura-layout-pad);
 }
 
 header {
