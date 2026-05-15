@@ -14,9 +14,10 @@ const SEQUENCE_START = {
 	a: 'arc-tr',
 };
 
-const DRAW_DURATION = 3;
-const BETWEEN_DELAY = 0.5;
-const PHASE3_DURATION = 1;
+const DRAW_DURATION       = 3;
+const BETWEEN_DELAY       = 0.5;
+const PHASE3_DURATION     = 1;
+const PHASE4_DELAY        = 0.5;
 const HEADER_SEG_DURATION = 0.15;
 
 // Large gap prevents the dash pattern from repeating within any path,
@@ -95,6 +96,44 @@ export function animatePluraLogoIntro(logo) {
 		});
 
 		master.to(removalTl, { progress: 1, ease: 'power2.inOut', duration: PHASE3_DURATION }, 'phase3');
+	}
+
+	// Phase 4 — brief pause, then reversal
+	master.addLabel('phase4a', `+=${PHASE4_DELAY}`);
+
+	// Phase 4a — legs undraw simultaneously
+	logo.querySelectorAll(`path${LEGS}`).forEach(el => {
+		const len = el.getTotalLength();
+		master.to(el, { strokeDashoffset: len + capOverhang, ease: 'power2.inOut', duration: PHASE3_DURATION }, 'phase4a');
+	});
+
+	master.addLabel('phase4b', `phase4a+=${PHASE3_DURATION}`);
+
+	// Phase 4b — letters undraw simultaneously, segment by segment in reverse
+	// Exception: U only draws its closing line-top segment
+	for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
+		if (letter === 'u') {
+			const el = logo.querySelector('#plura-anim-l-u-line-top');
+			if (el) master.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: DRAW_DURATION }, 'phase4b');
+			continue;
+		}
+
+		const startIdx = SEGMENT_ORDER.indexOf(startSeg);
+		const orderedSegs = [
+			...SEGMENT_ORDER.slice(startIdx),
+			...SEGMENT_ORDER.slice(0, startIdx),
+		].reverse();
+
+		const letterTl = gsap.timeline({ paused: true });
+
+		for (const seg of orderedSegs) {
+			const el = logo.querySelector(`#plura-anim-l-${letter}-${seg}`);
+			if (!el) continue;
+			const len = el.getTotalLength();
+			letterTl.to(el, { strokeDashoffset: len + capOverhang, ease: 'none', duration: 1 });
+		}
+
+		master.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: DRAW_DURATION }, 'phase4b');
 	}
 
 	return master;
