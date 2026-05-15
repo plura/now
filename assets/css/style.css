@@ -1,12 +1,19 @@
 /* ─── Layout ───────────────────────────────────────────────── */
 
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
   min-height: 100dvh;
-  background: var(--plura-color-dark);
+  padding: var(--plura-layout-pad);
+  background: var(--plura-color-light);
+}
+
+header {
+  height: var(--plura-layout-header-h);
+  border: 1px solid red;
+}
+
+main {
+  height: calc(100dvh - var(--plura-layout-header-h) - 2 * var(--plura-layout-pad));
+  border: 1px solid red;
 }
 
 
@@ -16,8 +23,15 @@ body {
   width: min(560px, 85dvw);
 }
 
+#plura-logo img {
+  visibility: hidden;
+}
+
 #plura-anim-l {
   overflow: visible;
+  color: var(--plura-color-dark);
+  filter: drop-shadow(0 1px 4px transparent);
+  transition: color 0.4s ease, filter 0.4s ease;
 }
 
 #plura-anim-l path {
@@ -32,7 +46,7 @@ body {
 
 /* ─── Logo variants ─────────────────────────────────────────── */
 
-svg.plura-light {
+#plura-anim-l.plura-logo--light {
   color: var(--plura-color-light);
-  filter: drop-shadow(0 2px 12px rgba(255, 255, 255, 0.2));
+  filter: drop-shadow(0 1px 4px color-mix(in srgb, var(--plura-color-dark) 30%, transparent));
 }
