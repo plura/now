@@ -1,12 +1,9 @@
 import { animatePluraLogoIntro, animatePluraLogoHeader } from './anim/logo.js';
 
-const introLogo  = document.querySelector('#plura-intro svg');
-const headerLogo = document.querySelector('header svg');
-
 export function runIntroAnimation() {
-  return animatePluraLogoIntro(introLogo);
+  return animatePluraLogoIntro(document.querySelector('#plura-intro svg'));
 }
 
 export function runHeaderAnimation() {
-  return animatePluraLogoHeader(headerLogo);
+  return animatePluraLogoHeader(document.querySelector('header svg'));
 }
