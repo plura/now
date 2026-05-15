@@ -35,6 +35,14 @@ main {
   justify-content: center;
 }
 
+/* ─── Intro O ───────────────────────────────────────────────── */
+
+#plura-intro-o {
+  position: absolute;
+  border: 1px solid red;
+}
+
+
 /* ─── Logo ─────────────────────────────────────────────────── */
 
 .plura-logo {
