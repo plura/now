@@ -37,9 +37,18 @@ main {
 
 /* ─── Logo ─────────────────────────────────────────────────── */
 
+.plura-logo {
+  display: block;
+}
+
 #plura-intro .plura-logo {
   width: min(560px, 85dvw);
   visibility: hidden;
+}
+
+header .plura-logo {
+  height: 36px;
+  width: auto;
 }
 
 #plura-anim-l {
