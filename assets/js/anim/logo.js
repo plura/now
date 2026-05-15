@@ -108,7 +108,7 @@ export function animatePluraLogoIntro(logo) {
 	logo.querySelectorAll(`path${LEGS}`).forEach(el => {
 		const len = el.getTotalLength();
 		phase4Tl.fromTo(el,
-			{ strokeDashoffset: 0 },
+			{ strokeDashoffset: 0, immediateRender: false },
 			{ strokeDashoffset: len + capOverhang, ease: 'none', duration: INTRO_PHASE3_DURATION },
 			0
 		);
