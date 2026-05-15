@@ -28,7 +28,7 @@ function getCapOverhang(path) {
   return (parseFloat(getComputedStyle(path).strokeWidth) || 0) * scale / 2;
 }
 
-export function animatePluraLogo() {
+export function animatePluraLogoIntro() {
   const paths = document.querySelectorAll('#plura-anim-l path');
   const capOverhang = getCapOverhang(paths[0]);
 
