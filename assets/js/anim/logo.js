@@ -1,5 +1,5 @@
 const REMOVALS = '[id$="-x"]';
-const LEGS     = '[id*="-leg-"]';
+const LEGS = '[id*="-leg-"]';
 
 const SEGMENT_ORDER = [
 	'arc-tl', 'line-left', 'arc-bl', 'line-bottom',
@@ -14,16 +14,15 @@ const SEQUENCE_START = {
 	a: 'arc-tr',
 };
 
-// Large gap prevents the dash pattern from repeating within any path,
-// eliminating round-cap dot artifacts at the hidden boundary.
-const DASH_GAP = 1e6;
-
 const INTRO_DRAW_DURATION   = 3;
 const INTRO_BETWEEN_DELAY   = 0.5;
 const INTRO_PHASE3_DURATION = 1;
 const INTRO_PHASE4_DELAY    = 0.5;
+const HEADER_SEG_DURATION   = 0.15;
 
-const HEADER_SEG_DURATION = 0.15;
+// Large gap prevents the dash pattern from repeating within any path,
+// eliminating round-cap dot artifacts at the hidden boundary.
+const DASH_GAP = 1e6;
 
 export function getCapOverhang(path) {
 	const svg = path.closest('svg');
