@@ -1,9 +1,11 @@
 /* ─── Color scheme ─────────────────────────────────────────── */
 
 :root {
+  /* Colors */
   --plura-color-dark:  #0f0f0f;
   --plura-color-light: #ffffff;
 
+  /* Layout */
   --plura-layout-header-h: 100px;
   --plura-layout-width:    90dvw;
   --plura-layout-pad:      calc((100dvw - var(--plura-layout-width)) / 2);

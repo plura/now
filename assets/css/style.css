@@ -17,13 +17,20 @@ main {
 }
 
 
-/* ─── Logo ─────────────────────────────────────────────────── */
+/* ─── Intro ─────────────────────────────────────────────────── */
 
-#plura-logo {
-  width: min(560px, 85dvw);
+#plura-intro {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#plura-logo img {
+/* ─── Logo ─────────────────────────────────────────────────── */
+
+#plura-intro .plura-logo {
+  width: min(560px, 85dvw);
   visibility: hidden;
 }
 
