@@ -68,9 +68,7 @@ export function animatePluraLogoIntro(logo) {
 		const letterTl = gsap.timeline({ paused: true });
 
 		for (const seg of getOrderedSegs(startSeg)) {
-			const el =
-				logo.querySelector(`#plura-anim-l-${letter}-${seg}`) ??
-				logo.querySelector(`#plura-anim-l-${letter}-${seg}-x`);
+			const el = logo.querySelector(`[id*="${letter}-${seg}"]`);
 			if (!el) continue;
 			letterTl.to(el, { strokeDashoffset: 0, ease: 'none', duration: 1 });
 		}
@@ -119,7 +117,7 @@ export function animatePluraLogoIntro(logo) {
 	// Exception: U only draws its closing line-top segment
 	for (const [letter, startSeg] of Object.entries(SEQUENCE_START)) {
 		if (letter === 'u') {
-			const el = logo.querySelector('#plura-anim-l-u-line-top');
+			const el = logo.querySelector(`[id*="${letter}-line-top"]`);
 			if (el) master.to(el, { strokeDashoffset: 0, ease: 'power2.inOut', duration: INTRO_DRAW_DURATION }, 'phase4b');
 			continue;
 		}
