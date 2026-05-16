@@ -1,3 +1,5 @@
+// Segments suffixed with '-x' are removal segments: drawn in phase 1, then undrawn in phase 3.
+// A given segment is always one or the other — never both variants coexist.
 const REMOVALS = '[id$="-x"]';
 const LEGS     = '[id*="-leg-"]';
 
