@@ -37,14 +37,6 @@ main {
   justify-content: center;
 }
 
-/* ─── Intro O ───────────────────────────────────────────────── */
-
-#plura-intro-o {
-  position: absolute;
-  color: var(--plura-color-dark);
-  color: rgb(255 0 0 / 0.5); /* TEST */
-}
-
 
 /* ─── Logo ─────────────────────────────────────────────────── */
 

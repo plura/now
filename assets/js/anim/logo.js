@@ -28,9 +28,65 @@ const INTRO_DRAW_DURATION   = 3;
 const INTRO_BETWEEN_DELAY   = 0.5;
 const INTRO_PHASE3_DURATION = 1;
 const INTRO_PHASE4_DELAY    = 0.5;
+const INTRO_EXPAND_DURATION = 1;
 
 const HEADER_DRAW_DURATION = 1.5;
 const HEADER_LEG_DURATION  = 0.5;
+
+
+// ─── Expansion helpers ───────────────────────────────────────
+
+// Scales and translates the U/O group to cover targetEl.
+// Uses an SVG matrix transform so the stroke stays in its own coordinate space,
+// combined with vector-effect: non-scaling-stroke to keep stroke width visually constant.
+function expandOToTarget(logo, targetEl) {
+	const svgRect    = logo.getBoundingClientRect();
+	const targetRect = targetEl.getBoundingClientRect();
+	const svgScale   = logo.viewBox.baseVal.width / svgRect.width;
+
+	// U/O visual bounds in screen px — all U paths are visible at this point.
+	const uPaths  = [...logo.querySelectorAll('[id^="plura-anim-l-u-"]')];
+	const uRects  = uPaths.map(el => el.getBoundingClientRect());
+	const uLeft   = Math.min(...uRects.map(r => r.left));
+	const uRight  = Math.max(...uRects.map(r => r.right));
+	const uTop    = Math.min(...uRects.map(r => r.top));
+	const uBottom = Math.max(...uRects.map(r => r.bottom));
+
+	// O center in SVG user units.
+	const oCx = ((uLeft + uRight)  / 2 - svgRect.left) * svgScale;
+	const oCy = ((uTop  + uBottom) / 2 - svgRect.top)  * svgScale;
+
+	// Target center in SVG user units.
+	const tCx = (targetRect.left + targetRect.width  / 2 - svgRect.left) * svgScale;
+	const tCy = (targetRect.top  + targetRect.height / 2 - svgRect.top)  * svgScale;
+
+	// Scale factors (svgScale cancels — ratio of screen px sizes).
+	const sx = targetRect.width  / (uRight - uLeft);
+	const sy = targetRect.height / (uBottom - uTop);
+
+	const uGroup = logo.querySelector('#plura-anim-l-u');
+
+	// Keep stroke at 4px visually as the group scales.
+	uPaths.forEach(el => { el.style.vectorEffect = 'non-scaling-stroke'; });
+
+	// Start from identity so onUpdate has a clean baseline.
+	uGroup.setAttribute('transform', 'matrix(1,0,0,1,0,0)');
+
+	// Proxy drives the matrix: scale around O center, translate center to target center.
+	const proxy = { sx: 1, sy: 1, cx: oCx, cy: oCy };
+
+	return gsap.timeline({ onComplete: () => logo.closest('#plura-intro')?.remove() })
+		.to(proxy, {
+			sx, sy, cx: tCx, cy: tCy,
+			ease:     'power2.inOut',
+			duration: INTRO_EXPAND_DURATION,
+			onUpdate: () => {
+				uGroup.setAttribute('transform',
+					`matrix(${proxy.sx},0,0,${proxy.sy},${proxy.cx - proxy.sx * oCx},${proxy.cy - proxy.sy * oCy})`
+				);
+			},
+		});
+}
 
 
 // ─── Utils ───────────────────────────────────────────────────
@@ -62,7 +118,7 @@ function initPaths(logo, capOverhang) {
 
 // ─── Animations ──────────────────────────────────────────────
 
-export function animatePluraLogoIntro(logo) {
+export function animatePluraLogoIntro(logo, targetEl = null) {
 	const capOverhang = getCapOverhang(logo.querySelector('path'));
 	initPaths(logo, capOverhang);
 
@@ -139,6 +195,11 @@ export function animatePluraLogoIntro(logo) {
 		}
 
 		master.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: INTRO_DRAW_DURATION }, 'phase4b');
+	}
+
+	// Phase 5 — expand the O to cover targetEl
+	if (targetEl) {
+		master.call(() => expandOToTarget(logo, targetEl));
 	}
 
 	return master;
