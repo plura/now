@@ -22,8 +22,17 @@ header {
 
 main {
   flex: 1;
+  overflow: hidden;
   border: 1px solid var(--plura-color-border);
   border-radius: var(--plura-radius);
+}
+
+#plura-content {
+  height: 100%;
+}
+
+html.plura-intro-done #plura-content {
+  overflow-y: auto;
 }
 
 
