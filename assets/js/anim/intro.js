@@ -10,7 +10,10 @@ export function runIntroSequence(onComplete) {
   const master = gsap.timeline();
 
   master.add(animatePluraLogoIntro(logo));
-  master.call(() => expandOToMain(logo, onComplete));
+  master.call(() => expandOToMain(logo, () => {
+    document.documentElement.classList.add('plura-intro-done');
+    onComplete?.();
+  }));
 
   return master;
 }
