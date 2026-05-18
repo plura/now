@@ -7,7 +7,7 @@ import dev from './dev.js';
 // Inline SVGs and fetch data in parallel before anything renders
 const [, projectsData] = await Promise.all([imgs2svg(), fetchProjects()]);
 
-renderProjects(projectsData, document.querySelector('main'));
+renderProjects(projectsData, document.querySelector('#plura-content'));
 lucide.createIcons();
 
 runHeaderAnimation();
