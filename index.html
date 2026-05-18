@@ -6,19 +6,79 @@
   <title>Plura</title>
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/cta.css" />
 </head>
 <body>
+
+  <!-- ─── Intro ─────────────────────────────────────────────── -->
   <div id="plura-intro">
     <img src="plura-logo.svg" alt="Plura" class="plura-logo plura-logo--light" />
   </div>
+  <!-- ─── /Intro ────────────────────────────────────────────── -->
+
+  <!-- ─── Stage ─────────────────────────────────────────────── -->
   <div id="plura-stage">
     <header>
-		<img src="plura-logo.svg" alt="Plura" class="plura-logo plura-logo--dark" />
-	</header>
+      <img src="plura-logo.svg" alt="Plura" class="plura-logo plura-logo--dark" />
+    </header>
     <main></main>
   </div>
+  <!-- ─── /Stage ────────────────────────────────────────────── -->
+
+  <!-- ─── CTA ───────────────────────────────────────────────── -->
+  <div class="plura-cta-main" id="plura-cta-main">
+    <div class="plura-cta-morph" id="plura-cta-morph" role="dialog" aria-modal="true" aria-label="Contact us">
+
+      <div class="plura-cta-form-wrapper">
+        <button class="plura-cta-close" id="plura-cta-close" aria-label="Close">
+          <i data-lucide="x"></i>
+        </button>
+        <!-- intro content slot -->
+        <div class="plura-cta-alert" role="alert" aria-live="polite" hidden></div>
+        <form class="plura-cta-form" id="plura-cta-form" novalidate>
+          <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+          <div class="plura-cta-field">
+            <label for="plura-cta-name">Name</label>
+            <input type="text" id="plura-cta-name" name="name" required autocomplete="name" placeholder="Your name" />
+          </div>
+          <div class="plura-cta-field">
+            <label for="plura-cta-email">Email</label>
+            <input type="email" id="plura-cta-email" name="email" required autocomplete="email" placeholder="your@email.com" />
+          </div>
+          <div class="plura-cta-field">
+            <label for="plura-cta-phone">Phone</label>
+            <input type="tel" id="plura-cta-phone" name="phone" autocomplete="tel" placeholder="+1 234 567 890" />
+          </div>
+          <div class="plura-cta-field">
+            <label for="plura-cta-type">Project type</label>
+            <select id="plura-cta-type" name="type" required>
+              <option value="" disabled selected>Select…</option>
+              <option value="website">Website</option>
+              <option value="webapp">Web App</option>
+              <option value="mobile">Mobile App</option>
+              <option value="design">Design &amp; Branding</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="plura-cta-field">
+            <label for="plura-cta-message">Message</label>
+            <textarea id="plura-cta-message" name="message" rows="4" required placeholder="Tell us about your project"></textarea>
+          </div>
+          <button type="submit" class="plura-cta-submit">Send</button>
+        </form>
+      </div>
+
+      <button class="plura-cta-trigger" id="plura-cta-trigger" aria-expanded="false" aria-haspopup="dialog">
+        <i data-lucide="mail"></i>
+      </button>
+
+    </div>
+  </div>
+  <!-- ─── /CTA ─────────────────────────────────────────────── -->
+
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/cta.js"></script>
 </body>
 </html>
