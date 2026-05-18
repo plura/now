@@ -1,4 +1,4 @@
-import { animatePluraLogoIntro, getCapOverhang, LOGO_STROKE_WIDTH } from './logo.js';
+import { animatePluraLogoIntro, LOGO_STROKE_WIDTH } from './logo.js';
 
 // Arc radius of the U letter corners in SVG user units, from path geometry.
 const SVG_ARC_RADIUS = 18.29;
@@ -24,7 +24,7 @@ function styleODiv(oDiv, style) {
 function getCoordsFromU(logo) {
   const uPaths     = [...logo.querySelectorAll('[id^="plura-anim-l-u-"]')]
     .filter(el => !el.id.endsWith('-x'));
-  const capOverhang = getCapOverhang(uPaths[0]);
+  const capOverhang = LOGO_STROKE_WIDTH / 2;
   const rects       = uPaths.map(el => el.getBoundingClientRect());
 
   const top    = Math.min(...rects.map(r => r.top))    - capOverhang;
