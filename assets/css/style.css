@@ -41,7 +41,7 @@ main {
 
 #plura-intro-o {
   position: absolute;
-  border: 1px solid red;
+  color: var(--plura-color-dark);
 }
 
 
