@@ -1,4 +1,4 @@
-import { runIntroAnimation, runHeaderAnimation } from './anim.js';
+import { runIntroAnimation } from './anim.js';
 import { imgs2svg } from './utils.js';
 import { fetchProjects, renderProjects } from './projects.js';
 import './cta.js';
@@ -9,8 +9,6 @@ const [, projectsData] = await Promise.all([imgs2svg(), fetchProjects()]);
 
 renderProjects(projectsData, document.querySelector('#plura-content'));
 lucide.createIcons();
-
-runHeaderAnimation();
 
 const tl = runIntroAnimation();
 if (dev.mode === '1') tl.progress(1);
