@@ -1,3 +1,15 @@
+export function el(tag, props = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class')        node.className = v;
+    else if (k === 'dataset') Object.assign(node.dataset, v);
+    else if (k === 'text')    node.textContent = v;
+    else                      node.setAttribute(k, v);
+  }
+  children.forEach(c => node.appendChild(c));
+  return node;
+}
+
 export async function img2svg(img) {
   if (!img.src.endsWith('.svg')) return;
 

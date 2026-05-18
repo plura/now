@@ -1,0 +1,196 @@
+/* ─── CTA / Contact ─────────────────────────────────────────── */
+
+:root {
+  --plura-cta-btn-size: 3.5rem;
+  --plura-cta-form-w:   420px;
+  /* --plura-dur and --plura-ease from base.css */
+}
+
+/* ─── Main ───────────────────────────────────────────────────── */
+
+.plura-cta-main {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  transition:
+    background-color var(--plura-dur) var(--plura-ease),
+    backdrop-filter  var(--plura-dur) var(--plura-ease);
+}
+
+.plura-cta-main.active {
+  pointer-events: all;
+  background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+/* ─── Morph ──────────────────────────────────────────────────── */
+
+.plura-cta-morph {
+  /* absolute inside fixed inset-0 parent = same as fixed, avoids backdrop-filter containing-block quirk */
+  position: absolute;
+  bottom: var(--plura-layout-pad);
+  right: var(--plura-layout-pad);
+  overflow: hidden;
+  pointer-events: all;
+  background: var(--plura-color-light);
+  border-radius: var(--plura-radius);
+  transition:
+    transform     var(--plura-dur) var(--plura-ease),
+    width         var(--plura-dur) var(--plura-ease),
+    height        var(--plura-dur) var(--plura-ease),
+    border-radius var(--plura-dur) var(--plura-ease);
+}
+
+.plura-cta-main:not(.active) .plura-cta-morph {
+  border-radius: 50%;
+}
+
+/* ─── Trigger ────────────────────────────────────────────────── */
+
+.plura-cta-trigger {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--plura-cta-btn-size);
+  height: var(--plura-cta-btn-size);
+  background: var(--plura-color-dark);
+  color: var(--plura-color-light);
+  border: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity var(--plura-dur) var(--plura-ease);
+}
+
+.plura-cta-main.active .plura-cta-trigger {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── Form wrapper ───────────────────────────────────────────── */
+
+.plura-cta-form-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--plura-cta-form-w);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--plura-dur) var(--plura-ease);
+}
+
+.plura-cta-main.active .plura-cta-form-wrapper {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ─── Close ──────────────────────────────────────────────────── */
+
+.plura-cta-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: transparent;
+  color: var(--plura-color-dark);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--plura-dur) var(--plura-ease);
+}
+
+.plura-cta-main.active .plura-cta-close {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ─── Form ───────────────────────────────────────────────────── */
+
+.plura-cta-form-wrapper {
+  padding: 1.75rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.plura-cta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.plura-cta-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.plura-cta-field label {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--plura-color-dark);
+}
+
+.plura-cta-field input,
+.plura-cta-field select,
+.plura-cta-field textarea {
+  padding: 0.5rem 0;
+  border: none;
+  border-bottom: 1px solid var(--plura-color-border);
+  border-radius: 0;
+  font-size: var(--plura-font-size-base);
+  font-weight: var(--plura-font-weight-light);
+  background: transparent;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.plura-cta-field input:focus,
+.plura-cta-field select:focus,
+.plura-cta-field textarea:focus {
+  border-color: var(--plura-color-dark);
+}
+
+.plura-cta-field ::placeholder {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-light);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--plura-color-muted);
+}
+
+.plura-cta-field textarea {
+  resize: none;
+}
+
+.plura-cta-submit {
+  margin-top: 0.25rem;
+  padding: 0.75rem;
+  background: transparent;
+  color: var(--plura-color-dark);
+  border: 1px solid var(--plura-color-border);
+  border-radius: calc(var(--plura-radius) * 0.5);
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.plura-cta-submit:hover {
+  background-color: color-mix(in srgb, var(--plura-color-dark) 5%, transparent);
+  border-color: var(--plura-color-dark);
+}
+
+.plura-cta-submit:disabled { opacity: 0.4; cursor: not-allowed; }

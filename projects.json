@@ -1,4 +1,9 @@
 {
+  "statuses": {
+    "dev": "In Development",
+    "archived": "Archived",
+    "soon": "Coming Soon"
+  },
   "tags": {
     "health": "Health",
     "events": "Events",
@@ -72,7 +77,8 @@
       "url": "http://dev.plura.pt/confiar/",
       "description": "Website for a Portuguese non-profit dedicated to the social reintegration of people with histories of incarceration and their families.",
       "category": "institutional",
-      "tags": []
+      "tags": [],
+      "status": "dev"
     },
     {
       "title": "São Bernardo Parish Centre",
@@ -212,7 +218,8 @@
       "url": "https://matizeatelier.pt/wp/",
       "description": "Website for an interior design studio.",
       "category": "other",
-      "tags": []
+      "tags": [],
+      "status": "dev"
     },
     {
       "title": "Vetocular",

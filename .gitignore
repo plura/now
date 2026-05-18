@@ -2,3 +2,6 @@
 .vscode/sftp.json
 !.vscode/sftp.json.example
 v2-temp.code-workspace
+
+# Config
+api/config.php

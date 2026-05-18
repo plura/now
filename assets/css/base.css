@@ -1,7 +1,38 @@
+/* ─── Fonts ──────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+
 /* ─── Reset ─────────────────────────────────────────────────── */
 
 *, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--plura-font);
+  font-weight: var(--plura-font-weight-regular);
+  color: var(--plura-color-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ensure form elements inherit font — browser defaults override otherwise */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* ─── Icons ──────────────────────────────────────────────────── */
+
+svg.lucide {
+  width: var(--plura-icon-size);
+  height: var(--plura-icon-size);
+  stroke: currentColor;
+  stroke-width: var(--plura-icon-stroke-width);
+  flex-shrink: 0;
 }
 
 
@@ -9,7 +40,8 @@
 
 :root {
   /* Colors */
-  --plura-color-dark:   #0f0f0f;
+  --plura-color-dark:   #2e2e2e;
+  --plura-color-muted:  #9a9a9a;
   --plura-color-light:  #ffffff;
   --plura-color-border: #e0e0e0;
 
@@ -20,6 +52,24 @@
   --plura-layout-header-h: 60px;
   --plura-layout-pad:      10px;
   --plura-layout-width:    calc(100dvw - 2 * var(--plura-layout-pad));
+
+  /* Typography */
+  --plura-font:                'Poppins', sans-serif;
+  --plura-font-weight-light:   300;
+  --plura-font-weight-regular: 400;
+  --plura-font-weight-semi:    600;
+  --plura-font-size-xs:        0.75rem;
+  --plura-font-size-sm:        0.875rem;
+  --plura-font-size-base:      0.9375rem;
+  --plura-letter-spacing-caps: 0.06em;
+
+  /* Motion */
+  --plura-dur:  0.4s;
+  --plura-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Icons */
+  --plura-icon-size:         1rem;
+  --plura-icon-stroke-width: 1.5;
 }
 
 @media (min-width: 768px) {
