@@ -1,3 +1,6 @@
+// Stroke width in CSS px — must match the stroke-width in style.css.
+export const LOGO_STROKE_WIDTH = 4;
+
 // Segments suffixed with '-x' are removal segments: drawn in phase 1, then undrawn in phase 3.
 // A given segment is always one or the other — never both variants coexist.
 const REMOVALS = '[id$="-x"]';

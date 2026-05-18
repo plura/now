@@ -1,4 +1,4 @@
-import { animatePluraLogoIntro, getCapOverhang } from './logo.js';
+import { animatePluraLogoIntro, getCapOverhang, LOGO_STROKE_WIDTH } from './logo.js';
 
 // Arc radius of the U letter corners in SVG user units, from path geometry.
 const SVG_ARC_RADIUS = 18.29;
@@ -9,7 +9,7 @@ function getStyleFromSVG(logo) {
   const scale = logo.viewBox.baseVal.width / logo.getBoundingClientRect().width;
 
   return {
-    borderWidth:  parseFloat(getComputedStyle(path).strokeWidth),
+    borderWidth:  LOGO_STROKE_WIDTH,
     borderRadius: SVG_ARC_RADIUS / scale,
   };
 }
