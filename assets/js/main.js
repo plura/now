@@ -1,6 +1,7 @@
 import { runIntroAnimation, runHeaderAnimation } from './anim.js';
 import { imgs2svg } from './utils.js';
 import { fetchProjects } from './projects.js';
+import './cta.js';
 
 // ?dev=1 skips intro animation to the end state
 const DEV = new URLSearchParams(location.search).get('dev') === '1';
