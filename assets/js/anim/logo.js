@@ -1,5 +1,6 @@
-// Stroke width in CSS px — must match the stroke-width in style.css.
+// Must match the values in style.css and the SVG path geometry.
 export const LOGO_STROKE_WIDTH = 4;
+const SVG_ARC_RADIUS = 18.29;
 
 // Segments suffixed with '-x' are removal segments: drawn in phase 1, then undrawn in phase 3.
 // A given segment is always one or the other — never both variants coexist.
@@ -28,7 +29,8 @@ const INTRO_DRAW_DURATION   = 3;
 const INTRO_BETWEEN_DELAY   = 0.5;
 const INTRO_PHASE3_DURATION = 1;
 const INTRO_PHASE4_DELAY    = 0.5;
-const INTRO_EXPAND_DURATION = 1;
+const INTRO_EXPAND_DURATION       = 0.8;
+const INTRO_EXPAND_CROSSFADE      = 0.15;
 
 const HEADER_DRAW_DURATION = 1.5;
 const HEADER_LEG_DURATION  = 0.5;
@@ -36,57 +38,55 @@ const HEADER_LEG_DURATION  = 0.5;
 
 // ─── Expansion helpers ───────────────────────────────────────
 
-// Scales and translates the U/O group to cover targetEl.
-// Uses an SVG matrix transform so the stroke stays in its own coordinate space,
-// combined with vector-effect: non-scaling-stroke to keep stroke width visually constant.
+// Creates a CSS div styled to match the SVG O, crossfades from the logo to the div,
+// then expands the div to cover targetEl. CSS handles border-radius correctly under
+// non-uniform scaling, unlike SVG path transforms.
 function expandOToTarget(logo, targetEl) {
-	const svgRect    = logo.getBoundingClientRect();
-	const targetRect = targetEl.getBoundingClientRect();
-	const svgScale   = logo.viewBox.baseVal.width / svgRect.width;
+	const svgRect  = logo.getBoundingClientRect();
+	const scale    = logo.viewBox.baseVal.width / svgRect.width;
 
-	// U/O visual bounds in screen px — all U paths are visible at this point.
+	// U/O visual bounds — all U paths are visible at this point.
 	const uPaths  = [...logo.querySelectorAll('[id^="plura-anim-l-u-"]')];
 	const uRects  = uPaths.map(el => el.getBoundingClientRect());
-	const uLeft   = Math.min(...uRects.map(r => r.left));
-	const uRight  = Math.max(...uRects.map(r => r.right));
-	const uTop    = Math.min(...uRects.map(r => r.top));
-	const uBottom = Math.max(...uRects.map(r => r.bottom));
+	const oTop    = Math.min(...uRects.map(r => r.top));
+	const oLeft   = Math.min(...uRects.map(r => r.left));
+	const oRight  = Math.max(...uRects.map(r => r.right));
+	const oBottom = Math.max(...uRects.map(r => r.bottom));
 
-	// O center in SVG user units.
-	const oCx = ((uLeft + uRight)  / 2 - svgRect.left) * svgScale;
-	const oCy = ((uTop  + uBottom) / 2 - svgRect.top)  * svgScale;
+	const targetRect   = targetEl.getBoundingClientRect();
+	const targetStyle  = getComputedStyle(targetEl);
 
-	// Target center in SVG user units.
-	const tCx = (targetRect.left + targetRect.width  / 2 - svgRect.left) * svgScale;
-	const tCy = (targetRect.top  + targetRect.height / 2 - svgRect.top)  * svgScale;
-
-	// Scale factors (svgScale cancels — ratio of screen px sizes).
-	const sx = targetRect.width  / (uRight - uLeft);
-	const sy = targetRect.height / (uBottom - uTop);
-
-	const uGroup = logo.querySelector('#plura-anim-l-u');
-
-	// Start from identity so onUpdate has a clean baseline.
-	uGroup.setAttribute('transform', 'matrix(1,0,0,1,0,0)');
-
-	// Proxy drives the matrix: scale around O center, translate center to target center.
-	// strokeWidth is counter-scaled so the stroke stays visually at LOGO_STROKE_WIDTH.
-	const proxy = { sx: 1, sy: 1, cx: oCx, cy: oCy };
+	// Build a div that visually matches the SVG O at its current position.
+	const oDiv = document.createElement('div');
+	oDiv.id    = 'plura-intro-o';
+	logo.closest('#plura-intro').appendChild(oDiv);
+	Object.assign(oDiv.style, {
+		position:     'fixed',
+		top:          `${oTop}px`,
+		left:         `${oLeft}px`,
+		width:        `${oRight - oLeft}px`,
+		height:       `${oBottom - oTop}px`,
+		border:       `${LOGO_STROKE_WIDTH}px solid`,
+		borderRadius: `${SVG_ARC_RADIUS / scale}px`,
+		color:        getComputedStyle(logo).color,
+		opacity:      '0',
+	});
 
 	return gsap.timeline({ onComplete: () => logo.closest('#plura-intro')?.remove() })
-		.to(proxy, {
-			sx, sy, cx: tCx, cy: tCy,
-			ease:     'power2.inOut',
-			duration: INTRO_EXPAND_DURATION,
-			onUpdate: () => {
-				uGroup.setAttribute('transform',
-					`matrix(${proxy.sx},0,0,${proxy.sy},${proxy.cx - proxy.sx * oCx},${proxy.cy - proxy.sy * oCy})`
-				);
-				uPaths.forEach(el => {
-					el.setAttribute('stroke-width', `${LOGO_STROKE_WIDTH / proxy.sx}`);
-				});
-			},
-		});
+		// Crossfade: SVG out, O div in — hides any minor visual mismatch at the handoff.
+		.to(logo, { opacity: 0, duration: INTRO_EXPAND_CROSSFADE, ease: 'none' }, 0)
+		.to(oDiv, { opacity: 1, duration: INTRO_EXPAND_CROSSFADE, ease: 'none' }, 0)
+		// Expand to targetEl, morphing radius and border color to match it.
+		.to(oDiv, {
+			top:          targetRect.top,
+			left:         targetRect.left,
+			width:        targetRect.width,
+			height:       targetRect.height,
+			borderRadius: targetStyle.borderRadius,
+			borderColor:  targetStyle.borderColor,
+			ease:         'power2.inOut',
+			duration:     INTRO_EXPAND_DURATION,
+		}, INTRO_EXPAND_CROSSFADE);
 }
 
 
