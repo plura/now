@@ -23,8 +23,13 @@ header {
 main {
   flex: 1;
   overflow: hidden;
+  visibility: hidden;
   border: 1px solid var(--plura-color-border);
   border-radius: var(--plura-radius);
+}
+
+html.plura-intro-done main {
+  visibility: visible;
 }
 
 #plura-content {
