@@ -1,6 +1,5 @@
-// Must match the values in style.css and the SVG path geometry.
+// Must match stroke-width in style.css.
 export const LOGO_STROKE_WIDTH = 4;
-const SVG_ARC_RADIUS = 18.29;
 
 // Segments suffixed with '-x' are removal segments: drawn in phase 1, then undrawn in phase 3.
 // A given segment is always one or the other — never both variants coexist.
@@ -29,65 +28,9 @@ const INTRO_DRAW_DURATION   = 3;
 const INTRO_BETWEEN_DELAY   = 0.5;
 const INTRO_PHASE3_DURATION = 1;
 const INTRO_PHASE4_DELAY    = 0.5;
-const INTRO_EXPAND_DURATION       = 0.8;
-const INTRO_EXPAND_CROSSFADE      = 0.15;
 
 const HEADER_DRAW_DURATION = 1.5;
 const HEADER_LEG_DURATION  = 0.5;
-
-
-// ─── Expansion helpers ───────────────────────────────────────
-
-// Creates a CSS div styled to match the SVG O, crossfades from the logo to the div,
-// then expands the div to cover targetEl. CSS handles border-radius correctly under
-// non-uniform scaling, unlike SVG path transforms.
-function expandOToTarget(logo, targetEl) {
-	const svgRect  = logo.getBoundingClientRect();
-	const scale    = logo.viewBox.baseVal.width / svgRect.width;
-
-	// U/O visual bounds — all U paths are visible at this point.
-	const uPaths  = [...logo.querySelectorAll('[id^="plura-anim-l-u-"]')];
-	const uRects  = uPaths.map(el => el.getBoundingClientRect());
-	const oTop    = Math.min(...uRects.map(r => r.top));
-	const oLeft   = Math.min(...uRects.map(r => r.left));
-	const oRight  = Math.max(...uRects.map(r => r.right));
-	const oBottom = Math.max(...uRects.map(r => r.bottom));
-
-	const targetRect   = targetEl.getBoundingClientRect();
-	const targetStyle  = getComputedStyle(targetEl);
-
-	// Build a div that visually matches the SVG O at its current position.
-	const oDiv = document.createElement('div');
-	oDiv.id    = 'plura-intro-o';
-	logo.closest('#plura-intro').appendChild(oDiv);
-	Object.assign(oDiv.style, {
-		position:     'fixed',
-		top:          `${oTop}px`,
-		left:         `${oLeft}px`,
-		width:        `${oRight - oLeft}px`,
-		height:       `${oBottom - oTop}px`,
-		border:       `${LOGO_STROKE_WIDTH}px solid`,
-		borderRadius: `${SVG_ARC_RADIUS / scale}px`,
-		color:        getComputedStyle(logo).color,
-		opacity:      '0',
-	});
-
-	return gsap.timeline({ onComplete: () => logo.closest('#plura-intro')?.remove() })
-		// Crossfade: SVG out, O div in — hides any minor visual mismatch at the handoff.
-		.to(logo, { opacity: 0, duration: INTRO_EXPAND_CROSSFADE, ease: 'none' }, 0)
-		.to(oDiv, { opacity: 1, duration: INTRO_EXPAND_CROSSFADE, ease: 'none' }, 0)
-		// Expand to targetEl, morphing radius and border color to match it.
-		.to(oDiv, {
-			top:          targetRect.top,
-			left:         targetRect.left,
-			width:        targetRect.width,
-			height:       targetRect.height,
-			borderRadius: targetStyle.borderRadius,
-			borderColor:  targetStyle.borderColor,
-			ease:         'power2.inOut',
-			duration:     INTRO_EXPAND_DURATION,
-		}, INTRO_EXPAND_CROSSFADE);
-}
 
 
 // ─── Utils ───────────────────────────────────────────────────
@@ -119,7 +62,7 @@ function initPaths(logo, capOverhang) {
 
 // ─── Animations ──────────────────────────────────────────────
 
-export function animatePluraLogoIntro(logo, targetEl = null) {
+export function animatePluraLogoIntro(logo) {
 	const capOverhang = getCapOverhang(logo.querySelector('path'));
 	initPaths(logo, capOverhang);
 
@@ -196,11 +139,6 @@ export function animatePluraLogoIntro(logo, targetEl = null) {
 		}
 
 		master.to(letterTl, { progress: 1, ease: 'power2.inOut', duration: INTRO_DRAW_DURATION }, 'phase4b');
-	}
-
-	// Phase 5 — expand the O to cover targetEl
-	if (targetEl) {
-		master.call(() => expandOToTarget(logo, targetEl));
 	}
 
 	return master;
