@@ -67,12 +67,11 @@ export function runIntroSequence() {
   observer.observe(document.body);
 
   const master = gsap.timeline({
-    // onComplete: () => document.querySelector('#plura-intro').remove(),
+    // TODO: hide logo, disconnect observer, tween oDiv to getCoordsFromMain(), then remove #plura-intro
+    onComplete: () => gsap.set(logo, { visibility: 'hidden' }),
   });
 
   master.add(animatePluraLogoIntro(logo));
-
-  // TODO: on intro complete, disconnect observer and tween oDiv to getCoordsFromMain()
 
   return master;
 }
