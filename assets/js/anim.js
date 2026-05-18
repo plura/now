@@ -1,6 +1,10 @@
 import { runIntroSequence } from './anim/intro.js';
 import { animatePluraLogoHeader } from './anim/logo.js';
 
+// Full intro animation:
+//   1. Hide header and content
+//   2. Run intro sequence (logo draw + O expansion)
+//   3. Fade in header → content, then draw header logo
 export function runIntroAnimation() {
   const header  = document.querySelector('header');
   const content = document.querySelector('#plura-content');
