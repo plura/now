@@ -1,15 +1,16 @@
 import { runIntroAnimation, runHeaderAnimation } from './anim.js';
 import { imgs2svg } from './utils.js';
-import { fetchProjects } from './projects.js';
+import { fetchProjects, renderProjects } from './projects.js';
 import './cta.js';
-
-// ?dev=1 skips intro animation to the end state
-const DEV = new URLSearchParams(location.search).get('dev') === '1';
+import dev from './dev.js';
 
 // Inline SVGs and fetch data in parallel before anything renders
 const [, projectsData] = await Promise.all([imgs2svg(), fetchProjects()]);
 
+renderProjects(projectsData, document.querySelector('main'));
+lucide.createIcons();
+
 runHeaderAnimation();
 
 const tl = runIntroAnimation();
-if (DEV) tl.progress(1);
+if (dev.mode === '1') tl.progress(1);
