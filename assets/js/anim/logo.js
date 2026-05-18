@@ -66,13 +66,11 @@ function expandOToTarget(logo, targetEl) {
 
 	const uGroup = logo.querySelector('#plura-anim-l-u');
 
-	// Keep stroke at 4px visually as the group scales.
-	uPaths.forEach(el => { el.style.vectorEffect = 'non-scaling-stroke'; });
-
 	// Start from identity so onUpdate has a clean baseline.
 	uGroup.setAttribute('transform', 'matrix(1,0,0,1,0,0)');
 
 	// Proxy drives the matrix: scale around O center, translate center to target center.
+	// strokeWidth is counter-scaled so the stroke stays visually at LOGO_STROKE_WIDTH.
 	const proxy = { sx: 1, sy: 1, cx: oCx, cy: oCy };
 
 	return gsap.timeline({ onComplete: () => logo.closest('#plura-intro')?.remove() })
@@ -84,6 +82,9 @@ function expandOToTarget(logo, targetEl) {
 				uGroup.setAttribute('transform',
 					`matrix(${proxy.sx},0,0,${proxy.sy},${proxy.cx - proxy.sx * oCx},${proxy.cy - proxy.sy * oCy})`
 				);
+				uPaths.forEach(el => {
+					el.setAttribute('stroke-width', `${LOGO_STROKE_WIDTH / proxy.sx}`);
+				});
 			},
 		});
 }
