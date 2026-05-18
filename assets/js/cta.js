@@ -1,5 +1,7 @@
 // ─── CTA / Contact ───────────────────────────────────────────
 
+import { openMorph, closeMorph } from './morph.js';
+
 const ctaMain    = document.getElementById('plura-cta-main');
 const ctaMorph   = document.getElementById('plura-cta-morph');
 const ctaTrigger = document.getElementById('plura-cta-trigger');
@@ -9,45 +11,25 @@ const ctaClose   = document.getElementById('plura-cta-close');
 
 const ctaFormWrapper = document.querySelector('.plura-cta-form-wrapper');
 
-let btnW = 0, btnH = 0, formW = 0, formH = 0;
+let formW = 0, formH = 0;
 
 const ro = new ResizeObserver(entries => {
   for (const entry of entries) {
     const box = entry.borderBoxSize[0];
-    if (entry.target === ctaTrigger)     { btnW = box.inlineSize; btnH = box.blockSize; }
-    if (entry.target === ctaFormWrapper) { formW = box.inlineSize; formH = box.blockSize; }
+    formW = box.inlineSize;
+    formH = box.blockSize;
   }
-  if (!ctaMain.classList.contains('active')) setMorphSize(false);
 });
 
-ro.observe(ctaTrigger);
 ro.observe(ctaFormWrapper);
 
-function setMorphSize(active) {
-  if (active) {
-    const rect = ctaMorph.getBoundingClientRect();
-    // morph is anchored by right/bottom — use those edges as the fixed reference
-    const dx   = window.innerWidth  / 2 - rect.right  + formW / 2;
-    const dy   = window.innerHeight / 2 - rect.bottom + formH / 2;
-    ctaMorph.style.width     = `${formW}px`;
-    ctaMorph.style.height    = `${formH}px`;
-    ctaMorph.style.transform = `translate(${dx}px, ${dy}px)`;
-  } else {
-    ctaMorph.style.width     = `${btnW}px`;
-    ctaMorph.style.height    = `${btnH}px`;
-    ctaMorph.style.transform = 'translate(0, 0)';
-  }
-}
-
 function openCta() {
-  setMorphSize(true);
-  ctaMain.classList.add('active');
+  openMorph(ctaMain, ctaMorph, ctaTrigger.getBoundingClientRect(), { width: formW, height: formH });
   ctaTrigger.setAttribute('aria-expanded', 'true');
 }
 
 function closeCta() {
-  setMorphSize(false);
-  ctaMain.classList.remove('active');
+  closeMorph(ctaMain, ctaMorph);
   ctaTrigger.setAttribute('aria-expanded', 'false');
 }
 

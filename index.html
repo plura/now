@@ -6,6 +6,7 @@
   <title>Plura</title>
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/morph.css" />
   <link rel="stylesheet" href="assets/css/cta.css" />
 </head>
 <body>
@@ -26,11 +27,11 @@
   <!-- ─── /Stage ────────────────────────────────────────────── -->
 
   <!-- ─── CTA ───────────────────────────────────────────────── -->
-  <div class="plura-cta-main" id="plura-cta-main">
-    <div class="plura-cta-morph" id="plura-cta-morph" role="dialog" aria-modal="true" aria-label="Contact us">
+  <div class="plura-morph-main plura-cta-main" id="plura-cta-main">
+    <div class="plura-morph-element plura-cta-morph" id="plura-cta-morph" role="dialog" aria-modal="true" aria-label="Contact us">
 
       <div class="plura-cta-form-wrapper">
-        <button class="plura-cta-close" id="plura-cta-close" aria-label="Close">
+        <button class="plura-morph-close plura-cta-close" id="plura-cta-close" aria-label="Close">
           <i data-lucide="x"></i>
         </button>
         <!-- intro content slot -->
@@ -77,14 +78,14 @@
   <!-- ─── /CTA ─────────────────────────────────────────────── -->
 
   <!-- ─── Project detail ───────────────────────────────────── -->
-  <div class="plura-project-detail-main" id="plura-project-detail-main">
-    <div class="plura-project-detail-morph" id="plura-project-detail-morph" role="dialog" aria-modal="true">
+  <div class="plura-morph-main plura-project-detail-main" id="plura-project-detail-main">
+    <div class="plura-morph-element plura-project-detail-morph" id="plura-project-detail-morph" role="dialog" aria-modal="true">
 
-      <button class="plura-project-detail-close" id="plura-project-detail-close" aria-label="Close">
+      <button class="plura-morph-close plura-project-detail-close" id="plura-project-detail-close" aria-label="Close">
         <i data-lucide="x"></i>
       </button>
 
-      <div class="plura-project-detail-content" id="plura-project-detail-content">
+      <div class="plura-morph-content plura-project-detail-content" id="plura-project-detail-content">
         <!-- populated dynamically -->
       </div>
 
@@ -95,5 +96,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/cta.js"></script>
 </body>
 </html>

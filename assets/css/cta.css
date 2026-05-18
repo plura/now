@@ -3,48 +3,27 @@
 :root {
   --plura-cta-btn-size: 3.5rem;
   --plura-cta-form-w:   420px;
-  /* --plura-dur and --plura-ease from base.css */
 }
+
 
 /* ─── Main ───────────────────────────────────────────────────── */
 
 .plura-cta-main {
-  position: fixed;
-  inset: 0;
   z-index: 100;
-  pointer-events: none;
-  transition:
-    background-color var(--plura-dur) var(--plura-ease),
-    backdrop-filter  var(--plura-dur) var(--plura-ease);
 }
 
-.plura-cta-main.active {
-  pointer-events: all;
-  background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
-  backdrop-filter: blur(6px);
-}
 
 /* ─── Morph ──────────────────────────────────────────────────── */
 
 .plura-cta-morph {
-  /* absolute inside fixed inset-0 parent = same as fixed, avoids backdrop-filter containing-block quirk */
-  position: absolute;
   bottom: var(--plura-layout-pad);
   right: var(--plura-layout-pad);
-  overflow: hidden;
-  pointer-events: all;
-  background: var(--plura-color-light);
-  border-radius: var(--plura-radius);
-  transition:
-    transform     var(--plura-dur) var(--plura-ease),
-    width         var(--plura-dur) var(--plura-ease),
-    height        var(--plura-dur) var(--plura-ease),
-    border-radius var(--plura-dur) var(--plura-ease);
 }
 
 .plura-cta-main:not(.active) .plura-cta-morph {
   border-radius: 50%;
 }
+
 
 /* ─── Trigger ────────────────────────────────────────────────── */
 
@@ -69,6 +48,7 @@
   pointer-events: none;
 }
 
+
 /* ─── Form wrapper ───────────────────────────────────────────── */
 
 .plura-cta-form-wrapper {
@@ -76,6 +56,11 @@
   top: 0;
   left: 0;
   width: var(--plura-cta-form-w);
+  padding: 1.75rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--plura-dur) var(--plura-ease);
@@ -86,40 +71,8 @@
   pointer-events: all;
 }
 
-/* ─── Close ──────────────────────────────────────────────────── */
-
-.plura-cta-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  background: transparent;
-  color: var(--plura-color-dark);
-  border: none;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--plura-dur) var(--plura-ease);
-}
-
-.plura-cta-main.active .plura-cta-close {
-  opacity: 1;
-  pointer-events: all;
-}
 
 /* ─── Form ───────────────────────────────────────────────────── */
-
-.plura-cta-form-wrapper {
-  padding: 1.75rem;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
 
 .plura-cta-form {
   display: flex;

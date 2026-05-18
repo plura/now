@@ -1,0 +1,74 @@
+/* ─── Morph / overlay base ───────────────────────────────────── */
+
+/* ─── Main (backdrop) ────────────────────────────────────────── */
+
+.plura-morph-main {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  transition:
+    background-color var(--plura-dur) var(--plura-ease),
+    backdrop-filter  var(--plura-dur) var(--plura-ease);
+}
+
+.plura-morph-main.active {
+  pointer-events: all;
+  background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+
+/* ─── Morph element ──────────────────────────────────────────── */
+
+.plura-morph-element {
+  /* absolute inside fixed inset-0 parent = same as fixed, avoids backdrop-filter containing-block quirk */
+  position: absolute;
+  overflow: hidden;
+  pointer-events: all;
+  background: var(--plura-color-light);
+  border-radius: var(--plura-radius);
+  /* position/size animated by GSAP — no CSS transitions here */
+}
+
+
+/* ─── Close button ───────────────────────────────────────────── */
+
+.plura-morph-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: transparent;
+  color: var(--plura-color-dark);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--plura-dur) var(--plura-ease);
+}
+
+.plura-morph-main.active .plura-morph-close {
+  opacity: 1;
+  pointer-events: all;
+}
+
+
+/* ─── Content ────────────────────────────────────────────────── */
+
+.plura-morph-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--plura-dur) var(--plura-ease);
+}
+
+.plura-morph-main.active .plura-morph-content {
+  opacity: 1;
+  pointer-events: all;
+}
