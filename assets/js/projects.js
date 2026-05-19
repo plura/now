@@ -1,4 +1,5 @@
 import { el } from './utils.js';
+import { openDetail } from './project-detail.js';
 
 export async function fetchProjects() {
   const res = await fetch('./projects.json');
@@ -18,13 +19,17 @@ function normalize({ statuses, tags, categories, projects }) {
 }
 
 export function renderProjects({ categories, projects }, container) {
+  const grid = el('div', { class: 'plura-projects' });
+
   for (const [catKey, catLabel] of Object.entries(categories)) {
     const catProjects = projects.filter(p => p.category === catKey);
     if (!catProjects.length) continue;
 
     const card = buildCategoryCard(catKey, catLabel, catProjects);
-    container.appendChild(card);
+    grid.appendChild(card);
   }
+
+  container.appendChild(grid);
 }
 
 function buildCategoryCard(catKey, catLabel, projects) {
@@ -50,10 +55,22 @@ function buildProjectItem(project) {
   );
 
   item.appendChild(row);
+
+  if (project.description) {
+    item.appendChild(
+      el('p', { class: 'plura-projects-item-desc', text: project.description })
+    );
+  }
+
+  const expandBtn = item.querySelector('.plura-projects-item-expand');
+  expandBtn.addEventListener('click', () => {
+    openDetail(project, item.getBoundingClientRect());
+  });
+
   return item;
 }
 
-function buildProjectMeta(project) {
+export function buildProjectMeta(project) {
   const meta = el('div', { class: 'plura-projects-item-meta' });
 
   if (project.status) {

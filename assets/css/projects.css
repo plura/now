@@ -1,0 +1,122 @@
+/* ─── Projects ──────────────────────────────────────────────── */
+
+main {
+  overflow-y: auto;
+}
+
+.plura-projects {
+  columns: 3;
+  column-gap: 10px;
+  padding: 10px;
+}
+
+@media (min-width: 768px) {
+  .plura-projects {
+    column-gap: 12px;
+    padding: 12px;
+  }
+}
+
+
+/* ─── Project item ──────────────────────────────────────────── */
+
+.plura-projects-item {
+  padding: 8px 0;
+}
+
+.plura-projects-item + .plura-projects-item {
+  border-top: 1px solid var(--plura-color-border);
+}
+
+.plura-projects-item-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plura-projects-item-title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--plura-font-size-sm);
+  font-weight: var(--plura-font-weight-regular);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plura-projects-item-desc {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-light);
+  color: var(--plura-color-muted);
+  line-height: 1.55;
+  margin-top: 3px;
+}
+
+
+/* ─── Meta: status + tags ───────────────────────────────────── */
+
+.plura-projects-item-meta {
+  display: contents;
+}
+
+.plura-projects-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.plura-projects-tag,
+.plura-projects-status {
+  font-size: 0.625rem;
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  padding: 2px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.plura-projects-tag {
+  background: var(--plura-color-border);
+  color: var(--plura-color-muted);
+}
+
+.plura-projects-status {
+  background: transparent;
+  color: var(--plura-color-muted);
+  border: 1px solid var(--plura-color-border);
+}
+
+
+/* ─── Category card ─────────────────────────────────────────── */
+
+.plura-projects-card {
+  break-inside: avoid;
+  border: 1px solid var(--plura-color-border);
+  border-radius: calc(var(--plura-radius) - 2px);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+
+.plura-projects-card-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--plura-color-border);
+  margin-bottom: 2px;
+}
+
+.plura-projects-card-label {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+}
+
+.plura-projects-card-count {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-light);
+  color: var(--plura-color-muted);
+}
