@@ -1,6 +1,7 @@
 // ─── CTA / Contact ───────────────────────────────────────────
 
 import { openMorph, closeMorph } from './morph.js';
+import { t, basePath } from './lang.js';
 
 const ctaMain    = document.getElementById('plura-cta-main');
 const ctaMorph   = document.getElementById('plura-cta-morph');
@@ -60,23 +61,23 @@ ctaForm.addEventListener('submit', async e => {
   hideAlert();
 
   const submit = ctaForm.querySelector('.plura-cta-submit');
-  submit.disabled     = true;
-  submit.textContent  = 'Sending…';
+  submit.disabled    = true;
+  submit.textContent = t('Sending…');
 
   try {
-    const res  = await fetch('api/contact.php', { method: 'POST', body: new FormData(ctaForm) });
+    const res  = await fetch(`${basePath}/api/contact.php`, { method: 'POST', body: new FormData(ctaForm) });
     const data = await res.json();
 
     if (data.success) {
-      showAlert('Message sent! We\'ll be in touch shortly.', 'success');
+      showAlert(t("Message sent! We'll be in touch shortly."), 'success');
       ctaForm.reset();
     } else {
-      showAlert(data.message ?? 'Something went wrong. Please try again.');
+      showAlert(data.message ?? t('Something went wrong. Please try again.'));
     }
   } catch {
-    showAlert('Network error. Please try again.');
+    showAlert(t('Network error. Please try again.'));
   } finally {
     submit.disabled    = false;
-    submit.textContent = 'Send';
+    submit.textContent = t('Send');
   }
 });

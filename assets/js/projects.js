@@ -1,8 +1,9 @@
 import { el } from './utils.js';
 import { openDetail } from './project-detail.js';
+import { t } from './lang.js';
 
-export async function fetchProjects() {
-  const res = await fetch('./data/projects.json');
+export async function fetchProjects(base = '.') {
+  const res = await fetch(`${base}/data/projects.json`);
   const data = await res.json();
   return normalize(data);
 }
@@ -97,14 +98,14 @@ function buildProjectActions(project) {
 
   if (project.url) {
     actions.appendChild(
-      el('a', { class: 'plura-projects-item-url', href: project.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `Visit ${project.title}` },
+      el('a', { class: 'plura-projects-item-url', href: project.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': t('Visit {title}', { title: project.title }) },
         el('i', { 'data-lucide': 'external-link' })
       )
     );
   }
 
   actions.appendChild(
-    el('button', { class: 'plura-projects-item-expand', 'aria-expanded': 'false', 'aria-label': `About ${project.title}` },
+    el('button', { class: 'plura-projects-item-expand', 'aria-expanded': 'false', 'aria-label': t('About {title}', { title: project.title }) },
       el('i', { 'data-lucide': 'chevron-down' })
     )
   );
