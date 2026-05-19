@@ -18,6 +18,8 @@
 .plura-cta-morph {
   bottom: var(--plura-layout-pad);
   right: var(--plura-layout-pad);
+  width: var(--plura-cta-btn-size);
+  height: var(--plura-cta-btn-size);
 }
 
 .plura-cta-main:not(.active) .plura-cta-morph {

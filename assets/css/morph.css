@@ -27,6 +27,7 @@
   pointer-events: all;
   background: var(--plura-color-light);
   border-radius: var(--plura-radius);
+  will-change: transform;
   /* position/size animated by GSAP — no CSS transitions here */
 }
 
