@@ -1,5 +1,6 @@
 import { animatePluraLogoIntro } from './logo.js';
 import { expandOToMain } from './logo-o.js';
+import { markIntroSeen } from '../session.js';
 
 // Intro sequence:
 //   1. Logo draws in (P L U R A), transforms, letters undraw, U closes into O
@@ -11,6 +12,7 @@ export function runIntroSequence(onComplete) {
 
   master.add(animatePluraLogoIntro(logo));
   master.call(() => expandOToMain(logo, () => {
+    markIntroSeen();
     document.documentElement.classList.add('plura-intro-done');
     onComplete?.();
   }));

@@ -1,6 +1,11 @@
 import { runIntroSequence } from './anim/intro.js';
 import { animatePluraLogoHeader } from './anim/logo.js';
 
+export function skipIntro() {
+  document.getElementById('plura-intro')?.remove();
+  document.documentElement.classList.add('plura-intro-done');
+}
+
 // Full intro animation:
 //   1. Hide header, content, and CTA
 //   2. Run intro sequence (logo draw + O expansion)
