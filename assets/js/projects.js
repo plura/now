@@ -2,7 +2,7 @@ import { el } from './utils.js';
 import { openDetail } from './project-detail.js';
 
 export async function fetchProjects() {
-  const res = await fetch('./projects.json');
+  const res = await fetch('./data/projects.json');
   const data = await res.json();
   return normalize(data);
 }
