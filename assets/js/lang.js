@@ -1,10 +1,8 @@
-export const lang     = document.documentElement.lang;
+export const lang     = document.documentElement.lang.split('-')[0];
 export const basePath = document.querySelector('meta[name="base-path"]')?.content ?? '.';
-export const isPt     = lang.startsWith('pt');
 
-// Only fetched on PT pages; EN strings live as fallbacks at each call site
-const _ui = isPt
-  ? await fetch(`${basePath}/data/lang/ui.json`).then(r => r.json())
+const _ui = lang !== 'en'
+  ? await fetch(`${basePath}/data/lang/ui.${lang}.json`).then(r => r.json()).catch(() => ({}))
   : {};
 
 export function t(key, vars = {}) {
@@ -12,4 +10,14 @@ export function t(key, vars = {}) {
   for (const [k, v] of Object.entries(vars))
     str = str.replaceAll(`{${k}}`, v);
   return str;
+}
+
+export async function fetchLang(base, name) {
+  if (lang === 'en') return null;
+  try {
+    const r = await fetch(`${base}/data/lang/${name}.${lang}.json`);
+    return r.ok ? r.json() : null;
+  } catch {
+    return null;
+  }
 }

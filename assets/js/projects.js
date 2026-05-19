@@ -1,11 +1,11 @@
 import { el } from './utils.js';
 import { openDetail } from './project-detail.js';
-import { t, isPt } from './lang.js';
+import { t, fetchLang } from './lang.js';
 
 export async function fetchProjects(base = '.') {
   const [data, pt] = await Promise.all([
     fetch(`${base}/data/projects.json`).then(r => r.json()),
-    isPt ? fetch(`${base}/data/lang/projects.pt.json`).then(r => r.json()) : Promise.resolve(null)
+    fetchLang(base, 'projects')
   ]);
   return normalize(data, pt);
 }
