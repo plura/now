@@ -2,7 +2,7 @@ export const lang     = document.documentElement.lang.split('-')[0];
 export const basePath = document.querySelector('meta[name="base-path"]')?.content ?? '.';
 
 const _ui = lang !== 'en'
-  ? await fetch(`${basePath}/data/lang/ui.${lang}.json`).then(r => r.json()).catch(() => ({}))
+  ? await fetch(`${basePath}/data/lang/${lang}.ui.json`).then(r => r.json()).catch(() => ({}))
   : {};
 
 export function t(key, vars = {}) {
@@ -15,7 +15,7 @@ export function t(key, vars = {}) {
 export async function fetchLang(base, name) {
   if (lang === 'en') return null;
   try {
-    const r = await fetch(`${base}/data/lang/${name}.${lang}.json`);
+    const r = await fetch(`${base}/data/lang/${lang}.${name}.json`);
     return r.ok ? r.json() : null;
   } catch {
     return null;
