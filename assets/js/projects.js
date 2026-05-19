@@ -3,23 +3,23 @@ import { openDetail } from './project-detail.js';
 import { t, fetchLang } from './lang.js';
 
 export async function fetchProjects(base = '.') {
-  const [data, pt] = await Promise.all([
+  const [data, trans] = await Promise.all([
     fetch(`${base}/data/projects.json`).then(r => r.json()),
     fetchLang(base, 'projects')
   ]);
-  return normalize(data, pt);
+  return normalize(data, trans);
 }
 
-function normalize({ statuses, tags, categories, projects }, pt = null) {
-  const s    = pt ? { ...statuses,   ...pt.statuses   } : statuses;
-  const tg   = pt ? { ...tags,       ...pt.tags       } : tags;
-  const cats = pt ? { ...categories, ...pt.categories } : categories;
+function normalize({ statuses, tags, categories, projects }, trans = null) {
+  const s    = trans ? { ...statuses,   ...trans.statuses   } : statuses;
+  const tg   = trans ? { ...tags,       ...trans.tags       } : tags;
+  const cats = trans ? { ...categories, ...trans.categories } : categories;
 
   return {
     categories: cats,
     projects: projects.map(p => ({
       ...p,
-      summary: pt?.projects?.[p.title]?.summary ?? p.summary,
+      summary: trans?.projects?.[p.title]?.summary ?? p.summary,
       status: p.status ? { key: p.status, label: s[p.status] } : null,
       tags: p.tags.map(tag => ({ key: tag, label: tg[tag] }))
     }))
