@@ -10,9 +10,57 @@ Minimal and light. Mostly text, generous whitespace, a strict grid. The logo ani
 
 ## Stack
 
-- `index.html` — single page
-- `style.css` — all styles
-- `main.js` — fetches and renders `projects.json` (ES module)
-- `projects.json` — content source: tags, categories, projects
-- GSAP — logo animation
-- Lucide — icons
+- **GSAP** — logo intro and UI animations
+- **Lucide** — icons (CDN)
+- **PHPMailer** — contact form backend (`api/`)
+
+### Structure
+
+```
+index.html              single page
+projects.json           content source: tags, categories, statuses, projects
+assets/
+  css/
+    base.css            reset and CSS variables
+    style.css           layout, header, global
+    projects.css        project grid and cards
+    morph.css           shared morph overlay pattern
+    cta.css             contact form overlay
+  js/
+    main.js             bootstrap: init modules, run animations
+    anim.js             animation orchestrator
+    anim/
+      intro.js          logo intro sequence
+      logo.js           logo path animation
+      logo-o.js         O expansion element
+    projects.js         fetch, normalise, and render projects grid
+    project-detail.js   project expand overlay
+    morph.js            shared morph overlay behaviour
+    cta.js              contact form overlay
+    utils.js            shared helpers
+    dev.js              dev/debug flag
+  media/
+    icons/              SVG icons (social)
+api/
+  lib/phpmailer/        PHPMailer library
+```
+
+### projects.json shape
+
+```json
+{
+  "statuses": { "dev": "In Development", "archived": "Archived", "soon": "Coming Soon" },
+  "tags":     { "<key>": "<label>", … },
+  "categories": { "<key>": "<label>", … },
+  "projects": [
+    {
+      "title": "",
+      "url": "",
+      "description": "",
+      "category": "<key>",
+      "tags": ["<key>"],
+      "status": "<key>"   // optional
+    }
+  ]
+}
+```
