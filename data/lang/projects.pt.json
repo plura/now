@@ -1,0 +1,126 @@
+{
+  "statuses": {
+    "dev":      "Em Desenvolvimento",
+    "archived": "Arquivado",
+    "soon":     "Brevemente"
+  },
+  "tags": {
+    "health":         "Saúde",
+    "events":         "Eventos",
+    "arts-culture":   "Artes & Cultura",
+    "science":        "Ciência",
+    "real-estate":    "Imobiliário",
+    "legal":          "Jurídico",
+    "sustainability": "Sustentabilidade",
+    "hospitality":    "Hotelaria"
+  },
+  "categories": {
+    "corporate":    "Corporativo",
+    "institutional":"Institucional",
+    "ecommerce":    "E-commerce / Imobiliário",
+    "webapps":      "Aplicações Web",
+    "arts":         "Artes",
+    "other":        "Outro"
+  },
+  "projects": {
+    "Amaro-VanVeggel": {
+      "summary": "Website para uma consultora especializada em REITs, construção e imobiliário."
+    },
+    "NovaSotecma": {
+      "summary": "Website para um distribuidor industrial angolano de equipamentos, ferramentas e soluções técnicas para múltiplos sectores."
+    },
+    "J. Justino das Neves": {
+      "summary": "Website institucional para um fabricante e fornecedor de produtos em aço."
+    },
+    "IME Engineering": {
+      "summary": "Website para uma empresa de engenharia especializada em consultoria, equipamentos e soluções de planeamento de produção."
+    },
+    "Eduardo Paz Ferreira & Associados": {
+      "summary": "Website para uma sociedade de advogados fundada pelo Professor Eduardo Paz Ferreira, figura de referência no direito fiscal, finanças públicas e vida cívica portuguesas."
+    },
+    "Livrecampo": {
+      "summary": "Website para um distribuidor autorizado e especialista em reparação de máquinas agrícolas, florestais, de jardim e construção."
+    },
+    "JoMI – Santa Maria": {
+      "summary": "Website de evento para o ciclo de conferências de Medicina Interna do Hospital de Santa Maria."
+    },
+    "Confiar": {
+      "summary": "Website para uma associação portuguesa dedicada à reinserção social de pessoas com historial de reclusão e das suas famílias."
+    },
+    "São Bernardo Parish Centre": {
+      "summary": "Website para um centro paroquial ao serviço da sua comunidade local."
+    },
+    "LUMU": {
+      "summary": "Website para uma plataforma associativa de promoção da cultura, solidariedade e partilha de conhecimento entre a diáspora guineense."
+    },
+    "Lisbon Geographical Society": {
+      "summary": "Website institucional para uma das mais antigas sociedades científicas e culturais de Portugal."
+    },
+    "LGS – Museum": {
+      "summary": "Website dedicado ao museu da Sociedade, com as suas colecções e exposições."
+    },
+    "InnovPlantProtect": {
+      "summary": "Website para um laboratório colaborativo dedicado à investigação e inovação em protecção de plantas."
+    },
+    "Portuguese Society for Spine Pathology": {
+      "summary": "Website institucional para uma sociedade médica especializada em patologia da coluna vertebral."
+    },
+    "Biotechnology Information Centre": {
+      "summary": "Website institucional para um centro dedicado à informação e divulgação em biotecnologia."
+    },
+    "Cetera – AIDFM": {
+      "summary": "Website para uma iniciativa de investigação ligada à Faculdade de Medicina da Universidade de Lisboa."
+    },
+    "CCUL": {
+      "summary": "Website institucional para o centro de investigação cardiovascular da Universidade de Lisboa."
+    },
+    "3 Wheeler": {
+      "summary": "E-commerce e montra para uma marca de cargo bikes e veículos eléctricos ligeiros."
+    },
+    "Basecamp": {
+      "summary": "Website para uma empresa de serviços de produção que fornece equipamento, equipa técnica e logística à indústria cinematográfica e publicitária em Portugal."
+    },
+    "Portugalocations": {
+      "summary": "Plataforma de imobiliário e arrendamento de férias focada em propriedades em Portugal."
+    },
+    "DrawNext": {
+      "summary": "Aplicação web React com sistema de administração integrado, desenvolvida para o Pavilhão de Portugal na Expo Osaka 2025."
+    },
+    "Cardio Genomics 2025": {
+      "summary": "Plataforma de conferência com módulos de submissão de resumos, registo de autores e carregamento de apresentações."
+    },
+    "Galeria Reverso": {
+      "summary": "Website para uma galeria de arte contemporânea."
+    },
+    "Diogo Stilwell": {
+      "summary": "Portfólio pessoal para um copywriter premiado com experiência na Ogilvy, Wunderman Thompson e Dentsu Creative."
+    },
+    "Cri.Ar.Te": {
+      "summary": "Website para um estúdio de artes e bem-estar infantil que promove o desenvolvimento emocional através de actividades criativas e sensoriais."
+    },
+    "Agnes Kolignan": {
+      "summary": "Website de portfólio pessoal para uma artista de moda e profissional criativa."
+    },
+    "Mangu": {
+      "summary": "Website para um exportador B2B de fruta fresca da Guiné-Bissau, representando agricultores locais em redes de distribuição internacional."
+    },
+    "Matize Atelier": {
+      "summary": "Website para um estúdio de design de interiores."
+    },
+    "Vetocular": {
+      "summary": "Website para uma clínica especializada dedicada exclusivamente à oftalmologia veterinária."
+    },
+    "Comunica": {
+      "summary": "Website para uma consultora de comunicação com alcance internacional."
+    },
+    "Toyno": {
+      "summary": "Website para um estúdio de design especializado em experiências para espaços públicos, de trabalho, educação e lazer."
+    },
+    "Publibalão": {
+      "summary": "Website para a empresa pioneira de balonismo em Portugal, activa desde 1994 — voos, eventos e formação. Inclui o FIBAQ, um dos maiores festivais de balonismo da Europa."
+    },
+    "Hotel Convento de São Paulo": {
+      "summary": "Website para um histórico hotel convento em Portugal."
+    }
+  }
+}

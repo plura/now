@@ -1,20 +1,27 @@
 import { el } from './utils.js';
 import { openDetail } from './project-detail.js';
-import { t } from './lang.js';
+import { t, isPt } from './lang.js';
 
 export async function fetchProjects(base = '.') {
-  const res = await fetch(`${base}/data/projects.json`);
-  const data = await res.json();
-  return normalize(data);
+  const [data, pt] = await Promise.all([
+    fetch(`${base}/data/projects.json`).then(r => r.json()),
+    isPt ? fetch(`${base}/data/lang/projects.pt.json`).then(r => r.json()) : Promise.resolve(null)
+  ]);
+  return normalize(data, pt);
 }
 
-function normalize({ statuses, tags, categories, projects }) {
+function normalize({ statuses, tags, categories, projects }, pt = null) {
+  const s    = pt ? { ...statuses,   ...pt.statuses   } : statuses;
+  const tg   = pt ? { ...tags,       ...pt.tags       } : tags;
+  const cats = pt ? { ...categories, ...pt.categories } : categories;
+
   return {
-    categories,
+    categories: cats,
     projects: projects.map(p => ({
       ...p,
-      status: p.status ? { key: p.status, label: statuses[p.status] } : null,
-      tags: p.tags.map(t => ({ key: t, label: tags[t] }))
+      summary: pt?.projects?.[p.title]?.summary ?? p.summary,
+      status: p.status ? { key: p.status, label: s[p.status] } : null,
+      tags: p.tags.map(tag => ({ key: tag, label: tg[tag] }))
     }))
   };
 }
