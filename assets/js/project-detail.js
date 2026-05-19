@@ -38,9 +38,9 @@ function populateContent(project) {
     )
   );
 
-  if (project.description) {
+  if (project.summary) {
     detailContent.appendChild(
-      el('p', { class: 'plura-project-detail-desc', text: project.description })
+      el('p', { class: 'plura-project-detail-desc', text: project.summary })
     );
   }
 

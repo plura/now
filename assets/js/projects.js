@@ -56,9 +56,9 @@ function buildProjectItem(project) {
 
   item.appendChild(row);
 
-  if (project.description) {
+  if (project.summary) {
     item.appendChild(
-      el('p', { class: 'plura-projects-item-desc', text: project.description })
+      el('p', { class: 'plura-projects-item-desc', text: project.summary })
     );
   }
 
