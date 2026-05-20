@@ -3,3 +3,46 @@
 .plura-float--projects-filter .plura-float-morph {
   bottom: calc(var(--plura-float-btn-size) + var(--plura-layout-pad) * 2);
 }
+
+
+/* ─── Panel content ──────────────────────────────────────────── */
+
+.plura-projects-filter-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--plura-pad);
+}
+
+
+/* ─── Group ──────────────────────────────────────────────────── */
+
+.plura-projects-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--plura-gap-xs) * 2);
+}
+
+.plura-projects-filter-group-label {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--plura-color-muted);
+}
+
+
+/* ─── Options ────────────────────────────────────────────────── */
+
+.plura-projects-filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--plura-gap-xs);
+}
+
+.plura-projects-filter-option {
+  cursor: pointer;
+  border: none;
+  transition: background      var(--plura-dur) var(--plura-ease),
+              color            var(--plura-dur) var(--plura-ease),
+              border-color     var(--plura-dur) var(--plura-ease);
+}

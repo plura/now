@@ -1,6 +1,6 @@
 // ─── CTA / Contact ───────────────────────────────────────────
 
-import { openMorph, closeMorph } from './morph.js';
+import { createFloat } from './float.js';
 import { t, basePath } from './lang.js';
 
 const ctaMain    = document.getElementById('plura-contacts-cta');
@@ -24,21 +24,12 @@ const ro = new ResizeObserver(entries => {
 
 ro.observe(ctaContent);
 
-function openCta() {
-  openMorph(ctaMain, ctaMorph, ctaTrigger.getBoundingClientRect(), { width: formW, height: formH });
-  ctaTrigger.setAttribute('aria-expanded', 'true');
-}
-
-function closeCta() {
-  closeMorph(ctaMain, ctaMorph);
-  ctaTrigger.setAttribute('aria-expanded', 'false');
-}
+createFloat(
+  { main: ctaMain, morph: ctaMorph, trigger: ctaTrigger, close: ctaClose },
+  () => ({ width: formW, height: formH })
+);
 
 lucide.createIcons();
-
-ctaTrigger.addEventListener('click', openCta);
-ctaClose.addEventListener('click', closeCta);
-ctaMain.addEventListener('click', e => { if (e.target === ctaMain) closeCta(); });
 
 // ─── Form submission ──────────────────────────────────────────
 

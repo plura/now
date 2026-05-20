@@ -4,6 +4,11 @@ main {
   overflow-y: auto;
 }
 
+.plura-projects-item--filtered,
+.plura-projects-card--filtered {
+  display: none;
+}
+
 .plura-projects {
   columns: 3;
   column-gap: 10px;

@@ -27,7 +27,9 @@
 
 /* ─── Color overrides ────────────────────────────────────────── */
 
-.plura-badge--featured {
+.plura-badge--featured,
+.plura-badge--active {
   background: var(--plura-color-dark);
   color: var(--plura-color-light);
+  border-color: var(--plura-color-dark);
 }

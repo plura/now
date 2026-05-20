@@ -1,5 +1,5 @@
 import { el } from './utils.js';
-import { openDetail } from './project-detail.js';
+import { openDetail } from './projects/detail.js';
 import { t, fetchLang } from './lang.js';
 
 export async function fetchProjects(base = '.') {
@@ -17,6 +17,8 @@ function normalize({ statuses, tags, categories, projects }, trans = null) {
 
   return {
     categories: cats,
+    tags: tg,
+    statuses: s,
     projects: projects.map(p => ({
       ...p,
       summary:  trans?.projects?.[p.title]?.summary ?? p.summary,
@@ -55,7 +57,7 @@ function buildCategoryCard(catKey, catLabel, projects) {
 }
 
 function buildProjectItem(project) {
-  const item = el('div', { class: 'plura-projects-item', role: 'listitem' });
+  const item = el('div', { class: 'plura-projects-item', role: 'listitem', dataset: { title: project.title } });
 
   const row = el('div', { class: 'plura-projects-item-row' },
     el('span', { class: 'plura-projects-item-title', text: project.title }),
