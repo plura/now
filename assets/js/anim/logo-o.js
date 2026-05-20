@@ -26,8 +26,8 @@ function roundedRectPath(x, y, w, h, r) {
 
 // Creates a full-screen fixed SVG (no viewBox — coordinates map 1:1 to screen px),
 // crossfades from the logo to a rounded-rect path matching the O shape, then
-// expands that path to cover <main>.
-export function expandOToMain(logo, onComplete) {
+// expands that path to cover <main>. Returns the timeline; caller handles cleanup.
+export function expandOToMain(logo) {
   const svgRect = logo.getBoundingClientRect();
   const scale   = logo.viewBox.baseVal.width / svgRect.width;
 
@@ -66,7 +66,7 @@ export function expandOToMain(logo, onComplete) {
 
   const targetBorderWidth = parseFloat(mainStyle.borderTopWidth);
 
-  return gsap.timeline({ onComplete: () => { document.querySelector('#plura-intro').remove(); onComplete?.(); } })
+  return gsap.timeline()
     // Crossfade: logo out, O path in.
     .to(logo,  { opacity: 0, duration: CROSSFADE_DURATION, ease: 'none' }, 0)
     .to(oSvg,  { opacity: 1, duration: CROSSFADE_DURATION, ease: 'none' }, 0)

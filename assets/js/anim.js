@@ -1,9 +1,40 @@
-import { runIntroSequence } from './anim/intro.js';
+import { runIntroSequence, finishIntro } from './anim/intro.js';
 import { animatePluraLogoHeader } from './anim/logo.js';
 
+function revealUI({ instant = false } = {}) {
+  const header  = document.querySelector('header');
+  const content = document.querySelector('#plura-content');
+  const cta     = document.querySelector('#plura-cta-main');
+
+  if (instant) {
+    gsap.set([header, content, cta], { opacity: 1 });
+    gsap.set(cta, { y: 0 });
+    animatePluraLogoHeader(document.querySelector('header svg')).progress(1);
+    return;
+  }
+
+  // Fade in header and content, then draw the header logo.
+  gsap.to([header, content], {
+    opacity:  1,
+    duration: 0.4,
+    stagger:  0.15,
+    ease:     'power2.out',
+    onComplete: () => animatePluraLogoHeader(document.querySelector('header svg')),
+  });
+
+  // Slide up and fade in the CTA trigger.
+  gsap.to(cta, {
+    opacity:  1,
+    y:        0,
+    duration: 0.5,
+    delay:    0.2,
+    ease:     'back.out(1.5)',
+  });
+}
+
 export function skipIntro() {
-  document.getElementById('plura-intro')?.remove();
-  document.documentElement.classList.add('plura-intro-done');
+  finishIntro();
+  revealUI({ instant: true });
 }
 
 // Full intro animation:
@@ -18,23 +49,5 @@ export function runIntroAnimation() {
   gsap.set([header, content], { opacity: 0 });
   gsap.set(cta, { opacity: 0, y: 20 });
 
-  return runIntroSequence(() => {
-    // Fade in header and content, then draw the header logo.
-    gsap.to([header, content], {
-      opacity:  1,
-      duration: 0.4,
-      stagger:  0.15,
-      ease:     'power2.out',
-      onComplete: () => animatePluraLogoHeader(document.querySelector('header svg')),
-    });
-
-    // Slide up and fade in the CTA trigger.
-    gsap.to(cta, {
-      opacity:  1,
-      y:        0,
-      duration: 0.5,
-      delay:    0.2,
-      ease:     'back.out(1.5)',
-    });
-  });
+  return runIntroSequence(() => revealUI());
 }

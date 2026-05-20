@@ -12,9 +12,8 @@ const [, projectsData] = await Promise.all([imgs2svg(), fetchProjects(basePath)]
 renderProjects(projectsData, document.querySelector('#plura-content'));
 lucide.createIcons();
 
-if (hasSeenIntro()) {
+if (hasSeenIntro() || dev.mode === '1') {
   skipIntro();
 } else {
-  const tl = runIntroAnimation();
-  if (dev.mode === '1') tl.progress(1);
+  runIntroAnimation();
 }
