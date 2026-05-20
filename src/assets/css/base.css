@@ -45,6 +45,9 @@ svg.lucide {
   --plura-color-light:  #ffffff;
   --plura-color-border: #e0e0e0;
 
+  /* Spacing */
+  --plura-pad: 1.5rem;
+
   /* Shape */
   --plura-radius: 12px;
 
@@ -58,9 +61,12 @@ svg.lucide {
   --plura-font-weight-light:   300;
   --plura-font-weight-regular: 400;
   --plura-font-weight-semi:    600;
+  --plura-font-size-2xs:       0.625rem;
   --plura-font-size-xs:        0.75rem;
   --plura-font-size-sm:        0.875rem;
-  --plura-font-size-base:      0.9375rem;
+  --plura-font-size-base:      clamp(0.875rem,  0.84rem + 0.2vw,  0.9375rem);
+  --plura-font-size-lg:        clamp(1.125rem,  1.05rem + 0.4vw,  1.25rem);
+  --plura-font-size-xl:        clamp(1.25rem,   1.1rem  + 0.75vw, 1.5rem);
   --plura-letter-spacing-caps: 0.06em;
 
   /* Motion */

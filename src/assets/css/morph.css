@@ -1,5 +1,10 @@
 /* ─── Morph / overlay base ───────────────────────────────────── */
 
+:root {
+  --plura-morph-pad: var(--plura-pad);
+}
+
+
 /* ─── Main (backdrop) ────────────────────────────────────────── */
 
 .plura-morph-main {
@@ -38,6 +43,7 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,6 +70,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  padding: var(--plura-morph-pad);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--plura-dur) var(--plura-ease);

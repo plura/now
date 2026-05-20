@@ -22,6 +22,7 @@ main {
 
 .plura-projects-item {
   padding: 8px 0;
+  cursor: default;
 }
 
 .plura-projects-item + .plura-projects-item {
@@ -53,6 +54,39 @@ main {
 }
 
 
+/* ─── Item actions ──────────────────────────────────────────── */
+
+.plura-projects-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.plura-projects-item-url,
+.plura-projects-item-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--plura-color-muted);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: color var(--plura-dur) var(--plura-ease),
+              background var(--plura-dur) var(--plura-ease);
+}
+
+.plura-projects-item-url:hover,
+.plura-projects-item-expand:hover {
+  color: var(--plura-color-dark);
+  background: var(--plura-color-border);
+}
+
+
 /* ─── Meta: status + tags ───────────────────────────────────── */
 
 .plura-projects-item-meta {
@@ -67,7 +101,7 @@ main {
 
 .plura-projects-tag,
 .plura-projects-status {
-  font-size: 0.625rem;
+  font-size: var(--plura-font-size-2xs);
   font-weight: var(--plura-font-weight-semi);
   letter-spacing: var(--plura-letter-spacing-caps);
   text-transform: uppercase;

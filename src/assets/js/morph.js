@@ -2,48 +2,54 @@
 // Shared open/close FLIP animation for overlay panels.
 // Consumer calls openMorph with the trigger's bounding rect;
 // closeMorph returns to that same rect automatically.
+//
+// options.hideOnClose — set autoAlpha: 0 after close animation
+//   (use for overlays with no persistent resting state)
 
-const origins = new WeakMap();
+const state = new WeakMap();
 
-export function openMorph(mainEl, morphEl, fromRect, toSize) {
-  origins.set(morphEl, fromRect);
+export function openMorph(mainEl, morphEl, fromRect, toSize, options = {}) {
+  state.set(morphEl, { fromRect, options });
 
   const toX = (window.innerWidth  - toSize.width)  / 2;
   const toY = (window.innerHeight - toSize.height) / 2;
 
-  // Anchor left/top once (no animation cost), then move with transform
   gsap.set(morphEl, {
-    left:   fromRect.x,
-    top:    fromRect.y,
-    width:  fromRect.width,
-    height: fromRect.height,
-    x: 0,
-    y: 0,
+    left:      fromRect.x,
+    top:       fromRect.y,
+    width:     fromRect.width,
+    height:    fromRect.height,
+    x:         0,
+    y:         0,
+    autoAlpha: 1,
   });
 
   mainEl.classList.add('active');
 
   gsap.to(morphEl, {
-    x:      toX - fromRect.x,
-    y:      toY - fromRect.y,
-    width:  toSize.width,
-    height: toSize.height,
+    x:        toX - fromRect.x,
+    y:        toY - fromRect.y,
+    width:    toSize.width,
+    height:   toSize.height,
     duration: 0.45,
-    ease: 'power3.inOut',
+    ease:     'power3.inOut',
   });
 }
 
 export function closeMorph(mainEl, morphEl) {
-  const toRect = origins.get(morphEl);
-  if (!toRect) return;
+  const { fromRect, options } = state.get(morphEl) ?? {};
+  if (!fromRect) return;
 
   gsap.to(morphEl, {
-    x:      0,
-    y:      0,
-    width:  toRect.width,
-    height: toRect.height,
+    x:        0,
+    y:        0,
+    width:    fromRect.width,
+    height:   fromRect.height,
     duration: 0.45,
-    ease: 'power3.inOut',
-    onComplete: () => mainEl.classList.remove('active'),
+    ease:     'power3.inOut',
+    onComplete: () => {
+      mainEl.classList.remove('active');
+      if (options.hideOnClose) gsap.set(morphEl, { autoAlpha: 0 });
+    },
   });
 }

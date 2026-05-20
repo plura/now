@@ -19,7 +19,7 @@ export function openDetail(project, fromRect) {
     height: Math.min(600, window.innerHeight * 0.85),
   };
 
-  openMorph(detailMain, detailMorph, fromRect, toSize);
+  openMorph(detailMain, detailMorph, fromRect, toSize, { hideOnClose: true });
 }
 
 export function closeDetail() {
@@ -34,6 +34,7 @@ function populateContent(project) {
   detailContent.appendChild(
     el('div', { class: 'plura-project-detail-header' },
       el('h2', { class: 'plura-project-detail-title', text: project.title }),
+      el('span', { class: 'plura-project-detail-category', text: project.category.label }),
       buildProjectMeta(project)
     )
   );

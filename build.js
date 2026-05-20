@@ -2,7 +2,7 @@ import { rollup } from 'rollup';
 import terser from '@rollup/plugin-terser';
 import CleanCSS from 'clean-css';
 import { minify as minifyHTML } from 'html-minifier-terser';
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, copyFileSync } from 'fs';
 import { join, dirname } from 'path';
 
 const SRC  = 'src';
@@ -25,6 +25,11 @@ const COPY_DIRS = [
   'assets/media',
   'data',
   'api',
+];
+
+const COPY_ROOT_FILES = [
+  'robots.txt',
+  'sitemap.xml',
 ];
 
 function read(filePath) {
@@ -80,6 +85,11 @@ async function build() {
   for (const dir of COPY_DIRS) {
     cpSync(join(SRC, dir), join(DIST, dir), { recursive: true });
     console.log(`  COPY ${dir}`);
+  }
+
+  for (const file of COPY_ROOT_FILES) {
+    copyFileSync(join(SRC, file), join(DIST, file));
+    console.log(`  COPY ${file}`);
   }
 
   console.log(`\nDone → ${DIST}/`);

@@ -3,23 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plura</title>
-  <link rel="alternate" hreflang="en" href="./" />
-  <link rel="alternate" hreflang="pt-PT" href="pt/" />
+
+  <title>Plura — Web Design &amp; Development Agency</title>
+  <meta name="description" content="Plura builds websites, web apps, mobile apps and brand identities. Tell us about your project." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://plura.pt/" />
+
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="en" href="https://plura.pt/" />
+  <link rel="alternate" hreflang="pt-PT" href="https://plura.pt/pt/" />
+  <link rel="alternate" hreflang="x-default" href="https://plura.pt/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://plura.pt/" />
+  <meta property="og:site_name" content="Plura" />
+  <meta property="og:title" content="Plura — Web Design &amp; Development Agency" />
+  <meta property="og:description" content="Plura builds websites, web apps, mobile apps and brand identities. Tell us about your project." />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="pt_PT" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Plura — Web Design &amp; Development Agency" />
+  <meta name="twitter:description" content="Plura builds websites, web apps, mobile apps and brand identities. Tell us about your project." />
+
   <link rel="stylesheet" href="assets/css/main.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Plura",
+    "url": "https://plura.pt",
+    "logo": "https://plura.pt/assets/media/plura-logo.svg",
+    "sameAs": [
+      "https://instagram.com/plura.pt",
+      "https://linkedin.com/company/plura"
+    ]
+  }
+  </script>
 </head>
 <body>
 
   <!-- ─── Intro ─────────────────────────────────────────────── -->
   <div id="plura-intro">
-    <img src="assets/media/plura-logo.svg" alt="Plura" class="plura-logo plura-logo--dark" />
+    <img src="assets/media/plura-logo-anim.svg" alt="Plura" class="plura-logo plura-logo--dark" />
   </div>
   <!-- ─── /Intro ────────────────────────────────────────────── -->
 
   <!-- ─── Stage ─────────────────────────────────────────────── -->
   <div id="plura-stage">
     <header>
-      <img src="assets/media/plura-logo.svg" alt="Plura" class="plura-logo plura-logo--dark" />
+      <img src="assets/media/plura-logo-anim.svg" alt="Plura" class="plura-logo plura-logo--dark" />
       <nav class="plura-social" aria-label="Social media">
         <a href="https://instagram.com/plura.pt" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <img src="assets/media/icons/instagram.svg" alt="" />
@@ -40,7 +76,7 @@
   <div class="plura-morph-main plura-cta-main" id="plura-cta-main">
     <div class="plura-morph-element plura-cta-morph" id="plura-cta-morph" role="dialog" aria-modal="true" aria-label="Contact us">
 
-      <div class="plura-cta-form-wrapper">
+      <div class="plura-morph-content plura-cta-form-wrapper">
         <button class="plura-morph-close plura-cta-close" id="plura-cta-close" aria-label="Close">
           <i data-lucide="x"></i>
         </button>

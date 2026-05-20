@@ -19,9 +19,10 @@ function normalize({ statuses, tags, categories, projects }, trans = null) {
     categories: cats,
     projects: projects.map(p => ({
       ...p,
-      summary: trans?.projects?.[p.title]?.summary ?? p.summary,
-      status: p.status ? { key: p.status, label: s[p.status] } : null,
-      tags: p.tags.map(tag => ({ key: tag, label: tg[tag] }))
+      summary:  trans?.projects?.[p.title]?.summary ?? p.summary,
+      category: { key: p.category, label: cats[p.category] },
+      status:   p.status ? { key: p.status, label: s[p.status] } : null,
+      tags:     p.tags.map(tag => ({ key: tag, label: tg[tag] }))
     }))
   };
 }
@@ -30,7 +31,7 @@ export function renderProjects({ categories, projects }, container) {
   const grid = el('div', { class: 'plura-projects' });
 
   for (const [catKey, catLabel] of Object.entries(categories)) {
-    const catProjects = projects.filter(p => p.category === catKey);
+    const catProjects = projects.filter(p => p.category.key === catKey);
     if (!catProjects.length) continue;
 
     const card = buildCategoryCard(catKey, catLabel, catProjects);
@@ -70,9 +71,10 @@ function buildProjectItem(project) {
     );
   }
 
-  const expandBtn = item.querySelector('.plura-projects-item-expand');
-  expandBtn.addEventListener('click', () => {
-    openDetail(project, item.getBoundingClientRect());
+  item.addEventListener('click', e => {
+    if (!e.target.closest('.plura-projects-item-url')) {
+      openDetail(project, item.getBoundingClientRect());
+    }
   });
 
   return item;
@@ -113,7 +115,7 @@ function buildProjectActions(project) {
 
   actions.appendChild(
     el('button', { class: 'plura-projects-item-expand', 'aria-expanded': 'false', 'aria-label': t('About {title}', { title: project.title }) },
-      el('i', { 'data-lucide': 'chevron-down' })
+      el('i', { 'data-lucide': 'maximize-2' })
     )
   );
 
