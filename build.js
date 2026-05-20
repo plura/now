@@ -1,9 +1,9 @@
-const { rollup } = require('rollup');
-const terser = require('@rollup/plugin-terser');
-const CleanCSS = require('clean-css');
-const { minify: minifyHTML } = require('html-minifier-terser');
-const fs = require('fs');
-const path = require('path');
+import { rollup } from 'rollup';
+import terser from '@rollup/plugin-terser';
+import CleanCSS from 'clean-css';
+import { minify as minifyHTML } from 'html-minifier-terser';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from 'fs';
+import { join, dirname } from 'path';
 
 const SRC  = 'src';
 const DIST = 'dist';
@@ -28,22 +28,22 @@ const COPY_DIRS = [
 ];
 
 function read(filePath) {
-  return fs.readFileSync(path.join(SRC, filePath), 'utf8');
+  return readFileSync(join(SRC, filePath), 'utf8');
 }
 
 function write(filePath, content) {
-  const dest = path.join(DIST, filePath);
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.writeFileSync(dest, content, 'utf8');
+  const dest = join(DIST, filePath);
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, content, 'utf8');
 }
 
 async function buildJS() {
   const bundle = await rollup({
-    input: path.join(SRC, 'assets/js/main.js'),
+    input: join(SRC, 'assets/js/main.js'),
     plugins: [terser()],
   });
   await bundle.write({
-    file: path.join(DIST, 'assets/js/main.js'),
+    file: join(DIST, 'assets/js/main.js'),
     format: 'es',
   });
   console.log('  JS   assets/js/main.js (bundled)');
@@ -70,7 +70,7 @@ async function buildHTML() {
 }
 
 async function build() {
-  fs.rmSync(DIST, { recursive: true, force: true });
+  rmSync(DIST, { recursive: true, force: true });
   console.log('Building...');
 
   await buildJS();
@@ -78,7 +78,7 @@ async function build() {
   await buildHTML();
 
   for (const dir of COPY_DIRS) {
-    fs.cpSync(path.join(SRC, dir), path.join(DIST, dir), { recursive: true });
+    cpSync(join(SRC, dir), join(DIST, dir), { recursive: true });
     console.log(`  COPY ${dir}`);
   }
 
