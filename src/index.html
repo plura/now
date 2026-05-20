@@ -73,30 +73,30 @@
   <!-- ─── /Stage ────────────────────────────────────────────── -->
 
   <!-- ─── CTA ───────────────────────────────────────────────── -->
-  <div class="plura-morph-main plura-cta-main" id="plura-cta-main">
-    <div class="plura-morph-element plura-cta-morph" id="plura-cta-morph" role="dialog" aria-modal="true" aria-label="Contact us">
+  <div class="plura-morph-main plura-float-main plura-float--contacts" id="plura-cta-main">
+    <div class="plura-morph-element plura-float-morph" id="plura-cta-morph" role="dialog" aria-modal="true" aria-label="Contact us">
 
       <div class="plura-morph-content plura-cta-form-wrapper">
-        <button class="plura-morph-close plura-cta-close" id="plura-cta-close" aria-label="Close">
+        <button class="plura-morph-close" id="plura-cta-close" aria-label="Close">
           <i data-lucide="x"></i>
         </button>
         <!-- intro content slot -->
         <div class="plura-cta-alert" role="alert" aria-live="polite" hidden></div>
-        <form class="plura-cta-form" id="plura-cta-form" novalidate>
+        <form class="plura-form" id="plura-cta-form" novalidate>
           <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
-          <div class="plura-cta-field">
+          <div class="plura-form-field">
             <label for="plura-cta-name">Name</label>
             <input type="text" id="plura-cta-name" name="name" required autocomplete="name" placeholder="Your name" />
           </div>
-          <div class="plura-cta-field">
+          <div class="plura-form-field">
             <label for="plura-cta-email">Email</label>
             <input type="email" id="plura-cta-email" name="email" required autocomplete="email" placeholder="your@email.com" />
           </div>
-          <div class="plura-cta-field">
+          <div class="plura-form-field">
             <label for="plura-cta-phone">Phone</label>
             <input type="tel" id="plura-cta-phone" name="phone" autocomplete="tel" placeholder="+1 234 567 890" />
           </div>
-          <div class="plura-cta-field">
+          <div class="plura-form-field">
             <label for="plura-cta-type">Project type</label>
             <select id="plura-cta-type" name="type" required>
               <option value="" disabled selected>Select…</option>
@@ -107,15 +107,15 @@
               <option value="other">Other</option>
             </select>
           </div>
-          <div class="plura-cta-field">
+          <div class="plura-form-field">
             <label for="plura-cta-message">Message</label>
             <textarea id="plura-cta-message" name="message" rows="4" required placeholder="Tell us about your project"></textarea>
           </div>
-          <button type="submit" class="plura-cta-submit">Send</button>
+          <button type="submit" class="plura-form-submit">Send</button>
         </form>
       </div>
 
-      <button class="plura-cta-trigger" id="plura-cta-trigger" aria-expanded="false" aria-haspopup="dialog">
+      <button class="plura-float-trigger" id="plura-cta-trigger" aria-expanded="false" aria-haspopup="dialog">
         <i data-lucide="mail"></i>
       </button>
 

@@ -40,13 +40,16 @@ svg.lucide {
 
 :root {
   /* Colors */
-  --plura-color-dark:   #2e2e2e;
-  --plura-color-muted:  #9a9a9a;
-  --plura-color-light:  #ffffff;
-  --plura-color-border: #e0e0e0;
+  --plura-color-dark:    #2e2e2e;
+  --plura-color-muted:   #9a9a9a;
+  --plura-color-light:   #ffffff;
+  --plura-color-border:  #e0e0e0;
+  --plura-color-surface: #f4f4f4;
 
   /* Spacing */
-  --plura-pad: 1.5rem;
+  --plura-pad:       1.5rem;
+  --plura-gap-xs:    3px;
+  --plura-badge-pad: 2px 5px;
 
   /* Shape */
   --plura-radius: 12px;

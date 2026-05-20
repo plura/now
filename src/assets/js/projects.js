@@ -85,7 +85,7 @@ export function buildProjectMeta(project) {
 
   if (project.status) {
     meta.appendChild(
-      el('span', { class: `plura-projects-status plura-projects-status--${project.status.key}`, text: project.status.label })
+      el('span', { class: `plura-badge plura-badge--outline plura-projects-status plura-projects-status--${project.status.key}`, text: project.status.label })
     );
   }
 
@@ -93,7 +93,7 @@ export function buildProjectMeta(project) {
     const tagsGroup = el('div', { class: 'plura-projects-tags' });
     project.tags.forEach(tag => {
       tagsGroup.appendChild(
-        el('span', { class: `plura-projects-tag plura-projects-tag--${tag.key}`, text: tag.label })
+        el('span', { class: `plura-badge plura-badge--fill plura-projects-tag plura-projects-tag--${tag.key}`, text: tag.label })
       );
     });
     meta.appendChild(tagsGroup);

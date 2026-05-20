@@ -1,0 +1,33 @@
+/* ─── Badge (shared badge base) ──────────────────────────────── */
+
+.plura-badge {
+  font-size: var(--plura-font-size-2xs);
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  padding: var(--plura-badge-pad);
+  border-radius: var(--plura-gap-xs);
+  white-space: nowrap;
+}
+
+
+/* ─── Structural variants ────────────────────────────────────── */
+
+.plura-badge--outline {
+  background: transparent;
+  color: var(--plura-color-muted);
+  border: 1px solid var(--plura-color-border);
+}
+
+.plura-badge--fill {
+  background: var(--plura-color-surface);
+  color: var(--plura-color-muted);
+}
+
+
+/* ─── Color overrides ────────────────────────────────────────── */
+
+.plura-badge--featured {
+  background: var(--plura-color-dark);
+  color: var(--plura-color-light);
+}

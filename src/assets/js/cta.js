@@ -60,7 +60,7 @@ ctaForm.addEventListener('submit', async e => {
   e.preventDefault();
   hideAlert();
 
-  const submit = ctaForm.querySelector('.plura-cta-submit');
+  const submit = ctaForm.querySelector('.plura-form-submit');
   submit.disabled    = true;
   submit.textContent = t('Sending…');
 

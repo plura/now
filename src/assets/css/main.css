@@ -1,6 +1,9 @@
 @import 'base.css';
+@import 'badge.css';
 @import 'style.css';
 @import 'projects.css';
 @import 'morph.css';
+@import 'float.css';
+@import 'form.css';
 @import 'cta.css';
 @import 'project-detail.css';

@@ -1,0 +1,49 @@
+/* ─── Float (shared floating panel pattern) ──────────────── */
+
+:root {
+  --plura-float-btn-size: 3.5rem;
+}
+
+
+/* ─── Main ───────────────────────────────────────────────────── */
+
+.plura-float-main {
+  z-index: 100;
+}
+
+
+/* ─── Trigger ────────────────────────────────────────────── */
+
+.plura-float-trigger {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--plura-float-btn-size);
+  height: var(--plura-float-btn-size);
+  background: var(--plura-color-dark);
+  color: var(--plura-color-light);
+  border: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity var(--plura-dur) var(--plura-ease);
+}
+
+.plura-float-main.active .plura-float-trigger {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* ─── Morph ──────────────────────────────────────────────────── */
+
+.plura-float-morph {
+  right: var(--plura-layout-pad);
+  width: var(--plura-float-btn-size);
+  height: var(--plura-float-btn-size);
+}
+
+.plura-float-main:not(.active) .plura-float-morph {
+  border-radius: 50%;
+}

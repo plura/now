@@ -9,13 +9,16 @@
 
 .plura-project-detail-header {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--plura-gap-xs);
   padding-bottom: var(--plura-morph-pad);
   border-bottom: 1px solid var(--plura-color-border);
 }
 
 .plura-project-detail-title {
+  flex: 0 0 100%;
   font-size: var(--plura-font-size-xl);
   font-weight: var(--plura-font-weight-regular);
 }

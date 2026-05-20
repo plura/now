@@ -90,36 +90,18 @@ main {
 /* ─── Meta: status + tags ───────────────────────────────────── */
 
 .plura-projects-item-meta {
-  display: contents;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: calc(var(--plura-gap-xs) * 2);
 }
 
 .plura-projects-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: var(--plura-gap-xs);
 }
 
-.plura-projects-tag,
-.plura-projects-status {
-  font-size: var(--plura-font-size-2xs);
-  font-weight: var(--plura-font-weight-semi);
-  letter-spacing: var(--plura-letter-spacing-caps);
-  text-transform: uppercase;
-  padding: 2px 5px;
-  border-radius: 3px;
-  white-space: nowrap;
-}
-
-.plura-projects-tag {
-  background: var(--plura-color-border);
-  color: var(--plura-color-muted);
-}
-
-.plura-projects-status {
-  background: transparent;
-  color: var(--plura-color-muted);
-  border: 1px solid var(--plura-color-border);
-}
 
 
 /* ─── Category card ─────────────────────────────────────────── */
