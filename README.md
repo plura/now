@@ -75,6 +75,18 @@ On first visit (no session flag), the logo draws in via SVG path animation, then
 
 ---
 
+## Structure
+
+Source lives in `src/`. The build outputs to `dist/`.
+
+CSS is modular — `main.css` is an `@import` chain. Design tokens are centralised in `base.css`; each concern (morph, float, form, badge, button, projects, filter, detail) has its own file.
+
+JS follows the same pattern: `main.js` bootstraps everything; feature modules live alongside a subfolder for sub-modules (`anim/`, `projects/`). Shared primitives (`morph.js`, `float.js`, `utils.js`, `lang.js`) are imported where needed.
+
+Content lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings.
+
+---
+
 ## projects.json shape
 
 ```json
