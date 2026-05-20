@@ -1,0 +1,49 @@
+/* ─── Button base (outlined by default) ─────────────────────── */
+
+.plura-btn {
+  padding: 0.75rem;
+  background: transparent;
+  color: var(--plura-color-dark);
+  border: 1px solid var(--plura-color-border);
+  border-radius: calc(var(--plura-radius) * 0.5);
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background     var(--plura-dur) var(--plura-ease),
+              color           var(--plura-dur) var(--plura-ease),
+              border-color    var(--plura-dur) var(--plura-ease);
+}
+
+.plura-btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--plura-color-dark) 5%, transparent);
+  border-color: var(--plura-color-dark);
+}
+
+.plura-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+/* ─── Minimal variant ────────────────────────────────────────── */
+
+.plura-btn--minimal {
+  color: var(--plura-color-muted);
+  border-color: transparent;
+}
+
+.plura-btn--minimal:not(:disabled):hover {
+  background: transparent;
+  border-color: transparent;
+  color: var(--plura-color-dark);
+}
+
+
+/* ─── Small variant ──────────────────────────────────────────── */
+
+.plura-btn--sm {
+  padding: calc(var(--plura-gap-xs) * 2) var(--plura-pad);
+  font-size: var(--plura-font-size-2xs);
+}

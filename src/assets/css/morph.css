@@ -80,3 +80,11 @@
   opacity: 1;
   pointer-events: all;
 }
+
+
+/* ─── Panel title ────────────────────────────────────────────── */
+
+.plura-panel-title {
+  font-size: var(--plura-font-size-base);
+  font-weight: var(--plura-font-weight-semi);
+}

@@ -47,3 +47,12 @@
 .plura-float-main:not(.active) .plura-float-morph {
   border-radius: 50%;
 }
+
+
+/* ─── Panel content ──────────────────────────────────────────── */
+
+.plura-float-morph .plura-morph-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--plura-pad);
+}

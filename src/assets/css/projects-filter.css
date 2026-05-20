@@ -5,6 +5,8 @@
 }
 
 
+
+
 /* ─── Panel content ──────────────────────────────────────────── */
 
 .plura-projects-filter-content {
@@ -27,7 +29,6 @@
   font-weight: var(--plura-font-weight-semi);
   letter-spacing: var(--plura-letter-spacing-caps);
   text-transform: uppercase;
-  color: var(--plura-color-muted);
 }
 
 

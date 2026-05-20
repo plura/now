@@ -5,5 +5,10 @@
   "Something went wrong. Please try again.":     "Algo correu mal. Por favor, tente novamente.",
   "Network error. Please try again.":            "Erro de rede. Por favor, tente novamente.",
   "Visit {title}":                               "Visitar {title}",
-  "About {title}":                               "Sobre {title}"
+  "About {title}":                               "Sobre {title}",
+  "Filter":                                      "Filtrar",
+  "Clear":                                       "Limpar",
+  "Categories":                                  "Categorias",
+  "Tags":                                        "Tags",
+  "Status":                                      "Estado"
 }

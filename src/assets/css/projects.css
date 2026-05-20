@@ -4,11 +4,6 @@ main {
   overflow-y: auto;
 }
 
-.plura-projects-item--filtered,
-.plura-projects-card--filtered {
-  display: none;
-}
-
 .plura-projects {
   columns: 3;
   column-gap: 10px;
@@ -140,4 +135,16 @@ main {
   font-size: var(--plura-font-size-xs);
   font-weight: var(--plura-font-weight-light);
   color: var(--plura-color-muted);
+}
+
+
+/* ─── Filtered state ─────────────────────────────────────────── */
+
+.plura-projects-item--filtered,
+.plura-projects-card--filtered {
+  display: none;
+}
+
+.plura-projects-item--filtered + .plura-projects-item {
+  border-top: none;
 }

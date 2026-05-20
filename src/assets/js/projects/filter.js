@@ -17,6 +17,10 @@ const active = {
   statuses:   new Set(),
 };
 
+function hasActive() {
+  return active.categories.size || active.tags.size || active.statuses.size;
+}
+
 // ─── Init ─────────────────────────────────────────────────────
 
 export function initFilter(data, projectsContainer) {
@@ -35,6 +39,8 @@ export function initFilter(data, projectsContainer) {
 }
 
 // ─── Panel ────────────────────────────────────────────────────
+
+let clearBtn;
 
 function buildPanel(data) {
   const usedTags     = new Set(data.projects.flatMap(p => p.tags.map(t => t.key)));
@@ -62,13 +68,22 @@ function buildPanel(data) {
     },
   ];
 
+  clearBtn = el('button', {
+    class:  'plura-btn plura-btn--minimal',
+    text:   t('Clear'),
+    hidden: '',
+  });
+  clearBtn.addEventListener('click', clearFilter);
+
   const content = el('div', { class: 'plura-projects-filter-content' });
   groups.forEach(group => {
     if (!group.items.length) return;
     content.appendChild(buildGroup(group));
   });
 
+  filterPanel.appendChild(el('span', { class: 'plura-panel-title', text: t('Filter') }));
   filterPanel.appendChild(content);
+  filterPanel.appendChild(clearBtn);
 }
 
 function buildGroup({ key, label, items }) {
@@ -110,7 +125,22 @@ function toggleOption(btn, groupKey, key) {
   applyFilter();
 }
 
+function clearFilter() {
+  active.categories.clear();
+  active.tags.clear();
+  active.statuses.clear();
+
+  filterPanel.querySelectorAll('.plura-projects-filter-option').forEach(btn => {
+    btn.setAttribute('aria-pressed', 'false');
+    btn.classList.remove('plura-badge--active');
+  });
+
+  applyFilter();
+}
+
 function applyFilter() {
+  clearBtn.hidden = !hasActive();
+
   const passing   = filterProjects(filterPanel._projects, active);
   const container = filterPanel._container;
 
