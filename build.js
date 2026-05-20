@@ -1,27 +1,12 @@
-const { minify: minifyJS } = require('terser');
+const { rollup } = require('rollup');
+const terser = require('@rollup/plugin-terser');
 const CleanCSS = require('clean-css');
 const { minify: minifyHTML } = require('html-minifier-terser');
 const fs = require('fs');
 const path = require('path');
 
-const SRC = 'src';
+const SRC  = 'src';
 const DIST = 'dist';
-
-const JS_FILES = [
-  'assets/js/utils.js',
-  'assets/js/morph.js',
-  'assets/js/dev.js',
-  'assets/js/anim/logo.js',
-  'assets/js/anim/logo-o.js',
-  'assets/js/anim/intro.js',
-  'assets/js/anim.js',
-  'assets/js/lang.js',
-  'assets/js/session.js',
-  'assets/js/project-detail.js',
-  'assets/js/projects.js',
-  'assets/js/cta.js',
-  'assets/js/main.js',
-];
 
 const CSS_FILES = [
   'assets/css/base.css',
@@ -53,20 +38,22 @@ function write(filePath, content) {
 }
 
 async function buildJS() {
-  for (const file of JS_FILES) {
-    const result = await minifyJS(read(file), { module: true, compress: true, mangle: true });
-    write(file, result.code);
-    console.log(`  JS   ${file}`);
-  }
+  const bundle = await rollup({
+    input: path.join(SRC, 'assets/js/main.js'),
+    plugins: [terser()],
+  });
+  await bundle.write({
+    file: path.join(DIST, 'assets/js/main.js'),
+    format: 'es',
+  });
+  console.log('  JS   assets/js/main.js (bundled)');
 }
 
 async function buildCSS() {
-  const cleaner = new CleanCSS({ level: 2 });
-  for (const file of CSS_FILES) {
-    const result = cleaner.minify(read(file));
-    write(file, result.styles);
-    console.log(`  CSS  ${file}`);
-  }
+  const src = CSS_FILES.map(f => read(f)).join('\n');
+  const result = new CleanCSS({ level: 2 }).minify(src);
+  write('assets/css/main.css', result.styles);
+  console.log('  CSS  assets/css/main.css (bundled)');
 }
 
 async function buildHTML() {

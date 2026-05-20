@@ -5,8 +5,9 @@
     "build": "node build.js"
   },
   "devDependencies": {
+    "@rollup/plugin-terser": "^1.0.0",
     "clean-css": "^5.3.3",
     "html-minifier-terser": "^7.2.0",
-    "terser": "^5.39.0"
+    "rollup": "^4.0.0"
   }
 }
