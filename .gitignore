@@ -5,3 +5,7 @@ v2-temp.code-workspace
 
 # Config
 api/config.php
+
+# Build
+node_modules/
+dist/
