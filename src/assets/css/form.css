@@ -77,3 +77,15 @@
 }
 
 .plura-form-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+
+/* ─── Alert ──────────────────────────────────────────────────── */
+
+.plura-alert {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-light);
+  color: var(--plura-color-muted);
+}
+
+.plura-alert[data-type="error"]   { color: #c0392b; }
+.plura-alert[data-type="success"] { color: #27ae60; }

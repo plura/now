@@ -4,7 +4,7 @@ import { openMorph, closeMorph } from './morph.js';
 import { buildProjectMeta } from './projects.js';
 import { el } from './utils.js';
 
-const detailMain    = document.getElementById('plura-project-detail-main');
+const detailMain    = document.getElementById('plura-project-detail');
 const detailMorph   = document.getElementById('plura-project-detail-morph');
 const detailClose   = document.getElementById('plura-project-detail-close');
 const detailContent = document.getElementById('plura-project-detail-content');

@@ -73,32 +73,51 @@
   </div>
   <!-- ─── /Stage ────────────────────────────────────────────── -->
 
-  <!-- ─── CTA ───────────────────────────────────────────────── -->
-  <div class="plura-morph-main plura-float-main plura-float--contacts" id="plura-cta-main">
-    <div class="plura-morph-element plura-float-morph" id="plura-cta-morph" role="dialog" aria-modal="true" aria-label="Contacte-nos">
+  <!-- ─── Filter ──────────────────────────────────────────────── -->
+  <div class="plura-morph-main plura-float-main plura-float--projects-filter" id="plura-projects-filter">
+    <div class="plura-morph-element plura-float-morph" id="plura-projects-filter-morph" role="dialog" aria-modal="true" aria-label="Filtrar projectos">
 
-      <div class="plura-morph-content plura-cta-form-wrapper">
-        <button class="plura-morph-close" id="plura-cta-close" aria-label="Fechar">
+      <div class="plura-morph-content plura-projects-filter-panel" id="plura-projects-filter-panel">
+        <button class="plura-morph-close" id="plura-projects-filter-close" aria-label="Fechar">
           <i data-lucide="x"></i>
         </button>
-        <div class="plura-cta-alert" role="alert" aria-live="polite" hidden></div>
-        <form class="plura-form" id="plura-cta-form" novalidate>
+        <!-- filter options populated dynamically -->
+      </div>
+
+      <button class="plura-float-trigger" id="plura-projects-filter-trigger" aria-expanded="false" aria-haspopup="dialog">
+        <i data-lucide="list-filter"></i>
+      </button>
+
+    </div>
+  </div>
+  <!-- ─── /Filter ─────────────────────────────────────────────── -->
+
+  <!-- ─── CTA ───────────────────────────────────────────────── -->
+  <div class="plura-morph-main plura-float-main plura-float--contacts" id="plura-contacts-cta">
+    <div class="plura-morph-element plura-float-morph" id="plura-contacts-cta-morph" role="dialog" aria-modal="true" aria-label="Contacte-nos">
+
+      <div class="plura-morph-content plura-contacts-cta-content">
+        <button class="plura-morph-close" id="plura-contacts-cta-close" aria-label="Fechar">
+          <i data-lucide="x"></i>
+        </button>
+        <div class="plura-contacts-cta-alert plura-alert" role="alert" aria-live="polite" hidden></div>
+        <form class="plura-form" id="plura-contacts-cta-form" novalidate>
           <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
           <div class="plura-form-field">
-            <label for="plura-cta-name">Nome</label>
-            <input type="text" id="plura-cta-name" name="name" required autocomplete="name" placeholder="O seu nome" />
+            <label for="plura-contacts-cta-name">Nome</label>
+            <input type="text" id="plura-contacts-cta-name" name="name" required autocomplete="name" placeholder="O seu nome" />
           </div>
           <div class="plura-form-field">
-            <label for="plura-cta-email">Email</label>
-            <input type="email" id="plura-cta-email" name="email" required autocomplete="email" placeholder="o-seu@email.com" />
+            <label for="plura-contacts-cta-email">Email</label>
+            <input type="email" id="plura-contacts-cta-email" name="email" required autocomplete="email" placeholder="o-seu@email.com" />
           </div>
           <div class="plura-form-field">
-            <label for="plura-cta-phone">Telefone</label>
-            <input type="tel" id="plura-cta-phone" name="phone" autocomplete="tel" placeholder="+351 912 345 678" />
+            <label for="plura-contacts-cta-phone">Telefone</label>
+            <input type="tel" id="plura-contacts-cta-phone" name="phone" autocomplete="tel" placeholder="+351 912 345 678" />
           </div>
           <div class="plura-form-field">
-            <label for="plura-cta-type">Tipo de projecto</label>
-            <select id="plura-cta-type" name="type" required>
+            <label for="plura-contacts-cta-type">Tipo de projecto</label>
+            <select id="plura-contacts-cta-type" name="type" required>
               <option value="" disabled selected>Seleccione…</option>
               <option value="website">Website</option>
               <option value="webapp">Aplicação Web</option>
@@ -108,14 +127,14 @@
             </select>
           </div>
           <div class="plura-form-field">
-            <label for="plura-cta-message">Mensagem</label>
-            <textarea id="plura-cta-message" name="message" rows="4" required placeholder="Fale-nos do seu projecto"></textarea>
+            <label for="plura-contacts-cta-message">Mensagem</label>
+            <textarea id="plura-contacts-cta-message" name="message" rows="4" required placeholder="Fale-nos do seu projecto"></textarea>
           </div>
           <button type="submit" class="plura-form-submit">Enviar</button>
         </form>
       </div>
 
-      <button class="plura-float-trigger" id="plura-cta-trigger" aria-expanded="false" aria-haspopup="dialog">
+      <button class="plura-float-trigger" id="plura-contacts-cta-trigger" aria-expanded="false" aria-haspopup="dialog">
         <i data-lucide="mail"></i>
       </button>
 
@@ -124,7 +143,7 @@
   <!-- ─── /CTA ─────────────────────────────────────────────── -->
 
   <!-- ─── Project detail ───────────────────────────────────── -->
-  <div class="plura-morph-main plura-project-detail-main" id="plura-project-detail-main">
+  <div class="plura-morph-main plura-project-detail" id="plura-project-detail">
     <div class="plura-morph-element plura-project-detail-morph" id="plura-project-detail-morph" role="dialog" aria-modal="true">
 
       <button class="plura-morph-close plura-project-detail-close" id="plura-project-detail-close" aria-label="Fechar">

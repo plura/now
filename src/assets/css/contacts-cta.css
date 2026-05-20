@@ -1,7 +1,7 @@
 /* ─── CTA / Contact ─────────────────────────────────────────── */
 
 :root {
-  --plura-cta-form-w: 420px;
+  --plura-contacts-cta-form-w: 420px;
 }
 
 
@@ -18,8 +18,8 @@
 
 /* ─── Form wrapper ───────────────────────────────────────────── */
 
-.plura-cta-form-wrapper {
-  width: var(--plura-cta-form-w);
+.plura-contacts-cta-content {
+  width: var(--plura-contacts-cta-form-w);
 }
 
 

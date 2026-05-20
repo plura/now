@@ -4,7 +4,7 @@ import { animatePluraLogoHeader } from './anim/logo.js';
 function revealUI({ instant = false } = {}) {
   const header  = document.querySelector('header');
   const content = document.querySelector('#plura-content');
-  const cta     = document.querySelector('#plura-cta-main');
+  const cta     = document.querySelector('#plura-contacts-cta');
 
   if (instant) {
     gsap.set([header, content, cta], { opacity: 1 });
@@ -44,7 +44,7 @@ export function skipIntro() {
 export function runIntroAnimation() {
   const header  = document.querySelector('header');
   const content = document.querySelector('#plura-content');
-  const cta     = document.querySelector('#plura-cta-main');
+  const cta     = document.querySelector('#plura-contacts-cta');
 
   gsap.set([header, content], { opacity: 0 });
   gsap.set(cta, { opacity: 0, y: 20 });

@@ -13,7 +13,7 @@ const CSS_FILES = [
   'assets/css/style.css',
   'assets/css/projects.css',
   'assets/css/morph.css',
-  'assets/css/cta.css',
+  'assets/css/contacts-cta.css',
 ];
 
 const HTML_FILES = [

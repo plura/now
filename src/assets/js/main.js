@@ -3,7 +3,7 @@ import { imgs2svg } from './utils.js';
 import { fetchProjects, renderProjects } from './projects.js';
 import { basePath } from './lang.js';
 import { hasSeenIntro } from './session.js';
-import './cta.js';
+import './contacts-cta.js';
 import dev from './dev.js';
 
 // Inline SVGs and fetch data in parallel before anything renders

@@ -1,0 +1,5 @@
+/* ─── Filter ─────────────────────────────────────────────────── */
+
+.plura-float--projects-filter .plura-float-morph {
+  bottom: calc(var(--plura-float-btn-size) + var(--plura-layout-pad) * 2);
+}

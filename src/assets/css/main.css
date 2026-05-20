@@ -5,5 +5,6 @@
 @import 'morph.css';
 @import 'float.css';
 @import 'form.css';
-@import 'cta.css';
+@import 'contacts-cta.css';
+@import 'projects-filter.css';
 @import 'project-detail.css';
