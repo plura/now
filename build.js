@@ -4,6 +4,7 @@ const { minify: minifyHTML } = require('html-minifier-terser');
 const fs = require('fs');
 const path = require('path');
 
+const SRC = 'src';
 const DIST = 'dist';
 
 const JS_FILES = [
@@ -41,6 +42,10 @@ const COPY_DIRS = [
   'api',
 ];
 
+function read(filePath) {
+  return fs.readFileSync(path.join(SRC, filePath), 'utf8');
+}
+
 function write(filePath, content) {
   const dest = path.join(DIST, filePath);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
@@ -49,8 +54,7 @@ function write(filePath, content) {
 
 async function buildJS() {
   for (const file of JS_FILES) {
-    const src = fs.readFileSync(file, 'utf8');
-    const result = await minifyJS(src, { module: true, compress: true, mangle: true });
+    const result = await minifyJS(read(file), { module: true, compress: true, mangle: true });
     write(file, result.code);
     console.log(`  JS   ${file}`);
   }
@@ -59,8 +63,7 @@ async function buildJS() {
 async function buildCSS() {
   const cleaner = new CleanCSS({ level: 2 });
   for (const file of CSS_FILES) {
-    const src = fs.readFileSync(file, 'utf8');
-    const result = cleaner.minify(src);
+    const result = cleaner.minify(read(file));
     write(file, result.styles);
     console.log(`  CSS  ${file}`);
   }
@@ -68,8 +71,7 @@ async function buildCSS() {
 
 async function buildHTML() {
   for (const file of HTML_FILES) {
-    const src = fs.readFileSync(file, 'utf8');
-    const result = await minifyHTML(src, {
+    const result = await minifyHTML(read(file), {
       collapseWhitespace: true,
       removeComments: true,
       minifyCSS: true,
@@ -89,7 +91,7 @@ async function build() {
   await buildHTML();
 
   for (const dir of COPY_DIRS) {
-    fs.cpSync(dir, path.join(DIST, dir), { recursive: true });
+    fs.cpSync(path.join(SRC, dir), path.join(DIST, dir), { recursive: true });
     console.log(`  COPY ${dir}`);
   }
 

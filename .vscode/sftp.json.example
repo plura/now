@@ -1,5 +1,6 @@
 {
     "name": "Plura | Now",
+    "context": "src",
     "host": "",
     "protocol": "ftp",
     "port": 21,
