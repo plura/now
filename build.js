@@ -8,13 +8,6 @@ import { join, dirname } from 'path';
 const SRC  = 'src';
 const DIST = 'dist';
 
-const CSS_FILES = [
-  'assets/css/base.css',
-  'assets/css/style.css',
-  'assets/css/projects.css',
-  'assets/css/morph.css',
-  'assets/css/contacts-cta.css',
-];
 
 const HTML_FILES = [
   'index.html',
@@ -54,10 +47,11 @@ async function buildJS() {
 }
 
 async function buildCSS() {
-  const src = CSS_FILES.map(f => read(f)).join('\n');
+  const imports = [...read('assets/css/main.css').matchAll(/@import\s+['"](.+?)['"]/g)].map(m => m[1]);
+  const src = imports.map(f => read(`assets/css/${f}`)).join('\n');
   const result = new CleanCSS({ level: 2 }).minify(src);
   write('assets/css/main.css', result.styles);
-  console.log('  CSS  assets/css/main.css (bundled)');
+  console.log(`  CSS  assets/css/main.css (${imports.length} files bundled)`);
 }
 
 async function buildHTML() {
