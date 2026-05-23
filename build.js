@@ -2,7 +2,7 @@ import { rollup } from 'rollup';
 import terser from '@rollup/plugin-terser';
 import CleanCSS from 'clean-css';
 import { minify as minifyHTML } from 'html-minifier-terser';
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, copyFileSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, copyFileSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 
 const SRC  = 'src';
@@ -23,7 +23,6 @@ const HTML_FILES = [
 
 const COPY_DIRS = [
   'assets/media',
-  'data',
   'api',
 ];
 
@@ -74,6 +73,17 @@ async function buildHTML() {
   }
 }
 
+function buildJSON() {
+  const files = readdirSync(join(SRC, 'data'), { recursive: true, withFileTypes: true });
+  for (const f of files) {
+    if (!f.name.endsWith('.json')) continue;
+    const rel = join(f.parentPath ?? f.path, f.name).slice(join(SRC, 'data').length + 1);
+    const minified = JSON.stringify(JSON.parse(read(join('data', rel))));
+    write(join('data', rel), minified);
+    console.log(`  JSON data/${rel}`);
+  }
+}
+
 async function build() {
   rmSync(DIST, { recursive: true, force: true });
   console.log('Building...');
@@ -81,6 +91,7 @@ async function build() {
   await buildJS();
   await buildCSS();
   await buildHTML();
+  buildJSON();
 
   for (const dir of COPY_DIRS) {
     cpSync(join(SRC, dir), join(DIST, dir), { recursive: true });
