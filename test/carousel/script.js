@@ -28,3 +28,6 @@ createCarousel(document.getElementById('carousel-host-dots-progressive'), { item
 createCarousel(document.getElementById('carousel-host-autoplay'), { items: projects.map(buildSlide), id: 'carousel6', type: 'fade', autoplay: 2000 });
 createCarousel(document.getElementById('carousel-host-loop'), { items: projects.map(buildSlide), id: 'carousel7', type: 'cover', loop: true, dots: true });
 createCarousel(document.getElementById('carousel-host-counter'), { items: projects.map(buildSlide), id: 'carousel8', type: 'cover', counter: true });
+createCarousel(document.getElementById('carousel-host-multi'), { items: projects.map(buildSlide), id: 'carousel9', type: 'slide', perView: 3, dots: true, className: 'is-multi' });
+createCarousel(document.getElementById('carousel-host-multi2'), { items: projects.map(buildSlide), id: 'carousel10', type: 'slide', perView: 3, perGroup: 3, dots: true, className: 'is-multi' });
+createCarousel(document.getElementById('carousel-host-multi3'), { items: projects.map(buildSlide), id: 'carousel11', type: 'slide', perView: 3, perGroup: 3, gap: 12, dots: true, className: 'is-multi' });

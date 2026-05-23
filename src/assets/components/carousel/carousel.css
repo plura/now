@@ -5,10 +5,10 @@
 .plura-carousel {
   position: relative;
   width: 100%;
-  --carousel-dot-size:    8px;
-  --carousel-dot-gap:     6px;
-  --carousel-dot-opacity: 0.2;
-  --carousel-dots-margin: 12px;
+  --plura-carousel-dot-size:    8px;
+  --plura-carousel-dot-gap:     6px;
+  --plura-carousel-dot-opacity: 0.2;
+  --plura-carousel-dots-margin: 12px;
 }
 
 .plura-carousel-wrapper {
@@ -37,12 +37,13 @@
 .plura-carousel--slide .plura-carousel-items {
   display: flex;
   flex-direction: row;
+  gap: var(--plura-carousel-gap, 0px);
 }
 
 .plura-carousel--slide .plura-carousel-item {
   position: relative;
   inset: auto;
-  flex: 0 0 100%;
+  flex: 0 0 calc((100% - (var(--plura-carousel-per-view, 1) - 1) * var(--plura-carousel-gap, 0px)) / var(--plura-carousel-per-view, 1));
 }
 
 /* ── Arrows ──────────────────────────────────────────────────────── */
@@ -92,8 +93,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--carousel-dot-gap);
-  margin: var(--carousel-dots-margin) auto 0;
+  gap: var(--plura-carousel-dot-gap);
+  margin: var(--plura-carousel-dots-margin) auto 0;
 }
 
 .plura-carousel-dot {
@@ -102,11 +103,11 @@
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
-  width:  var(--carousel-dot-size);
-  height: var(--carousel-dot-size);
+  width:  var(--plura-carousel-dot-size);
+  height: var(--plura-carousel-dot-size);
   border-radius: 50%;
   background: currentColor;
-  opacity: var(--carousel-dot-opacity);
+  opacity: var(--plura-carousel-dot-opacity);
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
@@ -119,12 +120,12 @@
 .plura-carousel-dots--scroll {
   display: block;
   overflow: hidden;
-  width: calc(var(--dots-max) * (var(--carousel-dot-size) + var(--carousel-dot-gap)) - var(--carousel-dot-gap));
+  width: calc(var(--dots-max) * (var(--plura-carousel-dot-size) + var(--plura-carousel-dot-gap)) - var(--plura-carousel-dot-gap));
 }
 
 .plura-carousel-dots-strip {
   display: flex;
   align-items: center;
-  gap: var(--carousel-dot-gap);
+  gap: var(--plura-carousel-dot-gap);
   transition: transform 0.3s ease;
 }

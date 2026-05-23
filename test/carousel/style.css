@@ -54,13 +54,17 @@ main {
 .plura-carousel-counter {
   font-size: var(--plura-test-font-xs);
   color: var(--plura-test-color-muted);
-  margin-top: var(--carousel-dots-margin);
+  margin-top: var(--plura-carousel-dots-margin);
 }
 
 /* ── Carousel size ───────────────────────────────────────────────── */
 
 .plura-carousel {
   width: var(--plura-test-carousel-width);
+}
+
+.is-multi.plura-carousel {
+  width: calc(var(--plura-test-carousel-width) * 2);
 }
 
 .plura-carousel .plura-carousel-wrapper {

@@ -45,6 +45,9 @@ export function createCarousel(container, options = {}) {
     autoplay  = false,
     loop      = false,
     duration  = 0.4,
+    perView   = 1,
+    perGroup  = 1,
+    gap       = 0,
   } = options;
 
   // If container already is .plura-carousel, use it directly.
@@ -61,7 +64,7 @@ export function createCarousel(container, options = {}) {
 
   // ── Items ──────────────────────────────────────────────────────
 
-  const itemsCtrl = createItems(root, items, type, duration);
+  const itemsCtrl = createItems(root, items, type, duration, perView, gap);
   const slideItems = itemsCtrl.items; // [{ el }, ...]
 
   // ── Nav elements ───────────────────────────────────────────────
@@ -93,8 +96,8 @@ export function createCarousel(container, options = {}) {
     updateState();
   }
 
-  function prev() { goTo(index > 0          ? index - 1 : loop ? total - 1 : index); }
-  function next() { goTo(index < total - 1  ? index + 1 : loop ? 0         : index); }
+  function prev() { goTo(index > 0          ? Math.max(0,           index - perGroup) : loop ? total - 1 : index); }
+  function next() { goTo(index < total - 1  ? Math.min(total - 1,  index + perGroup) : loop ? 0         : index); }
 
   if (arrows) {
     arrowsCtrl = createArrows(() => prev(), () => next(), loop);
@@ -112,11 +115,10 @@ export function createCarousel(container, options = {}) {
     const dragOptions = { onPrev: prev, onNext: next };
 
     if (type === 'slide') {
-      const strip   = itemsCtrl.el;
-      const getBase = () => -(index * strip.parentElement.clientWidth);
+      const strip = itemsCtrl.el;
 
-      dragOptions.onMove   = delta => gsap.set(strip, { x: getBase() + delta });
-      dragOptions.onCancel = ()    => gsap.to(strip,  { x: getBase(), duration: 0.3, ease: 'power2.out' });
+      dragOptions.onMove   = delta => gsap.set(strip, { x: itemsCtrl.slideX(index) + delta });
+      dragOptions.onCancel = ()    => gsap.to(strip,  { x: itemsCtrl.slideX(index), duration: 0.3, ease: 'power2.out' });
     }
 
     createDrag(itemsCtrl.el, dragOptions);
@@ -175,7 +177,7 @@ function createItem(node, { type, duration, active = false } = {}) {
   };
 }
 
-function createItems(root, rawItems, type, duration) {
+function createItems(root, rawItems, type, duration, perView, gap) {
   let wrapper, itemsEl;
 
   if (root.querySelector('.plura-carousel-wrapper')) {
@@ -201,11 +203,20 @@ function createItems(root, rawItems, type, duration) {
     );
   }
 
+  if (type === 'slide') {
+    if (perView > 1) itemsEl.style.setProperty('--plura-carousel-per-view', perView);
+    if (gap > 0)     itemsEl.style.setProperty('--plura-carousel-gap', `${gap}px`);
+  }
+
+  function slideX(index) {
+    return -items[index].el.offsetLeft;
+  }
+
   function animate(fromIndex, toIndex) {
     const direction = toIndex > fromIndex ? 1 : -1;
 
     if (type === 'slide') {
-      gsap.to(itemsEl, { x: -(toIndex * wrapper.clientWidth), duration, ease: 'power2.inOut', overwrite: 'auto' });
+      gsap.to(itemsEl, { x: slideX(toIndex), duration, ease: 'power2.inOut', overwrite: 'auto' });
     } else {
       items[fromIndex].animate(false, direction);
       items[toIndex].animate(true, direction);
@@ -216,7 +227,7 @@ function createItems(root, rawItems, type, duration) {
     items.forEach((item, i) => item.update(i === index));
   }
 
-  return { el: itemsEl, items, animate, update };
+  return { el: itemsEl, items, animate, update, slideX };
 }
 
 // ── Nav ──────────────────────────────────────────────────────────
@@ -277,8 +288,8 @@ function createDots(count, { dotsStyle = 'normal', dotsMax = 7 }, onSelect) {
 
     const container = el('div', { class: 'plura-carousel-dots plura-carousel-dots--scroll' }, strip);
     container.style.setProperty('--dots-max',          dotsMax);
-    container.style.setProperty('--carousel-dot-size', `${dotSize}px`);
-    container.style.setProperty('--carousel-dot-gap',  `${dotGap}px`);
+    container.style.setProperty('--plura-carousel-dot-size', `${dotSize}px`);
+    container.style.setProperty('--plura-carousel-dot-gap',  `${dotGap}px`);
 
     return {
       el: container,
