@@ -27,3 +27,4 @@ createCarousel(document.getElementById('carousel-host-dots'), { items: projects.
 createCarousel(document.getElementById('carousel-host-dots-progressive'), { items: projects.map(buildSlide), id: 'carousel4', dots: true, dotsStyle: 'scroll' });
 createCarousel(document.getElementById('carousel-host-autoplay'), { items: projects.map(buildSlide), id: 'carousel6', type: 'fade', autoplay: 2000 });
 createCarousel(document.getElementById('carousel-host-loop'), { items: projects.map(buildSlide), id: 'carousel7', type: 'cover', loop: true, dots: true });
+createCarousel(document.getElementById('carousel-host-counter'), { items: projects.map(buildSlide), id: 'carousel8', type: 'cover', counter: true });

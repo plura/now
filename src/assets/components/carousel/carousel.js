@@ -85,8 +85,6 @@ export function createCarousel(container, options = {}) {
     if (dotsCtrl)    dotsCtrl.update(index);
   }
 
-  updateState();
-
   // ── Navigation ─────────────────────────────────────────────────
 
   function goTo(i) {
@@ -107,6 +105,8 @@ export function createCarousel(container, options = {}) {
     counterCtrl = createCounter();
     root.appendChild(counterCtrl.el);
   }
+
+  updateState();
 
   if (drag) {
     const dragOptions = { onPrev: prev, onNext: next };
@@ -341,11 +341,7 @@ function createCounter() {
   const total   = el('span', { class: 'plura-carousel-counter-total' });
 
   return {
-    el: el('div', { class: 'plura-carousel-counter' },
-      current,
-      el('span', { class: 'plura-carousel-counter-sep', text: '/' }),
-      total
-    ),
+    el: el('div', { class: 'plura-carousel-counter' }, current, total),
     update(index, tot) {
       current.textContent = index + 1;
       total.textContent   = tot;

@@ -82,6 +82,10 @@
   gap: 4px;
 }
 
+.plura-carousel-counter-current::after {
+  content: ' /';
+}
+
 /* ── Dots ────────────────────────────────────────────────────────── */
 
 .plura-carousel-dots {
