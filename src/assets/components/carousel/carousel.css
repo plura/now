@@ -1,0 +1,126 @@
+/* carousel.css */
+
+/* ── Layout ──────────────────────────────────────────────────────── */
+
+.plura-carousel {
+  position: relative;
+  width: 100%;
+  --carousel-dot-size:    8px;
+  --carousel-dot-gap:     6px;
+  --carousel-dot-opacity: 0.2;
+  --carousel-dots-margin: 12px;
+}
+
+.plura-carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.plura-carousel--dragging {
+  user-select: none;
+}
+
+.plura-carousel-items {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.plura-carousel-item {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+}
+
+/* ── Slide type ──────────────────────────────────────────────────── */
+
+.plura-carousel--slide .plura-carousel-items {
+  display: flex;
+  flex-direction: row;
+}
+
+.plura-carousel--slide .plura-carousel-item {
+  position: relative;
+  inset: auto;
+  flex: 0 0 100%;
+}
+
+/* ── Arrows ──────────────────────────────────────────────────────── */
+
+.plura-carousel-arrows {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.plura-carousel-arrow {
+  pointer-events: all;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.plura-carousel-arrow:disabled {
+  opacity: 0.2;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Counter ─────────────────────────────────────────────────────── */
+
+.plura-carousel-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* ── Dots ────────────────────────────────────────────────────────── */
+
+.plura-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--carousel-dot-gap);
+  margin: var(--carousel-dots-margin) auto 0;
+}
+
+.plura-carousel-dot {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  width:  var(--carousel-dot-size);
+  height: var(--carousel-dot-size);
+  border-radius: 50%;
+  background: currentColor;
+  opacity: var(--carousel-dot-opacity);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.plura-carousel-dot.is-active {
+  opacity: 1;
+}
+
+/* ── Scroll dots ─────────────────────────────────────────────────── */
+
+.plura-carousel-dots--scroll {
+  display: block;
+  overflow: hidden;
+  width: calc(var(--dots-max) * (var(--carousel-dot-size) + var(--carousel-dot-gap)) - var(--carousel-dot-gap));
+}
+
+.plura-carousel-dots-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--carousel-dot-gap);
+  transition: transform 0.3s ease;
+}

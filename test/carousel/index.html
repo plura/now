@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel testbed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="../../src/assets/components/carousel/carousel.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <main>
+    <div id="carousel-host" data-label="cover"></div>
+    <div id="carousel-host-slide" data-label="slide"></div>
+    <div id="carousel-host-fade" data-label="fade"></div>
+    <div id="carousel-host-dots" data-label="cover + dots"></div>
+    <div id="carousel-host-dots-progressive" data-label="cover + dots scroll"></div>
+    <div id="carousel-host-autoplay" data-label="fade + autoplay"></div>
+    <div id="carousel-host-loop" data-label="cover + loop + dots"></div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script type="module" src="./script.js"></script>
+
+</body>
+</html>

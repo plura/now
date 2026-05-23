@@ -1,0 +1,354 @@
+// carousel.js — requires window.gsap (CDN global)
+
+function el(tag, props = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (k === 'class')        node.className = v;
+    else if (k === 'dataset') Object.assign(node.dataset, v);
+    else if (k === 'text')    node.textContent = v;
+    else                      node.setAttribute(k, v);
+  }
+  children.forEach(c => node.appendChild(c));
+  return node;
+}
+
+/**
+ * @param {Element} container  Host element. If it already has .plura-carousel it is used directly; otherwise a .plura-carousel is created inside it.
+ * @param {object}  options
+ * @param {Element[]|NodeList} [options.items]      Content nodes to wrap. Omit for static HTML mode.
+ * @param {string}  [options.id]
+ * @param {string}  [options.className]
+ * @param {'slide'|'cover'|'fade'} [options.type='slide']
+ * @param {boolean} [options.arrows=true]
+ * @param {boolean} [options.drag=true]
+ * @param {boolean} [options.counter=false]
+ * @param {boolean} [options.dots=false]
+ * @param {'normal'|'scroll'} [options.dotsStyle='normal']
+ * @param {number}  [options.dotsMax=7]            Max visible dots in scroll style.
+ * @param {boolean|number} [options.autoplay=false] true = 3000 ms, or pass ms directly.
+ * @param {boolean} [options.loop=false]
+ * @param {number}  [options.duration=0.4]          Transition duration in seconds.
+ * @returns {{ root: Element, prev: Function, next: Function }}
+ */
+export function createCarousel(container, options = {}) {
+  const {
+    items,
+    id,
+    className,
+    type     = 'slide',
+    arrows   = true,
+    drag     = true,
+    counter  = false,
+    dots      = false,
+    dotsStyle = 'normal',
+    dotsMax   = 7,
+    autoplay  = false,
+    loop      = false,
+    duration  = 0.4,
+  } = options;
+
+  // If container already is .plura-carousel, use it directly.
+  // Otherwise create .plura-carousel inside it.
+  const root = container.classList.contains('plura-carousel')
+    ? container
+    : el('div', { class: 'plura-carousel' });
+
+  if (root !== container) container.appendChild(root);
+
+  if (id)        root.id = id;
+  if (className) root.classList.add(...className.split(' '));
+  root.classList.add(`plura-carousel--${type}`);
+
+  // ── Items ──────────────────────────────────────────────────────
+
+  const itemsCtrl = createItems(root, items, type, duration);
+  const slideItems = itemsCtrl.items; // [{ el }, ...]
+
+  // ── Nav elements ───────────────────────────────────────────────
+
+  let arrowsCtrl, counterCtrl, dotsCtrl;
+
+  if (dots) {
+    dotsCtrl = createDots(slideItems.length, { dotsStyle, dotsMax }, i => goTo(i));
+    root.appendChild(dotsCtrl.el);
+  }
+
+  // ── State ──────────────────────────────────────────────────────
+
+  let index = 0;
+  const total = slideItems.length;
+
+  function updateState() {
+    itemsCtrl.update(index);
+    if (arrowsCtrl)  arrowsCtrl.update(index, total);
+    if (counterCtrl) counterCtrl.update(index, total);
+    if (dotsCtrl)    dotsCtrl.update(index);
+  }
+
+  updateState();
+
+  // ── Navigation ─────────────────────────────────────────────────
+
+  function goTo(i) {
+    itemsCtrl.animate(index, i);
+    index = i;
+    updateState();
+  }
+
+  function prev() { goTo(index > 0          ? index - 1 : loop ? total - 1 : index); }
+  function next() { goTo(index < total - 1  ? index + 1 : loop ? 0         : index); }
+
+  if (arrows) {
+    arrowsCtrl = createArrows(() => prev(), () => next(), loop);
+    root.appendChild(arrowsCtrl.el);
+  }
+
+  if (counter) {
+    counterCtrl = createCounter();
+    root.appendChild(counterCtrl.el);
+  }
+
+  if (drag) {
+    const dragOptions = { onPrev: prev, onNext: next };
+
+    if (type === 'slide') {
+      const strip   = itemsCtrl.el;
+      const getBase = () => -(index * strip.parentElement.clientWidth);
+
+      dragOptions.onMove   = delta => gsap.set(strip, { x: getBase() + delta });
+      dragOptions.onCancel = ()    => gsap.to(strip,  { x: getBase(), duration: 0.3, ease: 'power2.out' });
+    }
+
+    createDrag(itemsCtrl.el, dragOptions);
+  }
+
+  if (autoplay) {
+    const autoplayCtrl = createAutoplay(next, typeof autoplay === 'number' ? autoplay : 3000);
+    autoplayCtrl.start();
+    root.addEventListener('pointerenter', autoplayCtrl.stop);
+    root.addEventListener('pointerleave', autoplayCtrl.start);
+  }
+
+  if (typeof lucide !== 'undefined') lucide.createIcons({ el: root });
+
+  // ── Public API ─────────────────────────────────────────────────
+
+  return { root, prev, next };
+}
+
+// ── Items ─────────────────────────────────────────────────────────
+
+function createItem(node, { type, duration, active = false } = {}) {
+  // Static mode: node is already a .plura-carousel-item — adopt it directly.
+  // Dynamic mode: node is raw content — wrap it.
+  const itemEl = node.classList.contains('plura-carousel-item')
+    ? node
+    : el('div', { class: 'plura-carousel-item' }, node);
+
+  function animate(active, direction) {}
+
+  // `active` sets the initial GSAP state — true for the first item, false for all others.
+  if (type === 'cover') {
+    gsap.set(itemEl, { x: '0%', autoAlpha: active ? 1 : 0, zIndex: active ? 1 : 0 });
+    animate = (active, direction) => {
+      if (active) {
+        gsap.set(itemEl, { x: direction === 1 ? '100%' : '-100%', zIndex: 1, autoAlpha: 1 });
+        // overwrite: 'auto' redirects any running tween on conflicting properties rather than killing it abruptly.
+      gsap.to(itemEl,  { x: '0%', duration, ease: 'power2.inOut', overwrite: 'auto' });
+      } else {
+        gsap.set(itemEl, { zIndex: 0 });
+      }
+    };
+  }
+
+  if (type === 'fade') {
+    gsap.set(itemEl, { autoAlpha: active ? 1 : 0, x: '0%' });
+    animate = (active) => gsap.to(itemEl, { autoAlpha: active ? 1 : 0, duration, ease: 'power1.inOut', overwrite: 'auto' });
+  }
+
+  return {
+    el: itemEl,
+    animate,
+    update(isActive) {
+      itemEl.classList.toggle('plura-carousel-item--active', isActive);
+    },
+  };
+}
+
+function createItems(root, rawItems, type, duration) {
+  let wrapper, itemsEl;
+
+  if (root.querySelector('.plura-carousel-wrapper')) {
+    wrapper  = root.querySelector('.plura-carousel-wrapper');
+    itemsEl  = wrapper.querySelector('.plura-carousel-items');
+  } else {
+    itemsEl = el('div', { class: 'plura-carousel-items' });
+    wrapper  = el('div', { class: 'plura-carousel-wrapper' }, itemsEl);
+    root.appendChild(wrapper);
+  }
+
+  let items;
+
+  if (rawItems) {
+    items = Array.from(rawItems).map((node, i) => {
+      const item = createItem(node, { type, duration, active: i === 0 });
+      itemsEl.appendChild(item.el);
+      return item;
+    });
+  } else {
+    items = Array.from(itemsEl.querySelectorAll('.plura-carousel-item')).map((itemEl, i) =>
+      createItem(itemEl, { type, duration, active: i === 0 })
+    );
+  }
+
+  function animate(fromIndex, toIndex) {
+    const direction = toIndex > fromIndex ? 1 : -1;
+
+    if (type === 'slide') {
+      gsap.to(itemsEl, { x: -(toIndex * wrapper.clientWidth), duration, ease: 'power2.inOut', overwrite: 'auto' });
+    } else {
+      items[fromIndex].animate(false, direction);
+      items[toIndex].animate(true, direction);
+    }
+  }
+
+  function update(index) {
+    items.forEach((item, i) => item.update(i === index));
+  }
+
+  return { el: itemsEl, items, animate, update };
+}
+
+// ── Nav ──────────────────────────────────────────────────────────
+
+function createArrows(onPrev, onNext, loop = false) {
+  const btnPrev = el('button', { class: 'plura-carousel-arrow plura-carousel-arrow--prev', 'aria-label': 'Previous' },
+    el('i', { 'data-lucide': 'chevron-left' })
+  );
+  const btnNext = el('button', { class: 'plura-carousel-arrow plura-carousel-arrow--next', 'aria-label': 'Next' },
+    el('i', { 'data-lucide': 'chevron-right' })
+  );
+
+  btnPrev.addEventListener('click', onPrev);
+  btnNext.addEventListener('click', onNext);
+
+  return {
+    el: el('div', { class: 'plura-carousel-arrows' }, btnPrev, btnNext),
+    update(index, total) {
+      btnPrev.disabled = !loop && index === 0;
+      btnNext.disabled = !loop && index === total - 1;
+    },
+  };
+}
+
+function createDots(count, { dotsStyle = 'normal', dotsMax = 7 }, onSelect) {
+  if (dotsStyle === 'normal') {
+    const container = el('div', { class: 'plura-carousel-dots' });
+    for (let i = 0; i < count; i++) {
+      const dot = el('button', { class: 'plura-carousel-dot', 'aria-label': `Go to slide ${i + 1}` });
+      dot.addEventListener('click', () => onSelect(i));
+      container.appendChild(dot);
+    }
+
+    return {
+      el: container,
+      update(index) {
+        Array.from(container.children).forEach((dot, i) => {
+          dot.classList.toggle('is-active', i === index);
+        });
+      },
+    };
+  }
+
+  if (dotsStyle === 'scroll') {
+    const dotSize = 8;
+    const dotGap  = 6;
+    const unit    = dotSize + dotGap;
+    const half    = Math.floor(dotsMax / 2);
+
+    const strip = el('div', { class: 'plura-carousel-dots-strip' });
+    strip.style.paddingLeft = strip.style.paddingRight = `${half * unit}px`;
+
+    for (let i = 0; i < count; i++) {
+      const dot = el('button', { class: 'plura-carousel-dot', 'aria-label': `Go to slide ${i + 1}` });
+      dot.addEventListener('click', () => onSelect(i));
+      strip.appendChild(dot);
+    }
+
+    const container = el('div', { class: 'plura-carousel-dots plura-carousel-dots--scroll' }, strip);
+    container.style.setProperty('--dots-max',          dotsMax);
+    container.style.setProperty('--carousel-dot-size', `${dotSize}px`);
+    container.style.setProperty('--carousel-dot-gap',  `${dotGap}px`);
+
+    return {
+      el: container,
+      update(index) {
+        strip.style.transform = `translateX(${-index * unit}px)`;
+        Array.from(strip.children).forEach((dot, i) => {
+          const dist    = Math.abs(i - index);
+          const scale   = dist === 0 ? 1 : dist === 1 ? 0.72 : dist === 2 ? 0.54 : 0.4;
+          const opacity = dist === 0 ? 1 : dist === 1 ? 0.7  : dist === 2 ? 0.45 : 0.2;
+          dot.classList.toggle('is-active', i === index);
+          dot.style.transform = `scale(${scale})`;
+          dot.style.opacity   = String(opacity);
+        });
+      },
+    };
+  }
+}
+
+function createAutoplay(next, interval) {
+  let timer = null;
+
+  function start() {
+    if (timer) return;
+    timer = setInterval(next, interval);
+  }
+
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  return { start, stop };
+}
+
+function createDrag(el, { onPrev, onNext, onMove, onCancel, threshold = 50 }) {
+  let startX = 0;
+
+  el.addEventListener('pointerdown', e => {
+    startX = e.clientX;
+    el.setPointerCapture(e.pointerId); // keeps pointermove/pointerup firing even if pointer leaves the element
+    el.classList.add('plura-carousel--dragging');
+  });
+
+  el.addEventListener('pointermove', e => {
+    if (!el.hasPointerCapture(e.pointerId)) return;
+    onMove?.(e.clientX - startX);
+  });
+
+  el.addEventListener('pointerup', e => {
+    el.classList.remove('plura-carousel--dragging');
+    const delta = e.clientX - startX;
+    if      (delta >  threshold) onPrev();
+    else if (delta < -threshold) onNext();
+    else                         onCancel?.();
+  });
+}
+
+function createCounter() {
+  const current = el('span', { class: 'plura-carousel-counter-current' });
+  const total   = el('span', { class: 'plura-carousel-counter-total' });
+
+  return {
+    el: el('div', { class: 'plura-carousel-counter' },
+      current,
+      el('span', { class: 'plura-carousel-counter-sep', text: '/' }),
+      total
+    ),
+    update(index, tot) {
+      current.textContent = index + 1;
+      total.textContent   = tot;
+    },
+  };
+}
