@@ -85,6 +85,41 @@ JS follows the same pattern: `main.js` bootstraps everything; feature modules li
 
 Content lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings.
 
+### Carousel component
+
+A reusable vanilla JS + GSAP carousel in `src/assets/components/carousel/`. Designed to be consumed by any project — import the JS module and link the CSS, then customise via CSS custom properties.
+
+**Usage**
+
+```js
+import { createCarousel } from './src/assets/components/carousel/carousel.js';
+
+createCarousel(containerEl, {
+  items,          // NodeList or array of elements (omit for static HTML mode)
+  type,           // 'slide' | 'cover' | 'fade'  (default: 'slide')
+  arrows,         // boolean  (default: true)
+  drag,           // boolean  (default: true)
+  dots,           // boolean  (default: false)
+  dotsStyle,      // 'normal' | 'scroll'  (default: 'normal')
+  dotsMax,        // max visible dots in scroll style  (default: 7)
+  counter,        // boolean  (default: false)
+  loop,           // boolean  (default: false)
+  autoplay,       // false | true (3000ms) | number in ms
+  duration,       // transition duration in seconds  (default: 0.4)
+});
+```
+
+**CSS custom properties** (set on `.plura-carousel` or any ancestor):
+
+| Property | Default | Description |
+|---|---|---|
+| `--carousel-dot-size` | `8px` | Dot diameter |
+| `--carousel-dot-gap` | `6px` | Gap between dots |
+| `--carousel-dot-opacity` | `0.2` | Inactive dot opacity |
+| `--carousel-dots-margin` | `12px` | Space above dot row |
+
+A testbed lives in `test/carousel/`.
+
 ---
 
 ## projects.json shape
