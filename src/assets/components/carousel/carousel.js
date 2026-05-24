@@ -28,6 +28,7 @@ function el(tag, props = {}, ...children) {
  * @param {boolean|number} [options.autoplay=false] true = 3000 ms, or pass ms directly.
  * @param {boolean} [options.loop=false]
  * @param {number}  [options.duration=0.4]          Transition duration in seconds.
+ * @param {number}  [options.index=0]              Initial active slide index.
  * @returns {{ root: Element, prev: Function, next: Function }}
  */
 export function createCarousel(container, options = {}) {
@@ -48,6 +49,8 @@ export function createCarousel(container, options = {}) {
     perView   = 1,
     perGroup  = 1,
     gap       = 0,
+    center    = false,
+    index: initialIndex = 0,
   } = options;
 
   // If container already is .plura-carousel, use it directly.
@@ -64,7 +67,7 @@ export function createCarousel(container, options = {}) {
 
   // ── Items ──────────────────────────────────────────────────────
 
-  const itemsCtrl = createItems(root, items, type, duration, perView, gap);
+  const itemsCtrl = createItems(root, items, type, duration, perView, gap, center, initialIndex);
   const slideItems = itemsCtrl.items; // [{ el }, ...]
 
   // ── Nav elements ───────────────────────────────────────────────
@@ -78,7 +81,7 @@ export function createCarousel(container, options = {}) {
 
   // ── State ──────────────────────────────────────────────────────
 
-  let index = 0;
+  let index = Math.min(initialIndex, slideItems.length - 1);
   const total = slideItems.length;
 
   function updateState() {
@@ -177,7 +180,7 @@ function createItem(node, { type, duration, active = false } = {}) {
   };
 }
 
-function createItems(root, rawItems, type, duration, perView, gap) {
+function createItems(root, rawItems, type, duration, perView, gap, center, initialIndex = 0) {
   let wrapper, itemsEl;
 
   if (root.querySelector('.plura-carousel-wrapper')) {
@@ -193,13 +196,13 @@ function createItems(root, rawItems, type, duration, perView, gap) {
 
   if (rawItems) {
     items = Array.from(rawItems).map((node, i) => {
-      const item = createItem(node, { type, duration, active: i === 0 });
+      const item = createItem(node, { type, duration, active: i === initialIndex });
       itemsEl.appendChild(item.el);
       return item;
     });
   } else {
     items = Array.from(itemsEl.querySelectorAll('.plura-carousel-item')).map((itemEl, i) =>
-      createItem(itemEl, { type, duration, active: i === 0 })
+      createItem(itemEl, { type, duration, active: i === initialIndex })
     );
   }
 
@@ -209,7 +212,9 @@ function createItems(root, rawItems, type, duration, perView, gap) {
   }
 
   function slideX(index) {
-    return -items[index].el.offsetLeft;
+    const x = -items[index].el.offsetLeft;
+    if (!center) return x;
+    return x + (wrapper.clientWidth - items[index].el.offsetWidth) / 2;
   }
 
   function animate(fromIndex, toIndex) {
@@ -226,6 +231,8 @@ function createItems(root, rawItems, type, duration, perView, gap) {
   function update(index) {
     items.forEach((item, i) => item.update(i === index));
   }
+
+  if (type === 'slide') gsap.set(itemsEl, { x: slideX(initialIndex) });
 
   return { el: itemsEl, items, animate, update, slideX };
 }
