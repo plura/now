@@ -31,5 +31,5 @@ createCarousel(document.getElementById('carousel-host-counter'),          { item
 createCarousel(document.getElementById('carousel-host-index'),            { items: projects.map(buildSlide), id: 'carousel9',  type: 'slide', index: 10, dots: true });
 createCarousel(document.getElementById('carousel-host-multi'),            { items: projects.map(buildSlide), id: 'carousel10', type: 'slide', perView: 3, dots: true, className: 'is-multi' });
 createCarousel(document.getElementById('carousel-host-multi2'),           { items: projects.map(buildSlide), id: 'carousel11', type: 'slide', perView: 3, perGroup: 3, dots: true, className: 'is-multi' });
-createCarousel(document.getElementById('carousel-host-multi3'),           { items: projects.map(buildSlide), id: 'carousel12', type: 'slide', perView: 3, perGroup: 3, gap: 12, dots: true, className: 'is-multi' });
-createCarousel(document.getElementById('carousel-host-center'),           { items: projects.map(buildSlide), id: 'carousel13', type: 'slide', perView: 3, center: true, dots: true, className: 'is-multi' });
+createCarousel(document.getElementById('carousel-host-multi3'),           { items: projects.map(buildSlide), id: 'carousel12', type: 'slide', perView: 3, perGroup: 3, gap: 30, dots: true, className: 'is-multi' });
+createCarousel(document.getElementById('carousel-host-center'),           { items: projects.map(buildSlide), id: 'carousel13', type: 'slide', perView: 3, center: true, gap: 30, dots: true, className: 'is-multi' });

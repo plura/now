@@ -106,6 +106,11 @@ createCarousel(containerEl, {
   loop,           // boolean  (default: false)
   autoplay,       // false | true (3000ms) | number in ms
   duration,       // transition duration in seconds  (default: 0.4)
+  perView,        // visible slides at once, slide type only  (default: 1)
+  perGroup,       // slides to advance per step  (default: 1)
+  gap,            // px gap between slides  (default: 0)
+  center,         // center active slide in viewport, slide type only  (default: false)
+  index,          // initial active slide index  (default: 0)
 });
 ```
 
@@ -113,10 +118,10 @@ createCarousel(containerEl, {
 
 | Property | Default | Description |
 |---|---|---|
-| `--carousel-dot-size` | `8px` | Dot diameter |
-| `--carousel-dot-gap` | `6px` | Gap between dots |
-| `--carousel-dot-opacity` | `0.2` | Inactive dot opacity |
-| `--carousel-dots-margin` | `12px` | Space above dot row |
+| `--plura-carousel-dot-size` | `8px` | Dot diameter |
+| `--plura-carousel-dot-gap` | `6px` | Gap between dots |
+| `--plura-carousel-dot-opacity` | `0.2` | Inactive dot opacity |
+| `--plura-carousel-dots-margin` | `12px` | Space above dot row |
 
 A testbed lives in `test/carousel/`.
 

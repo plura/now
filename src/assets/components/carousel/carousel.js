@@ -15,41 +15,63 @@ function el(tag, props = {}, ...children) {
 /**
  * @param {Element} container  Host element. If it already has .plura-carousel it is used directly; otherwise a .plura-carousel is created inside it.
  * @param {object}  options
- * @param {Element[]|NodeList} [options.items]      Content nodes to wrap. Omit for static HTML mode.
- * @param {string}  [options.id]
- * @param {string}  [options.className]
- * @param {'slide'|'cover'|'fade'} [options.type='slide']
- * @param {boolean} [options.arrows=true]
- * @param {boolean} [options.drag=true]
- * @param {boolean} [options.counter=false]
- * @param {boolean} [options.dots=false]
- * @param {'normal'|'scroll'} [options.dotsStyle='normal']
- * @param {number}  [options.dotsMax=7]            Max visible dots in scroll style.
- * @param {boolean|number} [options.autoplay=false] true = 3000 ms, or pass ms directly.
- * @param {boolean} [options.loop=false]
- * @param {number}  [options.duration=0.4]          Transition duration in seconds.
- * @param {number}  [options.index=0]              Initial active slide index.
+ * // identity / content
+ * @param {Element[]|NodeList}     [options.items]              Content nodes to wrap. Omit for static HTML mode.
+ * @param {string}                 [options.id]                 Sets id on the root element.
+ * @param {string}                 [options.className]          Extra class(es) added to the root element.
+ * // core behaviour
+ * @param {'slide'|'cover'|'fade'} [options.type='slide']       Animation type.
+ * @param {number}                 [options.duration=0.4]       Transition duration in seconds.
+ * // interaction
+ * @param {boolean}                [options.arrows=true]        Show prev/next arrow buttons.
+ * @param {boolean}                [options.drag=true]          Enable pointer drag/swipe.
+ * // playback
+ * @param {boolean}                [options.loop=false]         Wrap around at first/last slide.
+ * @param {boolean|number}         [options.autoplay=false]     true = 3000 ms, or pass ms directly.
+ * // dots
+ * @param {boolean}                [options.dots=false]         Show dot navigation.
+ * @param {'normal'|'scroll'}      [options.dotsStyle='normal'] Dot style variant.
+ * @param {number}                 [options.dotsMax=7]          Max visible dots in scroll style.
+ * // counter
+ * @param {boolean}                [options.counter=false]      Show slide counter (e.g. 2 / 5).
+ * // multi-slide (slide type only)
+ * @param {number}                 [options.perView=1]          Visible slides at once.
+ * @param {number}                 [options.perGroup=1]         Slides to advance per step.
+ * @param {number}                 [options.gap=0]              Gap in px between slides.
+ * // positioning (slide type only)
+ * @param {boolean}                [options.center=false]       Center active slide in viewport.
+ * // initial state
+ * @param {number}                 [options.index=0]            Initial active slide index.
  * @returns {{ root: Element, prev: Function, next: Function }}
  */
 export function createCarousel(container, options = {}) {
   const {
+    // identity / content
     items,
     id,
     className,
+    // core behaviour
     type     = 'slide',
+    duration = 0.4,
+    // interaction
     arrows   = true,
     drag     = true,
-    counter  = false,
+    // playback
+    loop     = false,
+    autoplay = false,
+    // dots
     dots      = false,
     dotsStyle = 'normal',
     dotsMax   = 7,
-    autoplay  = false,
-    loop      = false,
-    duration  = 0.4,
-    perView   = 1,
-    perGroup  = 1,
-    gap       = 0,
-    center    = false,
+    // counter
+    counter  = false,
+    // multi-slide (slide type only)
+    perView  = 1,
+    perGroup = 1,
+    gap      = 0,
+    // positioning (slide type only)
+    center   = false,
+    // initial state
     index: initialIndex = 0,
   } = options;
 
