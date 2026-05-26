@@ -1,16 +1,6 @@
 // carousel.js — requires window.gsap (CDN global)
 
-function el(tag, props = {}, ...children) {
-  const node = document.createElement(tag);
-  for (const [k, v] of Object.entries(props)) {
-    if (k === 'class')        node.className = v;
-    else if (k === 'dataset') Object.assign(node.dataset, v);
-    else if (k === 'text')    node.textContent = v;
-    else                      node.setAttribute(k, v);
-  }
-  children.forEach(c => node.appendChild(c));
-  return node;
-}
+import { el } from '../../js/utils.js';
 
 /**
  * @param {Element} container  Host element. If it already has .plura-carousel it is used directly; otherwise a .plura-carousel is created inside it.
@@ -188,9 +178,9 @@ export function createCarousel(container, options = {}) {
 function createItem(node, { type, duration, active = false } = {}) {
   // Static mode: node is already a .plura-carousel-item — adopt it directly.
   // Dynamic mode: node is raw content — wrap it.
-  const itemEl = node.classList.contains('plura-carousel-item')
+  const itemEl = node instanceof Node && node.classList.contains('plura-carousel-item')
     ? node
-    : el('div', { class: 'plura-carousel-item' }, node);
+    : el('div', { class: 'plura-carousel-item' }, ...(node instanceof Node ? [node] : Array.from(node)));
 
   function animate(active, direction) {}
 
@@ -269,7 +259,7 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
     if (type === 'slide') {
       gsap.to(itemsEl, { x: slideX(toIndex), duration, ease: 'power2.inOut', overwrite: 'auto' });
     } else {
-      items[fromIndex].animate(false, direction);
+      if (fromIndex !== -1) items[fromIndex].animate(false, direction);
       items[toIndex].animate(true, direction);
     }
   }
