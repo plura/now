@@ -1,9 +1,5 @@
 /* ─── Morph / overlay base ───────────────────────────────────── */
 
-:root {
-  --plura-morph-pad: var(--plura-pad);
-}
-
 
 /* ─── Main (backdrop) ────────────────────────────────────────── */
 
@@ -68,9 +64,8 @@
 
 .plura-morph-content {
   position: absolute;
-  top: 0;
-  left: 0;
-  padding: var(--plura-morph-pad);
+  inset: 0;
+  overflow-y: auto;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--plura-dur) var(--plura-ease);
@@ -81,10 +76,8 @@
   pointer-events: all;
 }
 
-
-/* ─── Panel title ────────────────────────────────────────────── */
-
-.plura-panel-title {
-  font-size: var(--plura-font-size-base);
-  font-weight: var(--plura-font-weight-semi);
+/* panel inside morph fills the container; morph handles rounding via overflow: hidden */
+.plura-morph-content .plura-panel {
+  border-radius: 0;
+  min-height: 100%;
 }

@@ -49,10 +49,3 @@
 }
 
 
-/* ─── Panel content ──────────────────────────────────────────── */
-
-.plura-float-morph .plura-morph-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--plura-pad);
-}
