@@ -1,4 +1,5 @@
 @import 'base.css';
+@import 'components.css';
 @import 'badge.css';
 @import 'style.css';
 @import 'projects.css';
@@ -8,4 +9,6 @@
 @import 'form.css';
 @import 'contacts-cta.css';
 @import 'projects-filter.css';
+@import '../components/carousel/carousel.css';
+@import 'projects-carousel.css';
 @import 'project-detail.css';

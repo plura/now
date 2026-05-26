@@ -1,0 +1,29 @@
+/* ─── Panel ──────────────────────────────────────────────────── */
+
+.plura-panel {
+  background:    var(--plura-color-light);
+  border-radius: var(--plura-radius);
+  padding:       var(--plura-pad);
+  display:       flex;
+  flex-direction: column;
+  gap:           var(--plura-pad);
+}
+
+.plura-panel-header {
+  display:     flex;
+  align-items: center;
+}
+
+.plura-panel-title {
+  font-size:      var(--plura-font-size-xs);
+  font-weight:    var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  color:          var(--plura-color-muted);
+}
+
+.plura-panel-body {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--plura-pad);
+}
