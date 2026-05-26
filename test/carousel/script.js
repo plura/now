@@ -25,7 +25,6 @@ function itemsAuto() {
   });
 }
 
-function itemsEmpty(count) { return Array.from({ length: count }, () => el('div')); }
 
 function onEnter(index, slideEl) {
   if (slideEl.classList.contains('plura-carousel-item--visited')) return;
@@ -41,7 +40,7 @@ createCarousel(document.getElementById('carousel-host-autoplay'),         { item
 createCarousel(document.getElementById('carousel-host-loop'),             { items: items(), id: 'carousel7',  type: 'cover', loop: true, dots: true });
 createCarousel(document.getElementById('carousel-host-counter'),          { items: items(), id: 'carousel8',  type: 'cover', counter: true });
 createCarousel(document.getElementById('carousel-host-index'),            { items: items(),        id: 'carousel9',  type: 'slide', index: 10, dots: true });
-createCarousel(document.getElementById('carousel-host-on-enter'),         { items: itemsEmpty(10), id: 'carousel10', type: 'cover', dots: true, on: { enter: onEnter } });
+createCarousel(document.getElementById('carousel-host-on-enter'),         { items: 10, id: 'carousel10', type: 'cover', dots: true, on: { enter: onEnter } });
 createCarousel(document.getElementById('carousel-host-multi'),            { items: items(),        id: 'carousel11', type: 'slide', perView: 3, dots: true, className: 'is-multi' });
 createCarousel(document.getElementById('carousel-host-multi2'),           { items: items(),        id: 'carousel12', type: 'slide', perView: 3, perGroup: 3, dots: true, className: 'is-multi' });
 createCarousel(document.getElementById('carousel-host-multi3'),           { items: items(),        id: 'carousel13', type: 'slide', perView: 3, perGroup: 3, gap: 30, dots: true, className: 'is-multi' });

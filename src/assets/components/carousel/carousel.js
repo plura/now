@@ -6,7 +6,7 @@ import { el } from '../../js/utils.js';
  * @param {Element} container  Host element. If it already has .plura-carousel it is used directly; otherwise a .plura-carousel is created inside it.
  * @param {object}  options
  * // identity / content
- * @param {Element[]|NodeList}     [options.items]              Content nodes to wrap. Omit for static HTML mode.
+ * @param {Element[]|NodeList|number} [options.items]           Content nodes to wrap, or a count to create empty slides. Omit for static HTML mode.
  * @param {string}                 [options.id]                 Sets id on the root element.
  * @param {string}                 [options.className]          Extra class(es) added to the root element.
  * // core behaviour
@@ -228,6 +228,8 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
   let items;
 
   if (rawItems) {
+    if (typeof rawItems === 'number') rawItems = Array.from({ length: rawItems }, () => el('div'));
+
     items = Array.from(rawItems).map((node, i) => {
       const item = createItem(node, { type, duration, active: i === initialIndex });
       itemsEl.appendChild(item.el);
