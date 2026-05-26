@@ -110,8 +110,13 @@ export function createCarousel(container, options = {}) {
 
   // ── State ──────────────────────────────────────────────────────
 
-  let index = Math.min(initialIndex, slideItems.length - 1);
+  let index = -1;
   const total = slideItems.length;
+
+  function normalizeIndex(value) {
+    if (typeof value !== 'number') return 0;
+    return Math.max(0, Math.min(value, total - 1));
+  }
 
   function updateState() {
     itemsCtrl.update(index);
@@ -123,12 +128,12 @@ export function createCarousel(container, options = {}) {
   // ── Navigation ─────────────────────────────────────────────────
 
   function goTo(i) {
-    on.leave?.(index, slideItems[index].el);  // 1. outgoing slide
-    itemsCtrl.animate(index, i);              // 2. animate
-    on.change?.(index, i);                    // 3. transition starts (fromIndex, toIndex)
+    if (index !== -1) on.leave?.(index, slideItems[index].el); // 1. outgoing slide (skipped on init)
+    itemsCtrl.animate(index, i);                               // 2. animate
+    on.change?.(index, i);                                     // 3. transition starts (fromIndex, toIndex)
     index = i;
-    updateState();                            // 4. active class, arrows, dots, counter
-    on.enter?.(index, slideItems[index].el);  // 5. incoming slide
+    updateState();                                             // 4. active class, arrows, dots, counter
+    on.enter?.(index, slideItems[index].el);                   // 5. incoming slide
   }
 
   const step = perView === 'auto' ? 1 : perGroup;
@@ -145,8 +150,6 @@ export function createCarousel(container, options = {}) {
     counterCtrl = createCounter();
     root.appendChild(counterCtrl.el);
   }
-
-  updateState();
 
   if (drag) {
     const dragOptions = { onPrev: prev, onNext: next };
@@ -169,6 +172,11 @@ export function createCarousel(container, options = {}) {
   }
 
   if (typeof lucide !== 'undefined') lucide.createIcons({ el: root });
+
+  // ── Activate ───────────────────────────────────────────────────
+  // Single activation path — sets initial index, fires on.enter, syncs all UI elements.
+
+  goTo(normalizeIndex(initialIndex));
 
   // ── Public API ─────────────────────────────────────────────────
 
