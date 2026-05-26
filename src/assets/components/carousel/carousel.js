@@ -42,6 +42,11 @@ function el(tag, props = {}, ...children) {
  * @param {boolean}                [options.center=false]       Center active slide in viewport.
  * // initial state
  * @param {number}                 [options.index=0]            Initial active slide index.
+ * // events
+ * @param {object}                 [options.on={}]              Event callbacks.
+ * @param {Function}               [options.on.enter]           Fires on incoming slide: (index, el).
+ * @param {Function}               [options.on.leave]           Fires on outgoing slide: (index, el).
+ * @param {Function}               [options.on.change]          Fires once per navigation: (fromIndex, toIndex).
  * @returns {{ root: Element, prev: Function, next: Function }}
  */
 export function createCarousel(container, options = {}) {
@@ -73,6 +78,8 @@ export function createCarousel(container, options = {}) {
     center   = false,
     // initial state
     index: initialIndex = 0,
+    // events
+    on = {},
   } = options;
 
   // If container already is .plura-carousel, use it directly.
@@ -116,9 +123,12 @@ export function createCarousel(container, options = {}) {
   // ── Navigation ─────────────────────────────────────────────────
 
   function goTo(i) {
-    itemsCtrl.animate(index, i);
+    on.leave?.(index, slideItems[index].el);  // 1. outgoing slide
+    itemsCtrl.animate(index, i);              // 2. animate
+    on.change?.(index, i);                    // 3. transition starts (fromIndex, toIndex)
     index = i;
-    updateState();
+    updateState();                            // 4. active class, arrows, dots, counter
+    on.enter?.(index, slideItems[index].el);  // 5. incoming slide
   }
 
   const step = perView === 'auto' ? 1 : perGroup;
