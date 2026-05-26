@@ -40,10 +40,16 @@
   gap: var(--plura-carousel-gap, 0px);
 }
 
-.plura-carousel--slide .plura-carousel-item {
+.plura-carousel--slide:not(.plura-carousel--auto) .plura-carousel-item {
   position: relative;
   inset: auto;
   flex: 0 0 calc((100% - (var(--plura-carousel-per-view, 1) - 1) * var(--plura-carousel-gap, 0px)) / var(--plura-carousel-per-view, 1));
+}
+
+.plura-carousel--auto .plura-carousel-item {
+  position: relative;
+  inset: auto;
+  flex-shrink: 0;
 }
 
 /* ── Arrows ──────────────────────────────────────────────────────── */

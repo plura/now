@@ -3,6 +3,7 @@
 :root {
   --plura-test-carousel-width:  480px;
   --plura-test-carousel-height: 240px;
+  --plura-test-slide-width:     var(--plura-test-carousel-width);
   --plura-test-layout-gap:      40px;
   --plura-test-layout-padding:  40px;
 
@@ -63,9 +64,20 @@ main {
   width: var(--plura-test-carousel-width);
 }
 
-.is-multi.plura-carousel {
+.is-multi.plura-carousel,
+.is-auto.plura-carousel {
+  --plura-test-slide-width: calc(var(--plura-test-carousel-width) * 2); /* drives slide utility classes */
   width: calc(var(--plura-test-carousel-width) * 2);
 }
+
+/* ── Auto slide widths ───────────────────────────────────────────── */
+
+.slide--sm  { width: calc(var(--plura-test-slide-width) * 0.35); }
+.slide--md  { width: calc(var(--plura-test-slide-width) * 0.55); }
+.slide--lg  { width: calc(var(--plura-test-slide-width) * 0.75); }
+.slide--1-2 { width: calc(var(--plura-test-slide-width) / 2); }
+.slide--1-3 { width: calc(var(--plura-test-slide-width) / 3); }
+.slide--2-3 { width: calc(var(--plura-test-slide-width) / 3 * 2); }
 
 .plura-carousel .plura-carousel-wrapper {
   height: var(--plura-test-carousel-height);

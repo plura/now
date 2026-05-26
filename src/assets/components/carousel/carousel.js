@@ -121,8 +121,10 @@ export function createCarousel(container, options = {}) {
     updateState();
   }
 
-  function prev() { goTo(index > 0          ? Math.max(0,           index - perGroup) : loop ? total - 1 : index); }
-  function next() { goTo(index < total - 1  ? Math.min(total - 1,  index + perGroup) : loop ? 0         : index); }
+  const step = perView === 'auto' ? 1 : perGroup;
+
+  function prev() { goTo(index > 0         ? Math.max(0,          index - step) : loop ? total - 1 : index); }
+  function next() { goTo(index < total - 1 ? Math.min(total - 1,  index + step) : loop ? 0         : index); }
 
   if (arrows) {
     arrowsCtrl = createArrows(() => prev(), () => next(), loop);
@@ -229,8 +231,12 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
   }
 
   if (type === 'slide') {
-    if (perView > 1) itemsEl.style.setProperty('--plura-carousel-per-view', perView);
-    if (gap > 0)     itemsEl.style.setProperty('--plura-carousel-gap', `${gap}px`);
+    if (perView === 'auto') {
+      root.classList.add('plura-carousel--auto');
+    } else {
+      if (perView > 1) itemsEl.style.setProperty('--plura-carousel-per-view', perView);
+    }
+    if (gap > 0) itemsEl.style.setProperty('--plura-carousel-gap', `${gap}px`);
   }
 
   function slideX(index) {
