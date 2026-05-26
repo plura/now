@@ -81,9 +81,12 @@ function buildPanel(data) {
     content.appendChild(buildGroup(group));
   });
 
-  filterPanel.appendChild(el('span', { class: 'plura-panel-title', text: t('Filter') }));
-  filterPanel.appendChild(content);
-  filterPanel.appendChild(clearBtn);
+  const panelHeader = filterPanel.querySelector('.plura-panel-header');
+  const panelBody   = filterPanel.querySelector('.plura-panel-body');
+
+  panelHeader.appendChild(el('span', { class: 'plura-panel-title', text: t('Filter') }));
+  panelBody.appendChild(content);
+  panelBody.appendChild(clearBtn);
 }
 
 function buildGroup({ key, label, items }) {

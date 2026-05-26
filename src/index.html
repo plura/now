@@ -81,7 +81,14 @@
       </button>
 
       <div class="plura-morph-content plura-projects-filter-panel" id="plura-projects-filter-panel">
-        <!-- filter options populated dynamically -->
+        <div class="plura-panel">
+          <div class="plura-panel-header">
+            <!-- title injected by JS -->
+          </div>
+          <div class="plura-panel-body">
+            <!-- filter options populated dynamically -->
+          </div>
+        </div>
       </div>
 
       <button class="plura-float-trigger" id="plura-projects-filter-trigger" aria-expanded="false" aria-haspopup="dialog">
@@ -101,39 +108,45 @@
       </button>
 
       <div class="plura-morph-content plura-contacts-cta-content">
-        <span class="plura-panel-title">Contact</span>
-        <div class="plura-contacts-cta-alert plura-alert" role="alert" aria-live="polite" hidden></div>
-        <form class="plura-form" id="plura-contacts-cta-form" novalidate>
-          <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
-          <div class="plura-form-field">
-            <label for="plura-contacts-cta-name">Name</label>
-            <input type="text" id="plura-contacts-cta-name" name="name" required autocomplete="name" placeholder="Your name" />
+        <div class="plura-panel">
+          <div class="plura-panel-header">
+            <span class="plura-panel-title">Contact</span>
           </div>
-          <div class="plura-form-field">
-            <label for="plura-contacts-cta-email">Email</label>
-            <input type="email" id="plura-contacts-cta-email" name="email" required autocomplete="email" placeholder="your@email.com" />
+          <div class="plura-panel-body">
+            <div class="plura-contacts-cta-alert plura-alert" role="alert" aria-live="polite" hidden></div>
+            <form class="plura-form" id="plura-contacts-cta-form" novalidate>
+              <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+              <div class="plura-form-field">
+                <label for="plura-contacts-cta-name">Name</label>
+                <input type="text" id="plura-contacts-cta-name" name="name" required autocomplete="name" placeholder="Your name" />
+              </div>
+              <div class="plura-form-field">
+                <label for="plura-contacts-cta-email">Email</label>
+                <input type="email" id="plura-contacts-cta-email" name="email" required autocomplete="email" placeholder="your@email.com" />
+              </div>
+              <div class="plura-form-field">
+                <label for="plura-contacts-cta-phone">Phone</label>
+                <input type="tel" id="plura-contacts-cta-phone" name="phone" autocomplete="tel" placeholder="+1 234 567 890" />
+              </div>
+              <div class="plura-form-field">
+                <label for="plura-contacts-cta-type">Project type</label>
+                <select id="plura-contacts-cta-type" name="type" required>
+                  <option value="" disabled selected>Select…</option>
+                  <option value="website">Website</option>
+                  <option value="webapp">Web App</option>
+                  <option value="mobile">Mobile App</option>
+                  <option value="design">Design &amp; Branding</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="plura-form-field">
+                <label for="plura-contacts-cta-message">Message</label>
+                <textarea id="plura-contacts-cta-message" name="message" rows="4" required placeholder="Tell us about your project"></textarea>
+              </div>
+              <button type="submit" class="plura-btn plura-form-submit">Send</button>
+            </form>
           </div>
-          <div class="plura-form-field">
-            <label for="plura-contacts-cta-phone">Phone</label>
-            <input type="tel" id="plura-contacts-cta-phone" name="phone" autocomplete="tel" placeholder="+1 234 567 890" />
-          </div>
-          <div class="plura-form-field">
-            <label for="plura-contacts-cta-type">Project type</label>
-            <select id="plura-contacts-cta-type" name="type" required>
-              <option value="" disabled selected>Select…</option>
-              <option value="website">Website</option>
-              <option value="webapp">Web App</option>
-              <option value="mobile">Mobile App</option>
-              <option value="design">Design &amp; Branding</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="plura-form-field">
-            <label for="plura-contacts-cta-message">Message</label>
-            <textarea id="plura-contacts-cta-message" name="message" rows="4" required placeholder="Tell us about your project"></textarea>
-          </div>
-          <button type="submit" class="plura-btn plura-form-submit">Send</button>
-        </form>
+        </div>
       </div>
 
       <button class="plura-float-trigger" id="plura-contacts-cta-trigger" aria-expanded="false" aria-haspopup="dialog">
@@ -143,6 +156,12 @@
     </div>
   </div>
   <!-- ─── /CTA ─────────────────────────────────────────────── -->
+
+  <!-- ─── Projects carousel overlay ─────────────────────────── -->
+  <div id="plura-projects-carousel" class="" role="dialog" aria-modal="true" aria-label="Project details">
+    <!-- carousel injected dynamically -->
+  </div>
+  <!-- ─── /Projects carousel overlay ──────────────────────────── -->
 
   <!-- ─── Project detail ───────────────────────────────────── -->
   <div class="plura-morph-main plura-project-detail" id="plura-project-detail">
