@@ -208,6 +208,7 @@ function createItem(node, { type, duration, active = false } = {}) {
     animate,
     update(isActive) {
       itemEl.classList.toggle('plura-carousel-item--active', isActive);
+      if (isActive) itemEl.classList.add('plura-carousel-item--visited');
     },
   };
 }

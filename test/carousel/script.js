@@ -28,7 +28,7 @@ function itemsAuto() {
 function itemsEmpty(count) { return Array.from({ length: count }, () => el('div')); }
 
 function onEnter(index, slideEl) {
-  if (slideEl.querySelector('.on-enter-content')) return;
+  if (slideEl.classList.contains('plura-carousel-item--visited')) return;
   slideEl.appendChild(el('div', { class: 'on-enter-content', text: `Slide ${index + 1} — loaded on enter` }));
 }
 
