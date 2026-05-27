@@ -93,11 +93,6 @@ export function createCarousel(container, options = {}) {
 
   let arrowsCtrl, counterCtrl, dotsCtrl;
 
-  if (dots) {
-    dotsCtrl = createDots(slideItems.length, { dotsStyle, dotsMax }, i => goTo(i));
-    root.appendChild(dotsCtrl.el);
-  }
-
   // ── State ──────────────────────────────────────────────────────
 
   let index = -1;
@@ -131,17 +126,22 @@ export function createCarousel(container, options = {}) {
   function prev() { goTo(index > 0         ? Math.max(0,          index - step) : loop ? total - 1 : index); }
   function next() { goTo(index < total - 1 ? Math.min(total - 1,  index + step) : loop ? 0         : index); }
 
-  if (arrows) {
+  if (dots && total > 1) {
+    dotsCtrl = createDots(total, { dotsStyle, dotsMax }, i => goTo(i));
+    root.appendChild(dotsCtrl.el);
+  }
+
+  if (arrows && total > 1) {
     arrowsCtrl = createArrows(() => prev(), () => next(), loop);
     root.appendChild(arrowsCtrl.el);
   }
 
-  if (counter) {
+  if (counter && total > 1) {
     counterCtrl = createCounter();
     root.appendChild(counterCtrl.el);
   }
 
-  if (drag) {
+  if (drag && total > 1) {
     const dragOptions = { onPrev: prev, onNext: next };
 
     if (type === 'slide') {
@@ -154,7 +154,7 @@ export function createCarousel(container, options = {}) {
     createDrag(itemsCtrl.el, dragOptions);
   }
 
-  if (autoplay) {
+  if (autoplay && total > 1) {
     const autoplayCtrl = createAutoplay(next, typeof autoplay === 'number' ? autoplay : 3000);
     autoplayCtrl.start();
     root.addEventListener('pointerenter', autoplayCtrl.stop);
