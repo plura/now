@@ -4,50 +4,7 @@
   --plura-test-carousel-width:  480px;
   --plura-test-carousel-height: 240px;
   --plura-test-slide-width:     var(--plura-test-carousel-width);
-  --plura-test-layout-gap:      40px;
-  --plura-test-layout-padding:  40px;
-
-  --plura-test-color-muted:     #9a9a9a;
-  --plura-test-color-border:    #e0e0e0;
-  --plura-test-radius-card:     8px;
-  --plura-test-radius-tag:      4px;
-
-  --plura-test-font-xs:         0.7rem;
-  --plura-test-font-sm:         0.75rem;
-  --plura-test-font-base:       0.875rem;
-  --plura-test-font-lg:         1.25rem;
-  --plura-test-font-weight-normal:  400;
-  --plura-test-font-weight-semibold: 600;
-  --plura-test-letter-spacing:  0.06em;
-  --plura-test-line-height:     1.6;
-
-  --plura-test-color-slide-bg: #fbf9f6;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-}
-
-main {
-  padding: var(--plura-test-layout-padding);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--plura-test-layout-gap);
-}
-
-[data-label]::before {
-  content: attr(data-label);
-  display: block;
-  margin-bottom: 8px;
-  font-size: var(--plura-test-font-xs);
-  font-weight: var(--plura-test-font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: var(--plura-test-letter-spacing);
-  color: var(--plura-test-color-muted);
+  --plura-test-color-slide-bg:  #fbf9f6;
 }
 
 /* ── Counter ─────────────────────────────────────────────────────── */
@@ -66,7 +23,7 @@ main {
 
 .is-multi.plura-carousel,
 .is-auto.plura-carousel {
-  --plura-test-slide-width: calc(var(--plura-test-carousel-width) * 2); /* drives slide utility classes */
+  --plura-test-slide-width: calc(var(--plura-test-carousel-width) * 2);
   width: calc(var(--plura-test-carousel-width) * 2);
 }
 
