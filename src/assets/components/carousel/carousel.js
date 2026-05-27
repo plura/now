@@ -372,20 +372,30 @@ function createAutoplay(next, interval) {
 
 function createDrag(el, { onPrev, onNext, onMove, onCancel, threshold = 50 }) {
   let startX = 0;
+  let hadMultiTouch = false; // true if a second finger was seen during this gesture
 
   el.addEventListener('pointerdown', e => {
+    // isPrimary is true for the first finger only — ignore subsequent fingers but flag the gesture
+    if (!e.isPrimary) { hadMultiTouch = true; return; }
+    hadMultiTouch = false;
     startX = e.clientX;
-    el.setPointerCapture(e.pointerId); // keeps pointermove/pointerup firing even if pointer leaves the element
+    // setPointerCapture routes all future pointer events for this pointerId to this element,
+    // even if the pointer moves outside it — ensures pointermove/pointerup are never lost
+    el.setPointerCapture(e.pointerId);
     el.classList.add('plura-carousel--dragging');
   });
 
   el.addEventListener('pointermove', e => {
+    // hasPointerCapture guards against moves from uncaptured pointers (e.g. second finger)
     if (!el.hasPointerCapture(e.pointerId)) return;
     onMove?.(e.clientX - startX);
   });
 
   el.addEventListener('pointerup', e => {
+    if (!e.isPrimary) return; // ignore second-finger releases
     el.classList.remove('plura-carousel--dragging');
+    // if a second finger appeared during the gesture, cancel instead of navigating
+    if (hadMultiTouch) { onCancel?.(); return; }
     const delta = e.clientX - startX;
     if      (delta >  threshold) onPrev();
     else if (delta < -threshold) onNext();
