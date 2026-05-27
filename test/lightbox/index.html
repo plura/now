@@ -7,14 +7,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="../common.css">
+  <link rel="stylesheet" href="../../src/assets/components/carousel/carousel.css">
   <link rel="stylesheet" href="../../src/assets/components/lightbox/lightbox.css">
+  <link rel="stylesheet" href="../common.css">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
   <main>
-    <div id="lightbox-host"></div>
+
+    <div id="lightbox-buttons" class="lightbox-host" data-label="open by index">
+      <div class="lightbox-items"></div>
+    </div>
+
+    <div id="lightbox-embedded" class="lightbox-host" data-label="embedded images">
+      <div class="lightbox-items">
+        <img src="../media/Desktop _ Laptop.png" alt="Desktop / Laptop">
+        <img src="../media/iPad.png" alt="iPad">
+        <img src="../media/Mockup.png" alt="Mockup">
+        <img src="../media/Smartphone.png" alt="Smartphone">
+      </div>
+    </div>
+
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

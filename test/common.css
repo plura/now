@@ -8,6 +8,8 @@
 
   --plura-test-color-muted:    #9a9a9a;
   --plura-test-color-border:   #e0e0e0;
+  --plura-test-border-width:   1px;
+  --plura-test-color-slide-bg: #fbf9f6;
   --plura-test-radius-card:    8px;
   --plura-test-radius-tag:     4px;
 

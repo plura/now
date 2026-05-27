@@ -170,7 +170,7 @@ export function createCarousel(container, options = {}) {
 
   // ── Public API ─────────────────────────────────────────────────
 
-  return { root, prev, next };
+  return { root, prev, next, goTo: i => goTo(normalizeIndex(i)) };
 }
 
 // ── Items ─────────────────────────────────────────────────────────

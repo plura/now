@@ -4,7 +4,6 @@
   --plura-test-carousel-width:  480px;
   --plura-test-carousel-height: 240px;
   --plura-test-slide-width:     var(--plura-test-carousel-width);
-  --plura-test-color-slide-bg:  #fbf9f6;
 }
 
 /* ── Counter ─────────────────────────────────────────────────────── */
@@ -38,7 +37,7 @@
 
 .plura-carousel .plura-carousel-wrapper {
   height: var(--plura-test-carousel-height);
-  border: 1px solid var(--plura-test-color-border);
+  border: var(--plura-test-border-width) solid var(--plura-test-color-border);
   border-radius: var(--plura-test-radius-card);
 }
 
