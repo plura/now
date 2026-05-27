@@ -15,11 +15,8 @@
 }
 
 .plura-panel-title {
-  font-size:      var(--plura-font-size-xs);
-  font-weight:    var(--plura-font-weight-semi);
-  letter-spacing: var(--plura-letter-spacing-caps);
-  text-transform: uppercase;
-  color:          var(--plura-color-muted);
+  font-size:   var(--plura-font-size-base);
+  font-weight: var(--plura-font-weight-semi);
 }
 
 .plura-panel-body {
