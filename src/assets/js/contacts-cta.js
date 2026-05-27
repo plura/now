@@ -10,7 +10,7 @@ const ctaClose   = document.getElementById('plura-contacts-cta-close');
 
 // ─── Toggle ──────────────────────────────────────────────────
 
-const ctaContent = document.querySelector('.plura-contacts-cta-content');
+const ctaContent = document.querySelector('.plura-contacts-cta-content .plura-panel');
 
 let formW = 0, formH = 0;
 
