@@ -1,0 +1,32 @@
+/* ─── Projects carousel overlay ─────────────────────────────── */
+
+#plura-projects-carousel {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+}
+
+#plura-projects-carousel:not(.is-open) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* ─── Slides ─────────────────────────────────────────────────── */
+
+#plura-projects-carousel .plura-carousel-item {
+  width: 600px;
+}
+
+/* ─── Temp ───────────────────────────────────────────────────── */
+
+#plura-projects-carousel {
+  background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+#plura-projects-carousel .plura-carousel-item {
+  border-radius: 12px;
+  background: beige;
+}
