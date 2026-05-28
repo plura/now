@@ -185,8 +185,8 @@ function createItem(node, { type, duration, active = false } = {}) {
     ? node
     : el('div', { class: 'plura-carousel-item' }, ...(node instanceof Node ? [node] : Array.from(node)));
 
-  // static mode: data-thumb attribute; dynamic mode: thumb property on the node
-  const thumb = node.thumb ?? itemEl.dataset.thumb ?? null;
+  // static mode: data-thumb attribute; dynamic mode: thumb property on the node; img element: src
+  const thumb = node.thumb ?? itemEl.dataset.thumb ?? (node instanceof HTMLImageElement ? node.src : null);
 
   function animate(active, direction) {}
 
