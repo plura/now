@@ -44,16 +44,20 @@ export function createLightbox(images, initialIndex = 0, options = {}) {
   gsap.set(root, { autoAlpha: 0 });
 
   // ── Close on backdrop click ────────────────────────────────────
+  // elementFromPoint is used instead of e.target because the carousel's drag
+  // handler calls setPointerCapture on the items element, which routes all
+  // pointer events (including the click) to it — so e.target is always
+  // .plura-carousel-items regardless of what was actually clicked.
 
   root.addEventListener('click', e => {
     const actual = document.elementFromPoint(e.clientX, e.clientY);
-    if (!actual?.closest('img')) close();
+    if (!actual?.closest('img, .plura-carousel-arrow')) close();
   });
 
   // ── Open / Close ───────────────────────────────────────────────
 
   function open(i = currentIndex) {
-    carouselGoTo(i);
+    carouselGoTo(i, false);
     document.body.appendChild(root);
     gsap.to(root, { autoAlpha: 1, duration: 0.25 });
   }
