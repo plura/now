@@ -18,6 +18,13 @@
   width: 100%;
 }
 
+@media (min-width: 640px) {
+  .plura-carousel {
+    --plura-carousel-thumb-width:  52px;
+    --plura-carousel-thumb-height: 36px;
+  }
+}
+
 .plura-carousel-wrapper {
   overflow: hidden;
   width: 100%;
