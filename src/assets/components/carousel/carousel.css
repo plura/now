@@ -180,7 +180,7 @@
   transition: opacity var(--plura-carousel-transition);
 }
 
-.plura-carousel-indicators--thumbs .plura-carousel-indicator.is-active img {
+.plura-carousel-indicators--thumbs :is(.plura-carousel-indicator.is-active, .plura-carousel-indicator:hover) img {
   opacity: 1;
 }
 
