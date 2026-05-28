@@ -17,6 +17,42 @@
 
 #plura-projects-carousel .plura-carousel-item {
   width: 600px;
+  background: transparent;
+}
+
+/* ─── Item header ────────────────────────────────────────────── */
+
+.plura-projects-carousel-item-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--plura-gap-xs);
+  padding-bottom: var(--plura-morph-pad);
+  border-bottom: 1px solid var(--plura-color-border);
+}
+
+.plura-projects-carousel-item-title {
+  flex: 0 0 100%;
+  font-size: var(--plura-font-size-xl);
+  font-weight: var(--plura-font-weight-regular);
+}
+
+.plura-projects-carousel-item-category {
+  font-size: var(--plura-font-size-xs);
+  font-weight: var(--plura-font-weight-semi);
+  letter-spacing: var(--plura-letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--plura-color-muted);
+}
+
+/* ─── Item body ──────────────────────────────────────────────── */
+
+.plura-projects-carousel-item-desc {
+  font-size: var(--plura-font-size-sm);
+  font-weight: var(--plura-font-weight-light);
+  color: var(--plura-color-muted);
+  line-height: 1.7;
 }
 
 /* ─── Temp ───────────────────────────────────────────────────── */
@@ -24,9 +60,4 @@
 #plura-projects-carousel {
   background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
   backdrop-filter: blur(6px);
-}
-
-#plura-projects-carousel .plura-carousel-item {
-  border-radius: 12px;
-  background: beige;
 }
