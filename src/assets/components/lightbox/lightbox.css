@@ -3,21 +3,38 @@
 /* ── Overlay ──────────────────────────────────────────────────────── */
 
 .plura-lightbox {
+  --plura-lightbox-bg:                     rgba(0, 0, 0, 0.92);
+  --plura-lightbox-padding-top:            32px;
+  --plura-lightbox-padding-bottom:         24px;
+  --plura-lightbox-gap:                    16px;
+  --plura-lightbox-arrow-color:            #fff;
+  --plura-lightbox-img-max-width:          90vw;
+  --plura-lightbox-counter-color:          rgba(255, 255, 255, 0.6);
+  --plura-lightbox-counter-font-size:      13px;
+  --plura-lightbox-counter-letter-spacing: 0.05em;
+
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(0, 0, 0, 0.92);
+  background: var(--plura-lightbox-bg);
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: var(--plura-lightbox-padding-top) 0 var(--plura-lightbox-padding-bottom);
+  gap: var(--plura-lightbox-gap);
 }
 
 /* ── Stage ────────────────────────────────────────────────────────── */
 
+/* Wrapper fills remaining space after counter/dots; order pushes it above them. */
 .plura-lightbox .plura-carousel-wrapper {
-  height: 100%;
+  flex: 1;
+  min-height: 0;
+  order: 1;
 }
 
 .plura-lightbox .plura-carousel-arrow {
-  color: #fff;
+  color: var(--plura-lightbox-arrow-color);
 }
 
 .plura-lightbox .plura-carousel-item {
@@ -30,8 +47,8 @@
 
 .plura-lightbox-img {
   display: block;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: var(--plura-lightbox-img-max-width);
+  max-height: 100%;
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
@@ -40,13 +57,18 @@
 /* ── Counter ──────────────────────────────────────────────────────── */
 
 .plura-lightbox .plura-carousel-counter {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 13px;
-  letter-spacing: 0.05em;
+  order: 2;
+  text-align: center;
+  color: var(--plura-lightbox-counter-color);
+  font-size: var(--plura-lightbox-counter-font-size);
+  letter-spacing: var(--plura-lightbox-counter-letter-spacing);
   pointer-events: none;
   white-space: nowrap;
+}
+
+/* ── Indicators ───────────────────────────────────────────────────── */
+
+.plura-lightbox .plura-carousel-indicators {
+  order: 3;
+  margin-top: 0;
 }

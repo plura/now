@@ -4,21 +4,23 @@ import { el } from '../../js/utils.js';
 import { createCarousel } from '../carousel/carousel.js';
 
 /**
- * @param {string[]}  images            Array of image URLs.
- * @param {number}    [initialIndex=0]  Initial image index.
- * @param {object}    [options={}]
- * @param {Function}  [options.onClose]      Called with final index when lightbox closes.
- * @param {boolean}   [options.counter=false] Show slide counter.
- * @param {boolean}   [options.arrows=false]  Show prev/next arrows.
+ * @param {string[]|Element[]|NodeList} items           Image URLs or existing DOM nodes.
+ * @param {number}                      [initialIndex=0] Initial image index.
+ * @param {object}                      [options={}]
+ * @param {Function}  [options.onClose]        Called with final index when lightbox closes.
+ * @param {boolean}   [options.counter=false]  Show slide counter.
+ * @param {boolean}   [options.arrows=false]   Show prev/next arrows.
+ * @param {boolean}   [options.indicators=false] Show indicator dots.
+ * @param {boolean}   [options.thumbs=false]   Use thumbnail indicators.
  * @returns {{ open: Function, close: Function, goTo: Function }}
  */
-export function createLightbox(images, initialIndex = 0, options = {}) {
-  const { onClose, counter = false, arrows = false } = options;
+export function createLightbox(items, initialIndex = 0, options = {}) {
+  const { onClose, counter = false, arrows = false, indicators = false, thumbs = false } = options;
 
   // ── Items ──────────────────────────────────────────────────────
 
-  const items = images.map(url =>
-    el('img', { class: 'plura-lightbox-img', src: url, alt: '' })
+  const carouselItems = Array.from(items).map(item =>
+    typeof item === 'string' ? el('img', { src: item, alt: '' }) : item.cloneNode(true)
   );
 
   // ── Carousel ───────────────────────────────────────────────────
@@ -28,13 +30,15 @@ export function createLightbox(images, initialIndex = 0, options = {}) {
 
   const container = document.createElement('div');
   const { root, prev, next, goTo: carouselGoTo } = createCarousel(container, {
-    items,
-    type:    'fade',
+    items:      carouselItems,
+    type:       'fade',
     arrows,
-    drag:    true,
+    drag:       true,
     counter,
-    loop:    false,
-    index:   initialIndex,
+    indicators,
+    thumbs,
+    loop:       false,
+    index:      initialIndex,
     on: {
       enter: i => { currentIndex = i; },
     },
