@@ -22,6 +22,7 @@ import { el } from '../../js/utils.js';
  * @param {boolean}                [options.dots=false]         Show dot navigation.
  * @param {'normal'|'scroll'}      [options.dotsStyle='normal'] Dot style variant.
  * @param {number}                 [options.dotsMax=7]          Max visible dots in scroll style.
+ * @param {boolean}                [options.thumbs=false]       Use thumbnail images as indicators instead of dots (overrides dots style).
  * // counter
  * @param {boolean}                [options.counter=false]      Show slide counter (e.g. 2 / 5).
  * // multi-slide (slide type only)
@@ -58,6 +59,7 @@ export function createCarousel(container, options = {}) {
     dots      = false,
     dotsStyle = 'normal',
     dotsMax   = 7,
+    thumbs    = false,
     // counter
     counter  = false,
     // multi-slide (slide type only)
@@ -126,8 +128,9 @@ export function createCarousel(container, options = {}) {
   function prev() { goTo(index > 0         ? Math.max(0,          index - step) : loop ? total - 1 : index); }
   function next() { goTo(index < total - 1 ? Math.min(total - 1,  index + step) : loop ? 0         : index); }
 
-  if (dots && total > 1) {
-    dotsCtrl = createDots(total, { dotsStyle, dotsMax }, i => goTo(i));
+  if ((dots || thumbs) && total > 1) {
+    const thumbSrcs = thumbs ? slideItems.map(item => item.thumb) : null;
+    dotsCtrl = createDots(total, { dotsStyle, dotsMax, thumbs, thumbSrcs }, i => goTo(i));
     root.appendChild(dotsCtrl.el);
   }
 
@@ -182,6 +185,9 @@ function createItem(node, { type, duration, active = false } = {}) {
     ? node
     : el('div', { class: 'plura-carousel-item' }, ...(node instanceof Node ? [node] : Array.from(node)));
 
+  // static mode: data-thumb attribute; dynamic mode: thumb property on the node
+  const thumb = node.thumb ?? itemEl.dataset.thumb ?? null;
+
   function animate(active, direction) {}
 
   // `active` sets the initial GSAP state — true for the first item, false for all others.
@@ -212,6 +218,7 @@ function createItem(node, { type, duration, active = false } = {}) {
 
   return {
     el: itemEl,
+    thumb,
     animate,
     update(isActive) {
       itemEl.classList.toggle('plura-carousel-item--active', isActive);
@@ -302,60 +309,50 @@ function createArrows(onPrev, onNext, loop = false) {
   };
 }
 
-function createDots(count, { dotsStyle = 'normal', dotsMax = 7 }, onSelect) {
-  if (dotsStyle === 'normal') {
-    const container = el('div', { class: 'plura-carousel-dots' });
-    for (let i = 0; i < count; i++) {
-      const dot = el('button', { class: 'plura-carousel-dot', 'aria-label': `Go to slide ${i + 1}` });
-      dot.addEventListener('click', () => onSelect(i));
-      container.appendChild(dot);
-    }
+function createDots(count, { dotsStyle = 'normal', dotsMax = 7, thumbs = false, thumbSrcs = null }, onSelect) {
+  const isScroll = !thumbs && dotsStyle === 'scroll';
 
-    return {
-      el: container,
-      update(index) {
-        Array.from(container.children).forEach((dot, i) => {
-          dot.classList.toggle('is-active', i === index);
-        });
-      },
-    };
-  }
+  const cls = ['plura-carousel-dots', thumbs && 'plura-carousel-dots--thumbs', isScroll && 'plura-carousel-dots--scroll'].filter(Boolean).join(' ');
+  const container = el('div', { class: cls });
+  let target = container; // buttons are appended to strip in scroll mode, container otherwise
 
-  if (dotsStyle === 'scroll') {
-    const dotSize = 8;
-    const dotGap  = 6;
-    const unit    = dotSize + dotGap;
-    const half    = Math.floor(dotsMax / 2);
-
+  let unit;
+  if (isScroll) {
+    const dotSize = 8, dotGap = 6;
+    unit = dotSize + dotGap;
+    const half  = Math.floor(dotsMax / 2);
     const strip = el('div', { class: 'plura-carousel-dots-strip' });
     strip.style.paddingLeft = strip.style.paddingRight = `${half * unit}px`;
-
-    for (let i = 0; i < count; i++) {
-      const dot = el('button', { class: 'plura-carousel-dot', 'aria-label': `Go to slide ${i + 1}` });
-      dot.addEventListener('click', () => onSelect(i));
-      strip.appendChild(dot);
-    }
-
-    const container = el('div', { class: 'plura-carousel-dots plura-carousel-dots--scroll' }, strip);
-    container.style.setProperty('--dots-max',          dotsMax);
+    container.style.setProperty('--dots-max',                dotsMax);
     container.style.setProperty('--plura-carousel-dot-size', `${dotSize}px`);
     container.style.setProperty('--plura-carousel-dot-gap',  `${dotGap}px`);
+    container.appendChild(strip);
+    target = strip;
+  }
 
-    return {
-      el: container,
-      update(index) {
-        strip.style.transform = `translateX(${-index * unit}px)`;
-        Array.from(strip.children).forEach((dot, i) => {
+  for (let i = 0; i < count; i++) {
+    const inner = thumbs ? (thumbSrcs?.[i] ? el('img', { src: thumbSrcs[i], alt: `Slide ${i + 1}` }) : el('div')) : null;
+    const btn   = el('button', { class: 'plura-carousel-dot', 'aria-label': `Go to slide ${i + 1}` }, ...(inner ? [inner] : []));
+    btn.addEventListener('click', () => onSelect(i));
+    target.appendChild(btn);
+  }
+
+  return {
+    el: container,
+    update(index) {
+      Array.from(target.children).forEach((btn, i) => {
+        btn.classList.toggle('is-active', i === index);
+        if (isScroll) {
           const dist    = Math.abs(i - index);
           const scale   = dist === 0 ? 1 : dist === 1 ? 0.72 : dist === 2 ? 0.54 : 0.4;
           const opacity = dist === 0 ? 1 : dist === 1 ? 0.7  : dist === 2 ? 0.45 : 0.2;
-          dot.classList.toggle('is-active', i === index);
-          dot.style.transform = `scale(${scale})`;
-          dot.style.opacity   = String(opacity);
-        });
-      },
-    };
-  }
+          btn.style.transform = `scale(${scale})`;
+          btn.style.opacity   = String(opacity);
+        }
+      });
+      if (isScroll) target.style.transform = `translateX(${-index * unit}px)`;
+    },
+  };
 }
 
 function createAutoplay(next, interval) {

@@ -146,6 +146,38 @@
   opacity: 1;
 }
 
+/* ── Thumb dots ──────────────────────────────────────────────────── */
+
+.plura-carousel-dots--thumbs {
+  gap: var(--plura-carousel-dot-gap);
+  margin-top: var(--plura-carousel-dots-margin);
+}
+
+.plura-carousel-dots--thumbs .plura-carousel-dot {
+  width:  auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  opacity: 1;
+}
+
+.plura-carousel-dots--thumbs .plura-carousel-dot img,
+.plura-carousel-dots--thumbs .plura-carousel-dot div {
+  display: block;
+  width:  40px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: var(--plura-carousel-dot-opacity);
+  transition: opacity 0.3s ease;
+}
+
+.plura-carousel-dots--thumbs .plura-carousel-dot.is-active img,
+.plura-carousel-dots--thumbs .plura-carousel-dot.is-active div {
+  opacity: 1;
+}
+
 /* ── Scroll dots ─────────────────────────────────────────────────── */
 
 .plura-carousel-dots--scroll {
