@@ -112,9 +112,9 @@ export function createCarousel(container, options = {}) {
 
   // ── Navigation ─────────────────────────────────────────────────
 
-  function goTo(i) {
+  function goTo(i, animate = true) {
     if (index !== -1) on.leave?.(index, slideItems[index].el); // 1. outgoing slide (skipped on init)
-    itemsCtrl.animate(index, i);                               // 2. animate
+    itemsCtrl.animate(index, i, animate);                      // 2. animate (or instant set)
     on.change?.(index, i);                                     // 3. transition starts (fromIndex, toIndex)
     index = i;
     updateState();                                             // 4. active class, arrows, dots, counter
@@ -170,7 +170,7 @@ export function createCarousel(container, options = {}) {
 
   // ── Public API ─────────────────────────────────────────────────
 
-  return { root, prev, next, goTo: i => goTo(normalizeIndex(i)) };
+  return { root, prev, next, goTo: (i, animate) => goTo(normalizeIndex(i), animate) };
 }
 
 // ── Items ─────────────────────────────────────────────────────────
@@ -187,11 +187,15 @@ function createItem(node, { type, duration, active = false } = {}) {
   // `active` sets the initial GSAP state — true for the first item, false for all others.
   if (type === 'cover') {
     gsap.set(itemEl, { x: '0%', autoAlpha: active ? 1 : 0, zIndex: active ? 1 : 0 });
-    animate = (active, direction) => {
+    animate = (active, direction, animated = true) => {
       if (active) {
-        gsap.set(itemEl, { x: direction === 1 ? '100%' : '-100%', zIndex: 1, autoAlpha: 1 });
-        // overwrite: 'auto' redirects any running tween on conflicting properties rather than killing it abruptly.
-      gsap.to(itemEl,  { x: '0%', duration, ease: 'power2.inOut', overwrite: 'auto' });
+        if (animated) {
+          gsap.set(itemEl, { x: direction === 1 ? '100%' : '-100%', zIndex: 1, autoAlpha: 1 });
+          // overwrite: 'auto' redirects any running tween on conflicting properties rather than killing it abruptly.
+          gsap.to(itemEl,  { x: '0%', duration, ease: 'power2.inOut', overwrite: 'auto' });
+        } else {
+          gsap.set(itemEl, { x: '0%', zIndex: 1, autoAlpha: 1 });
+        }
       } else {
         gsap.set(itemEl, { zIndex: 0 });
       }
@@ -200,7 +204,10 @@ function createItem(node, { type, duration, active = false } = {}) {
 
   if (type === 'fade') {
     gsap.set(itemEl, { autoAlpha: active ? 1 : 0, x: '0%' });
-    animate = (active) => gsap.to(itemEl, { autoAlpha: active ? 1 : 0, duration, ease: 'power1.inOut', overwrite: 'auto' });
+    animate = (active, direction, animated = true) => {
+      if (animated) gsap.to(itemEl,  { autoAlpha: active ? 1 : 0, duration, ease: 'power1.inOut', overwrite: 'auto' });
+      else          gsap.set(itemEl, { autoAlpha: active ? 1 : 0 });
+    };
   }
 
   return {
@@ -256,14 +263,15 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
     return x + (wrapper.clientWidth - items[index].el.offsetWidth) / 2;
   }
 
-  function animate(fromIndex, toIndex) {
+  function animate(fromIndex, toIndex, animated = true) {
     const direction = toIndex > fromIndex ? 1 : -1;
 
     if (type === 'slide') {
-      gsap.to(itemsEl, { x: slideX(toIndex), duration, ease: 'power2.inOut', overwrite: 'auto' });
+      if (animated) gsap.to(itemsEl,  { x: slideX(toIndex), duration, ease: 'power2.inOut', overwrite: 'auto' });
+      else          gsap.set(itemsEl, { x: slideX(toIndex) });
     } else {
-      if (fromIndex !== -1) items[fromIndex].animate(false, direction);
-      items[toIndex].animate(true, direction);
+      if (fromIndex !== -1) items[fromIndex].animate(false, direction, animated);
+      items[toIndex].animate(true, direction, animated);
     }
   }
 
