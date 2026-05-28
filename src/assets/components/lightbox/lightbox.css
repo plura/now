@@ -16,6 +16,10 @@
   height: 100%;
 }
 
+.plura-lightbox .plura-carousel-arrow {
+  color: #fff;
+}
+
 .plura-lightbox .plura-carousel-item {
   display: flex;
   align-items: center;

@@ -37,7 +37,7 @@ import { el } from '../../js/utils.js';
  * @param {Function}               [options.on.enter]           Fires on incoming slide: (index, el).
  * @param {Function}               [options.on.leave]           Fires on outgoing slide: (index, el).
  * @param {Function}               [options.on.change]          Fires once per navigation: (fromIndex, toIndex).
- * @returns {{ root: Element, prev: Function, next: Function }}
+ * @returns {{ root: Element, prev: Function, next: Function, goTo: Function }}
  */
 export function createCarousel(container, options = {}) {
   const {
@@ -279,12 +279,8 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
 // ── Nav ──────────────────────────────────────────────────────────
 
 function createArrows(onPrev, onNext, loop = false) {
-  const btnPrev = el('button', { class: 'plura-carousel-arrow plura-carousel-arrow--prev', 'aria-label': 'Previous' },
-    el('i', { 'data-lucide': 'chevron-left' })
-  );
-  const btnNext = el('button', { class: 'plura-carousel-arrow plura-carousel-arrow--next', 'aria-label': 'Next' },
-    el('i', { 'data-lucide': 'chevron-right' })
-  );
+  const btnPrev = el('button', { class: 'plura-carousel-arrow plura-carousel-arrow--prev', 'aria-label': 'Previous' });
+  const btnNext = el('button', { class: 'plura-carousel-arrow plura-carousel-arrow--next', 'aria-label': 'Next' });
 
   btnPrev.addEventListener('click', onPrev);
   btnNext.addEventListener('click', onNext);
