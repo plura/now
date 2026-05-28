@@ -3,12 +3,19 @@
 /* ── Layout ──────────────────────────────────────────────────────── */
 
 .plura-carousel {
-  position: relative;
-  width: 100%;
+  --plura-carousel-item-bg:           #fff;
+  --plura-carousel-arrow-size:        24px;
   --plura-carousel-indicator-size:    8px;
   --plura-carousel-indicator-gap:     6px;
   --plura-carousel-indicator-opacity: 0.2;
   --plura-carousel-indicators-margin: 12px;
+  --plura-carousel-thumb-width:       40px;
+  --plura-carousel-thumb-height:      28px;
+  --plura-carousel-thumb-radius:      3px;
+  --plura-carousel-transition:        0.3s ease;
+
+  position: relative;
+  width: 100%;
 }
 
 .plura-carousel-wrapper {
@@ -29,7 +36,7 @@
 .plura-carousel-item {
   position: absolute;
   inset: 0;
-  background: #fff;
+  background: var(--plura-carousel-item-bg);
 }
 
 /* ── Slide type ──────────────────────────────────────────────────── */
@@ -78,8 +85,8 @@
 .plura-carousel-arrow::before {
   content: '';
   display: block;
-  width: 24px;
-  height: 24px;
+  width: var(--plura-carousel-arrow-size);
+  height: var(--plura-carousel-arrow-size);
   background-color: currentColor;
   mask-repeat: no-repeat;
   mask-position: center;
@@ -100,7 +107,7 @@
 }
 
 .plura-carousel-arrow:disabled {
-  opacity: 0.2;
+  opacity: var(--plura-carousel-indicator-opacity);
   cursor: default;
   pointer-events: none;
 }
@@ -139,7 +146,7 @@
   border-radius: 50%;
   background: currentColor;
   opacity: var(--plura-carousel-indicator-opacity);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform var(--plura-carousel-transition), opacity var(--plura-carousel-transition);
 }
 
 .plura-carousel-indicator.is-active {
@@ -158,12 +165,12 @@
 
 .plura-carousel-indicators--thumbs .plura-carousel-indicator img {
   display: block;
-  width:  40px;
-  height: 28px;
+  width:  var(--plura-carousel-thumb-width);
+  height: var(--plura-carousel-thumb-height);
   object-fit: cover;
-  border-radius: 3px;
+  border-radius: var(--plura-carousel-thumb-radius);
   opacity: var(--plura-carousel-indicator-opacity);
-  transition: opacity 0.3s ease;
+  transition: opacity var(--plura-carousel-transition);
 }
 
 .plura-carousel-indicators--thumbs .plura-carousel-indicator.is-active img {
@@ -182,5 +189,5 @@
   display: flex;
   align-items: center;
   gap: var(--plura-carousel-indicator-gap);
-  transition: transform 0.3s ease;
+  transition: transform var(--plura-carousel-transition);
 }
