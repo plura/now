@@ -5,10 +5,10 @@
 .plura-carousel {
   position: relative;
   width: 100%;
-  --plura-carousel-dot-size:    8px;
-  --plura-carousel-dot-gap:     6px;
-  --plura-carousel-dot-opacity: 0.2;
-  --plura-carousel-dots-margin: 12px;
+  --plura-carousel-indicator-size:    8px;
+  --plura-carousel-indicator-gap:     6px;
+  --plura-carousel-indicator-opacity: 0.2;
+  --plura-carousel-indicators-margin: 12px;
 }
 
 .plura-carousel-wrapper {
@@ -118,42 +118,37 @@
   content: ' /';
 }
 
-/* ── Dots ────────────────────────────────────────────────────────── */
+/* ── Indicators ──────────────────────────────────────────────────── */
 
-.plura-carousel-dots {
+.plura-carousel-indicators {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--plura-carousel-dot-gap);
-  margin: var(--plura-carousel-dots-margin) auto 0;
+  gap: var(--plura-carousel-indicator-gap);
+  margin: var(--plura-carousel-indicators-margin) auto 0;
 }
 
-.plura-carousel-dot {
+.plura-carousel-indicator {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
-  width:  var(--plura-carousel-dot-size);
-  height: var(--plura-carousel-dot-size);
+  width:  var(--plura-carousel-indicator-size);
+  height: var(--plura-carousel-indicator-size);
   border-radius: 50%;
   background: currentColor;
-  opacity: var(--plura-carousel-dot-opacity);
+  opacity: var(--plura-carousel-indicator-opacity);
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.plura-carousel-dot.is-active {
+.plura-carousel-indicator.is-active {
   opacity: 1;
 }
 
-/* ── Thumb dots ──────────────────────────────────────────────────── */
+/* ── Thumbs ──────────────────────────────────────────────────────── */
 
-.plura-carousel-dots--thumbs {
-  gap: var(--plura-carousel-dot-gap);
-  margin-top: var(--plura-carousel-dots-margin);
-}
-
-.plura-carousel-dots--thumbs .plura-carousel-dot {
+.plura-carousel-indicators--thumbs .plura-carousel-indicator {
   width:  auto;
   height: auto;
   border-radius: 0;
@@ -161,34 +156,31 @@
   opacity: 1;
 }
 
-.plura-carousel-dots--thumbs .plura-carousel-dot img,
-.plura-carousel-dots--thumbs .plura-carousel-dot div {
+.plura-carousel-indicators--thumbs .plura-carousel-indicator img {
   display: block;
   width:  40px;
   height: 28px;
   object-fit: cover;
   border-radius: 3px;
-  background: currentColor;
-  opacity: var(--plura-carousel-dot-opacity);
+  opacity: var(--plura-carousel-indicator-opacity);
   transition: opacity 0.3s ease;
 }
 
-.plura-carousel-dots--thumbs .plura-carousel-dot.is-active img,
-.plura-carousel-dots--thumbs .plura-carousel-dot.is-active div {
+.plura-carousel-indicators--thumbs .plura-carousel-indicator.is-active img {
   opacity: 1;
 }
 
-/* ── Scroll dots ─────────────────────────────────────────────────── */
+/* ── Scroll ──────────────────────────────────────────────────────── */
 
-.plura-carousel-dots--scroll {
+.plura-carousel-indicators--scroll {
   display: block;
   overflow: hidden;
-  width: calc(var(--dots-max) * (var(--plura-carousel-dot-size) + var(--plura-carousel-dot-gap)) - var(--plura-carousel-dot-gap));
+  width: calc(var(--indicators-max) * (var(--plura-carousel-indicator-size) + var(--plura-carousel-indicator-gap)) - var(--plura-carousel-indicator-gap));
 }
 
-.plura-carousel-dots-strip {
+.plura-carousel-indicators-strip {
   display: flex;
   align-items: center;
-  gap: var(--plura-carousel-dot-gap);
+  gap: var(--plura-carousel-indicator-gap);
   transition: transform 0.3s ease;
 }

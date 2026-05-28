@@ -11,7 +11,7 @@
 .plura-carousel-counter {
   font-size: var(--plura-test-font-xs);
   color: var(--plura-test-color-muted);
-  margin-top: var(--plura-carousel-dots-margin);
+  margin-top: var(--plura-carousel-indicators-margin);
 }
 
 /* ── Carousel size ───────────────────────────────────────────────── */

@@ -19,10 +19,10 @@ import { el } from '../../js/utils.js';
  * @param {boolean}                [options.loop=false]         Wrap around at first/last slide.
  * @param {boolean|number}         [options.autoplay=false]     true = 3000 ms, or pass ms directly.
  * // dots
- * @param {boolean}                [options.dots=false]         Show dot navigation.
- * @param {'normal'|'scroll'}      [options.dotsStyle='normal'] Dot style variant.
- * @param {number}                 [options.dotsMax=7]          Max visible dots in scroll style.
- * @param {boolean}                [options.thumbs=false]       Use thumbnail images as indicators instead of dots (overrides dots style).
+ * @param {boolean}                [options.indicators=false]         Show indicator navigation.
+ * @param {'normal'|'scroll'}      [options.indicatorsStyle='normal'] Indicator style variant.
+ * @param {number}                 [options.indicatorsMax=7]          Max visible indicators in scroll style.
+ * @param {boolean}                [options.thumbs=false]             Use thumbnail images as indicators (overrides normal/scroll style).
  * // counter
  * @param {boolean}                [options.counter=false]      Show slide counter (e.g. 2 / 5).
  * // multi-slide (slide type only)
@@ -55,11 +55,11 @@ export function createCarousel(container, options = {}) {
     // playback
     loop     = false,
     autoplay = false,
-    // dots
-    dots      = false,
-    dotsStyle = 'normal',
-    dotsMax   = 7,
-    thumbs    = false,
+    // indicators
+    indicators      = false,
+    indicatorsStyle = 'normal',
+    indicatorsMax   = 7,
+    thumbs          = false,
     // counter
     counter  = false,
     // multi-slide (slide type only)
@@ -93,7 +93,7 @@ export function createCarousel(container, options = {}) {
 
   // ── Nav elements ───────────────────────────────────────────────
 
-  let arrowsCtrl, counterCtrl, dotsCtrl;
+  let arrowsCtrl, counterCtrl, indicatorsCtrl;
 
   // ── State ──────────────────────────────────────────────────────
 
@@ -107,9 +107,9 @@ export function createCarousel(container, options = {}) {
 
   function updateState() {
     itemsCtrl.update(index);
-    if (arrowsCtrl)  arrowsCtrl.update(index, total);
-    if (counterCtrl) counterCtrl.update(index, total);
-    if (dotsCtrl)    dotsCtrl.update(index);
+    if (arrowsCtrl)      arrowsCtrl.update(index, total);
+    if (counterCtrl)     counterCtrl.update(index, total);
+    if (indicatorsCtrl)  indicatorsCtrl.update(index);
   }
 
   // ── Navigation ─────────────────────────────────────────────────
@@ -128,10 +128,10 @@ export function createCarousel(container, options = {}) {
   function prev() { goTo(index > 0         ? Math.max(0,          index - step) : loop ? total - 1 : index); }
   function next() { goTo(index < total - 1 ? Math.min(total - 1,  index + step) : loop ? 0         : index); }
 
-  if ((dots || thumbs) && total > 1) {
+  if ((indicators || thumbs) && total > 1) {
     const thumbSrcs = thumbs ? slideItems.map(item => item.thumb) : null;
-    dotsCtrl = createDots(total, { dotsStyle, dotsMax, thumbs, thumbSrcs }, i => goTo(i));
-    root.appendChild(dotsCtrl.el);
+    indicatorsCtrl = createIndicators(total, { indicatorsStyle, indicatorsMax, thumbs, thumbSrcs }, i => goTo(i));
+    root.appendChild(indicatorsCtrl.el);
   }
 
   if (arrows && total > 1) {
@@ -309,30 +309,30 @@ function createArrows(onPrev, onNext, loop = false) {
   };
 }
 
-function createDots(count, { dotsStyle = 'normal', dotsMax = 7, thumbs = false, thumbSrcs = null }, onSelect) {
-  const isScroll = !thumbs && dotsStyle === 'scroll';
+function createIndicators(count, { indicatorsStyle = 'normal', indicatorsMax = 7, thumbs = false, thumbSrcs = null }, onSelect) {
+  const isScroll = !thumbs && indicatorsStyle === 'scroll';
 
-  const cls = ['plura-carousel-dots', thumbs && 'plura-carousel-dots--thumbs', isScroll && 'plura-carousel-dots--scroll'].filter(Boolean).join(' ');
+  const cls = ['plura-carousel-indicators', thumbs && 'plura-carousel-indicators--thumbs', isScroll && 'plura-carousel-indicators--scroll'].filter(Boolean).join(' ');
   const container = el('div', { class: cls });
   let target = container; // buttons are appended to strip in scroll mode, container otherwise
 
   let unit;
   if (isScroll) {
-    const dotSize = 8, dotGap = 6;
-    unit = dotSize + dotGap;
-    const half  = Math.floor(dotsMax / 2);
-    const strip = el('div', { class: 'plura-carousel-dots-strip' });
+    const indicatorSize = 8, indicatorGap = 6;
+    unit = indicatorSize + indicatorGap;
+    const half  = Math.floor(indicatorsMax / 2);
+    const strip = el('div', { class: 'plura-carousel-indicators-strip' });
     strip.style.paddingLeft = strip.style.paddingRight = `${half * unit}px`;
-    container.style.setProperty('--dots-max',                dotsMax);
-    container.style.setProperty('--plura-carousel-dot-size', `${dotSize}px`);
-    container.style.setProperty('--plura-carousel-dot-gap',  `${dotGap}px`);
+    container.style.setProperty('--indicators-max',                    indicatorsMax);
+    container.style.setProperty('--plura-carousel-indicator-size', `${indicatorSize}px`);
+    container.style.setProperty('--plura-carousel-indicator-gap',  `${indicatorGap}px`);
     container.appendChild(strip);
     target = strip;
   }
 
   for (let i = 0; i < count; i++) {
-    const inner = thumbs ? (thumbSrcs?.[i] ? el('img', { src: thumbSrcs[i], alt: `Slide ${i + 1}` }) : el('div')) : null;
-    const btn   = el('button', { class: 'plura-carousel-dot', 'aria-label': `Go to slide ${i + 1}` }, ...(inner ? [inner] : []));
+    const inner = thumbs && thumbSrcs?.[i] ? el('img', { src: thumbSrcs[i], alt: `Slide ${i + 1}` }) : null;
+    const btn   = el('button', { class: 'plura-carousel-indicator', 'aria-label': `Go to slide ${i + 1}` }, ...(inner ? [inner] : []));
     btn.addEventListener('click', () => onSelect(i));
     target.appendChild(btn);
   }
