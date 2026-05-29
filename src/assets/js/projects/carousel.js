@@ -2,6 +2,7 @@
 
 import { createCarousel } from '../../components/carousel/carousel.js';
 import { createProjectsCarouselItem } from './carousel-item.js';
+import { initOverlay } from '../overlay.js';
 
 const overlay = document.getElementById('plura-projects-carousel');
 
@@ -17,13 +18,29 @@ export function createProjectsCarousel({ categories, projects }) {
     slideEl.appendChild(createProjectsCarouselItem(flat[index]));
   }
 
-  createCarousel(overlay, {
+  const { goTo } = createCarousel(overlay, {
     items:   flat.length,
     perView: 'auto',
     center:  true,
     gap:     100,
     on: { enter: onEnter },
   });
+
+  const { open: overlayOpen, close: overlayClose } = initOverlay(overlay, {
+    keepOpenSelector: '.plura-carousel-item',
+    onDismiss: close,
+  });
+
+  function open(index) {
+    goTo(index, false);
+    overlayOpen();
+  }
+
+  function close() {
+    overlayClose();
+  }
+
+  return { open, close, goTo };
 }
 
 // ─── Helpers ──────────────────────────────────────────────────

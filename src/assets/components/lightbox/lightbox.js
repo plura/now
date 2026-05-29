@@ -2,6 +2,7 @@
 
 import { el } from '../../js/utils.js';
 import { createCarousel } from '../carousel/carousel.js';
+import { initOverlay } from '../../js/overlay.js';
 
 const registry = new Map();
 
@@ -58,21 +59,10 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   });
 
   root.classList.add('plura-lightbox');
-  gsap.set(root, { autoAlpha: 0 });
 
-  // ── Close on backdrop click ────────────────────────────────────
-  // elementFromPoint is used instead of e.target because the carousel's drag
-  // handler calls setPointerCapture on the items element, which routes all
-  // pointer events (including the click) to it — so e.target is always
-  // .plura-carousel-items regardless of what was actually clicked.
-
-  root.addEventListener('keydown', e => {
-    if (e.key === 'Escape') close();
-  });
-
-  root.addEventListener('click', e => {
-    const actual = document.elementFromPoint(e.clientX, e.clientY);
-    if (!actual?.closest('.plura-carousel-item :is(img, video), .plura-carousel-arrow, .plura-carousel-indicators')) close();
+  const { open: overlayOpen, close: overlayClose } = initOverlay(root, {
+    keepOpenSelector: '.plura-carousel-item :is(img, video), .plura-carousel-arrow, .plura-carousel-indicators',
+    onDismiss: () => close(),
   });
 
   // ── Open / Close ───────────────────────────────────────────────
@@ -80,16 +70,12 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   function open(i = currentIndex) {
     carouselGoTo(i, false);
     document.body.appendChild(root);
-    // visibility must be set before focus() — browsers ignore focus on visibility:hidden elements.
-    // gsap.set handles this immediately; autoAlpha then animates opacity only.
-    gsap.set(root, { visibility: 'visible' });
-    root.focus();
-    gsap.to(root, { opacity: 1, duration: 0.25 });
+    overlayOpen();
   }
 
   function close() {
     const finalIndex = currentIndex;
-    gsap.to(root, { opacity: 0, duration: 0.2, onComplete: () => { gsap.set(root, { visibility: 'hidden' }); root.remove(); } });
+    overlayClose(() => root.remove());
     onClose?.(finalIndex);
   }
 
