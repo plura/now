@@ -24,9 +24,7 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   // If an id is given and an instance already exists, swap items and return it.
 
   if (id && registry.has(id)) {
-    const instance = registry.get(id);
-    instance.setItems(items, initialIndex);
-    return instance;
+    return registry.get(id);
   }
 
   // ── Items ──────────────────────────────────────────────────────
@@ -86,9 +84,15 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
     onClose?.(finalIndex);
   }
 
+  let lastItems = null;
+
   function setItems(raw, startIndex = 0) {
-    carouselSetItems(buildCarouselItems(raw), startIndex);
-    currentIndex = startIndex;
+    if (raw === lastItems) {
+      carouselGoTo(startIndex, false);
+    } else {
+      lastItems = raw;
+      carouselSetItems(buildCarouselItems(raw), startIndex);
+    }
   }
 
   // ── Public API ─────────────────────────────────────────────────
