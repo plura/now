@@ -37,6 +37,10 @@
   color: var(--plura-lightbox-arrow-color);
 }
 
+.plura-lightbox .plura-carousel-arrow:disabled {
+  pointer-events: all;
+}
+
 .plura-lightbox .plura-carousel-item {
   display: flex;
   align-items: center;
