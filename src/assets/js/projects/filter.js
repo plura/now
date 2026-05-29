@@ -17,6 +17,9 @@ const active = {
   statuses:   new Set(),
 };
 
+let _container;
+let _projects;
+
 function hasActive() {
   return active.categories.size || active.tags.size || active.statuses.size;
 }
@@ -34,8 +37,8 @@ export function initFilter(data, projectsContainer) {
     })
   );
 
-  filterPanel._container = projectsContainer;
-  filterPanel._projects  = data.projects;
+  _container = projectsContainer;
+  _projects  = data.projects;
 }
 
 // ─── Panel ────────────────────────────────────────────────────
@@ -144,14 +147,13 @@ function clearFilter() {
 function applyFilter() {
   clearBtn.hidden = !hasActive();
 
-  const passing   = filterProjects(filterPanel._projects, active);
-  const container = filterPanel._container;
+  const passing = filterProjects(_projects, active);
 
-  container.querySelectorAll('.plura-projects-item').forEach(item => {
+  _container.querySelectorAll('.plura-projects-item').forEach(item => {
     item.classList.toggle('plura-projects-item--filtered', !passing.has(item.dataset.title));
   });
 
-  container.querySelectorAll('.plura-projects-card').forEach(card => {
+  _container.querySelectorAll('.plura-projects-card').forEach(card => {
     const visible = card.querySelectorAll('.plura-projects-item:not(.plura-projects-item--filtered)').length;
     card.classList.toggle('plura-projects-card--filtered', !visible);
   });
