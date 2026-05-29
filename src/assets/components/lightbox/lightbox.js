@@ -3,25 +3,39 @@
 import { el } from '../../js/utils.js';
 import { createCarousel } from '../carousel/carousel.js';
 
+const registry = new Map();
+
 /**
  * @param {string[]|Element[]|NodeList} items           Image URLs or existing DOM nodes.
  * @param {number}                      [initialIndex=0] Initial image index.
  * @param {object}                      [options={}]
- * @param {Function}  [options.onClose]        Called with final index when lightbox closes.
- * @param {boolean}   [options.counter=false]  Show slide counter.
- * @param {boolean}   [options.arrows=false]   Show prev/next arrows.
+ * @param {string}    [options.id]              Registry id — reuses the same instance across calls.
+ * @param {Function}  [options.onClose]         Called with final index when lightbox closes.
+ * @param {boolean}   [options.counter=false]   Show slide counter.
+ * @param {boolean}   [options.arrows=false]    Show prev/next arrows.
  * @param {boolean}   [options.indicators=false] Show indicator dots.
- * @param {boolean}   [options.thumbs=false]   Use thumbnail indicators.
- * @returns {{ open: Function, close: Function, goTo: Function }}
+ * @param {boolean}   [options.thumbs=false]    Use thumbnail indicators.
+ * @returns {{ open: Function, close: Function, goTo: Function, setItems: Function }}
  */
 export function createLightbox(items, initialIndex = 0, options = {}) {
-  const { onClose, counter = false, arrows = false, indicators = false, thumbs = false } = options;
+  const { id, onClose, counter = false, arrows = false, indicators = false, thumbs = false } = options;
+
+  // ── Singleton registry ─────────────────────────────────────────
+  // If an id is given and an instance already exists, swap items and return it.
+
+  if (id && registry.has(id)) {
+    const instance = registry.get(id);
+    instance.setItems(items, initialIndex);
+    return instance;
+  }
 
   // ── Items ──────────────────────────────────────────────────────
 
-  const carouselItems = Array.from(items).map(item =>
-    typeof item === 'string' ? el('img', { src: item, alt: '' }) : item.cloneNode(true)
-  );
+  function buildCarouselItems(raw) {
+    return Array.from(raw).map(item =>
+      typeof item === 'string' ? el('img', { src: item, alt: '' }) : item.cloneNode(true)
+    );
+  }
 
   // ── Carousel ───────────────────────────────────────────────────
   // Use a detached container — we mount root directly to body on open.
@@ -29,8 +43,8 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   let currentIndex = initialIndex;
 
   const container = document.createElement('div');
-  const { root, prev, next, goTo: carouselGoTo } = createCarousel(container, {
-    items: carouselItems,
+  const { root, goTo: carouselGoTo, setItems: carouselSetItems } = createCarousel(container, {
+    items: buildCarouselItems(items),
     type:       'fade',
     arrows,
     drag:       true,
@@ -55,7 +69,7 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   root.addEventListener('click', e => {
     const actual = document.elementFromPoint(e.clientX, e.clientY);
-    if (!actual?.closest('img, .plura-carousel-arrow')) close();
+    if (!actual?.closest('img, .plura-carousel-arrow, .plura-carousel-indicators')) close();
   });
 
   // ── Open / Close ───────────────────────────────────────────────
@@ -72,7 +86,16 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
     onClose?.(finalIndex);
   }
 
+  function setItems(raw, startIndex = 0) {
+    carouselSetItems(buildCarouselItems(raw), startIndex);
+    currentIndex = startIndex;
+  }
+
   // ── Public API ─────────────────────────────────────────────────
 
-  return { open, close, goTo: carouselGoTo };
+  const instance = { open, close, goTo: carouselGoTo, setItems };
+
+  if (id) registry.set(id, instance);
+
+  return instance;
 }
