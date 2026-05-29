@@ -96,8 +96,12 @@ export function createCarousel(container, options = {}) {
 
   // ── State ──────────────────────────────────────────────────────
 
-  let index = -1;
-  let total = itemsCtrl.items.length;
+  let index, total;
+
+  function initVars() {
+    total = itemsCtrl.items.length;
+    index = -1;
+  }
 
   function normalizeIndex(value) {
     if (typeof value !== 'number') return 0;
@@ -110,6 +114,8 @@ export function createCarousel(container, options = {}) {
     if (counterCtrl)     counterCtrl.update(index, total);
     if (indicatorsCtrl)  indicatorsCtrl.update(index);
   }
+
+  initVars();
 
   // ── Navigation ─────────────────────────────────────────────────
 
@@ -127,11 +133,6 @@ export function createCarousel(container, options = {}) {
 
   function prev() { goTo(index > 0         ? Math.max(0,          index - step) : loop ? total - 1 : index); }
   function next() { goTo(index < total - 1 ? Math.min(total - 1,  index + step) : loop ? 0         : index); }
-
-  function initVars() {
-    total = itemsCtrl.items.length;
-    index = -1;
-  }
 
   function initIndicators() {
     const thumbSrcs = thumbs ? itemsCtrl.items.map(item => item.thumb) : null;
