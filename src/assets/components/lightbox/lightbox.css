@@ -45,10 +45,11 @@
   cursor: default;
 }
 
-.plura-lightbox-img {
+.plura-lightbox .plura-carousel-item img {
   display: block;
+  width: 100%;
+  height: 100%;
   max-width: var(--plura-lightbox-img-max-width);
-  max-height: 100%;
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
