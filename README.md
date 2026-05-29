@@ -87,43 +87,120 @@ Content lives in `data/` — one JSON file drives the projects grid; a `lang/` s
 
 ### Carousel component
 
-A reusable vanilla JS + GSAP carousel in `src/assets/components/carousel/`. Designed to be consumed by any project — import the JS module and link the CSS, then customise via CSS custom properties.
+A reusable vanilla JS + GSAP carousel in `src/assets/components/carousel/`. Import the JS module and link the CSS, then customise via CSS custom properties.
 
 **Usage**
 
 ```js
 import { createCarousel } from './src/assets/components/carousel/carousel.js';
 
-createCarousel(containerEl, {
-  items,          // NodeList or array of elements (omit for static HTML mode)
-  type,           // 'slide' | 'cover' | 'fade'  (default: 'slide')
-  arrows,         // boolean  (default: true)
-  drag,           // boolean  (default: true)
-  dots,           // boolean  (default: false)
-  dotsStyle,      // 'normal' | 'scroll'  (default: 'normal')
-  dotsMax,        // max visible dots in scroll style  (default: 7)
-  counter,        // boolean  (default: false)
-  loop,           // boolean  (default: false)
-  autoplay,       // false | true (3000ms) | number in ms
-  duration,       // transition duration in seconds  (default: 0.4)
-  perView,        // visible slides at once, slide type only  (default: 1)
-  perGroup,       // slides to advance per step  (default: 1)
-  gap,            // px gap between slides  (default: 0)
-  center,         // center active slide in viewport, slide type only  (default: false)
-  index,          // initial active slide index  (default: 0)
+const carousel = createCarousel(containerEl, {
+  // identity / content
+  items,            // Element[] | NodeList | number — omit for static HTML mode
+  id,               // string — sets id on root element
+  className,        // string — extra class(es) on root element
+  // core behaviour
+  type,             // 'slide' | 'cover' | 'fade'  (default: 'slide')
+  duration,         // transition duration in seconds  (default: 0.4)
+  // interaction
+  arrows,           // boolean  (default: true)
+  drag,             // boolean  (default: true)
+  // playback
+  loop,             // boolean  (default: false)
+  autoplay,         // false | true (3 000 ms) | number in ms
+  // indicators
+  indicators,       // boolean  (default: false)
+  indicatorsStyle,  // 'normal' | 'scroll'  (default: 'normal')
+  indicatorsMax,    // max visible indicators in scroll style  (default: 7)
+  thumbs,           // boolean — use thumbnail images as indicators  (default: false)
+  // counter
+  counter,          // boolean  (default: false)
+  // multi-slide (slide type only)
+  perView,          // visible slides at once, or 'auto'  (default: 1)
+  perGroup,         // slides to advance per step  (default: 1)
+  gap,              // px gap between slides  (default: 0)
+  center,           // center active slide in viewport  (default: false)
+  // initial state
+  index,            // initial active slide index  (default: 0)
+  // events
+  on: {
+    enter,          // (index, el) — fires on incoming slide
+    leave,          // (index, el) — fires on outgoing slide
+    change,         // (fromIndex, toIndex) — fires once per navigation
+  },
 });
+
+// Public API
+carousel.prev();
+carousel.next();
+carousel.goTo(index, animate);   // animate defaults to true
+carousel.setItems(items, index); // replace slides at runtime
+carousel.index();                // returns current index
 ```
+
+**Thumb sources** (resolved in priority order per item): `node.thumb` property → `data-thumb` attribute → `src` if item is an `<img>`.
 
 **CSS custom properties** (set on `.plura-carousel` or any ancestor):
 
 | Property | Default | Description |
 |---|---|---|
-| `--plura-carousel-dot-size` | `8px` | Dot diameter |
-| `--plura-carousel-dot-gap` | `6px` | Gap between dots |
-| `--plura-carousel-dot-opacity` | `0.2` | Inactive dot opacity |
-| `--plura-carousel-dots-margin` | `12px` | Space above dot row |
+| `--plura-carousel-item-bg` | `#fff` | Slide background |
+| `--plura-carousel-arrow-size` | `24px` | Arrow icon size |
+| `--plura-carousel-indicator-size` | `8px` | Indicator diameter |
+| `--plura-carousel-indicator-gap` | `6px` | Gap between indicators |
+| `--plura-carousel-indicator-opacity` | `0.2` | Inactive indicator opacity |
+| `--plura-carousel-indicators-margin` | `12px` | Space above indicator row |
+| `--plura-carousel-thumb-width` | `40px` (mobile) / `52px` (desktop) | Thumb width |
+| `--plura-carousel-thumb-height` | `28px` (mobile) / `36px` (desktop) | Thumb height |
+| `--plura-carousel-thumb-radius` | `3px` | Thumb border radius |
+| `--plura-carousel-transition` | `0.3s ease` | Shared transition timing |
 
 A testbed lives in `test/carousel/`.
+
+---
+
+### Lightbox component
+
+A fullscreen image viewer in `src/assets/components/lightbox/`. Wraps a carousel internally.
+
+```js
+import { createLightbox } from './src/assets/components/lightbox/lightbox.js';
+
+const lb = createLightbox(items, initialIndex, {
+  id,           // string — registry key for singleton reuse
+  arrows,       // boolean  (default: false)
+  counter,      // boolean  (default: false)
+  indicators,   // boolean  (default: false)
+  thumbs,       // boolean  (default: false)
+  onClose,      // (finalIndex) — called on close
+});
+
+lb.open(index);
+lb.close();
+lb.goTo(index, animate);
+lb.setItems(items, index);   // swap items; skips rebuild if same reference
+```
+
+Passing `id` opts into a singleton registry — subsequent `createLightbox` calls with the same `id` return the existing instance. Useful for sharing one lightbox across multiple galleries.
+
+A testbed lives in `test/lightbox/`.
+
+---
+
+### Gallery component
+
+Combines a carousel with a lightbox in `src/assets/components/gallery/`.
+
+```js
+import { createGallery } from './src/assets/components/gallery/gallery.js';
+
+createGallery(containerEl, items, 'carousel', {
+  carousel: { /* createCarousel options */ },
+  lightbox: { /* createLightbox options, including id */ },
+});
+```
+
+Clicking the active carousel item opens the lightbox at the current index.
 
 ---
 
