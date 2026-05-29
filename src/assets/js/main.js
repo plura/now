@@ -17,8 +17,10 @@ initFilter(projectsData, content);
 createProjectsCarousel(projectsData);
 lucide.createIcons();
 
-if (hasSeenIntro() || dev.mode === '1') {
+if (hasSeenIntro() || dev.has('no-intro') || dev.needsSettled) {
   skipIntro();
 } else {
   runIntroAnimation();
 }
+
+dev.apply();
