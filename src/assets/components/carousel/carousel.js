@@ -15,6 +15,7 @@ import { el } from '../../js/utils.js';
  * // interaction
  * @param {boolean}                [options.arrows=true]        Show prev/next arrow buttons.
  * @param {boolean}                [options.drag=true]          Enable pointer drag/swipe.
+ * @param {boolean}                [options.keyboard=false]     Enable arrow key navigation when focused.
  * // playback
  * @param {boolean}                [options.loop=false]         Wrap around at first/last slide.
  * @param {boolean|number}         [options.autoplay=false]     true = 3000 ms, or pass ms directly.
@@ -52,6 +53,7 @@ export function createCarousel(container, options = {}) {
     // interaction
     arrows   = true,
     drag     = true,
+    keyboard = false,
     // playback
     loop     = false,
     autoplay = false,
@@ -164,6 +166,8 @@ export function createCarousel(container, options = {}) {
 
     createDrag(itemsCtrl.el, dragOptions);
   }
+
+  if (keyboard) createKeyboard(root, { onPrev: prev, onNext: next });
 
   if (autoplay && total > 1) {
     const autoplayCtrl = createAutoplay(next, typeof autoplay === 'number' ? autoplay : 3000);
@@ -423,6 +427,14 @@ function createDrag(el, { onPrev, onNext, onMove, onCancel, threshold = 50 }) {
     if      (delta >  threshold) onPrev();
     else if (delta < -threshold) onNext();
     else                         onCancel?.();
+  });
+}
+
+function createKeyboard(root, { onPrev, onNext }) {
+  root.tabIndex = 0;
+  root.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  onPrev();
+    if (e.key === 'ArrowRight') onNext();
   });
 }
 

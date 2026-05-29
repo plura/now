@@ -46,6 +46,7 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
     type:       'fade',
     arrows,
     drag:       true,
+    keyboard:   true,
     counter,
     indicators,
     thumbs,
@@ -65,6 +66,10 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   // pointer events (including the click) to it — so e.target is always
   // .plura-carousel-items regardless of what was actually clicked.
 
+  root.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+  });
+
   root.addEventListener('click', e => {
     const actual = document.elementFromPoint(e.clientX, e.clientY);
     if (!actual?.closest('.plura-carousel-item :is(img, video), .plura-carousel-arrow, .plura-carousel-indicators')) close();
@@ -75,6 +80,7 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   function open(i = currentIndex) {
     carouselGoTo(i, false);
     document.body.appendChild(root);
+    root.focus();
     gsap.to(root, { autoAlpha: 1, duration: 0.25 });
   }
 
