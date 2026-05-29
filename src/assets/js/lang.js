@@ -2,7 +2,9 @@ export const lang     = document.documentElement.lang.split('-')[0];
 export const basePath = document.querySelector('meta[name="base-path"]')?.content ?? '.';
 
 const _ui = lang !== 'en'
-  ? await fetch(`${basePath}/data/lang/${lang}.ui.json`).then(r => r.json()).catch(() => ({}))
+  ? await fetch(`${basePath}/data/lang/${lang}.ui.json`)
+      .then(r => r.ok ? r.json() : {})
+      .catch(() => ({}))
   : {};
 
 export function t(key, vars = {}) {
