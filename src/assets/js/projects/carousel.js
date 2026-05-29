@@ -23,6 +23,7 @@ export function createProjectsCarousel({ categories, projects }) {
     perView: 'auto',
     center:  true,
     gap:     100,
+    keyboard: true,
     on: { enter: onEnter },
   });
 
