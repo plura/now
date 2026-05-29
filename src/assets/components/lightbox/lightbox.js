@@ -80,14 +80,16 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   function open(i = currentIndex) {
     carouselGoTo(i, false);
     document.body.appendChild(root);
-    // focus in onStart — autoAlpha sets visibility:visible at tween start,
-    // making the element focusable; calling focus() before that is silently ignored.
-    gsap.to(root, { autoAlpha: 1, duration: 0.25, onStart: () => root.focus() });
+    // visibility must be set before focus() — browsers ignore focus on visibility:hidden elements.
+    // gsap.set handles this immediately; autoAlpha then animates opacity only.
+    gsap.set(root, { visibility: 'visible' });
+    root.focus();
+    gsap.to(root, { opacity: 1, duration: 0.25 });
   }
 
   function close() {
     const finalIndex = currentIndex;
-    gsap.to(root, { autoAlpha: 0, duration: 0.2, onComplete: () => root.remove() });
+    gsap.to(root, { opacity: 0, duration: 0.2, onComplete: () => { gsap.set(root, { visibility: 'hidden' }); root.remove(); } });
     onClose?.(finalIndex);
   }
 
