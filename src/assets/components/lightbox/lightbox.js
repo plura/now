@@ -95,6 +95,9 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   let lastItems = null;
 
+  // Reference equality — avoids rebuilding the carousel when the same item set is
+  // reused (singleton pattern). Note: in-place array mutations are not detected
+  // (may need revisiting if in-place mutations are expected).
   function setItems(raw, startIndex = 0) {
     if (raw === lastItems) {
       carouselGoTo(startIndex, false);
