@@ -71,3 +71,35 @@ images.forEach((_, i) => {
   btn.addEventListener('click', () => lb5.open(i));
   arrayThumbsItems.appendChild(btn);
 });
+
+// ── Singleton ─────────────────────────────────────────────────────
+// Two sets share the same lightbox instance (id: 'test-singleton').
+// Each open call swaps to the correct set without creating a new instance.
+
+const setA = images.slice(0, 2);
+const setB = images.slice(2);
+
+const singletonA = document.querySelector('#lightbox-singleton-a .lightbox-items');
+const singletonB = document.querySelector('#lightbox-singleton-b .lightbox-items');
+
+createLightbox(setA, 0, { id: 'test-singleton', arrows: true, thumbs: true });
+
+setA.forEach((_, i) => {
+  const btn = el('button', { class: 'trigger-btn', text: `Set A — image ${i + 1}` });
+  btn.addEventListener('click', () => {
+    const lb = createLightbox(setA, i, { id: 'test-singleton' });
+    lb.setItems(setA, i);
+    lb.open();
+  });
+  singletonA.appendChild(btn);
+});
+
+setB.forEach((_, i) => {
+  const btn = el('button', { class: 'trigger-btn', text: `Set B — image ${i + 1}` });
+  btn.addEventListener('click', () => {
+    const lb = createLightbox(setB, i, { id: 'test-singleton' });
+    lb.setItems(setB, i);
+    lb.open();
+  });
+  singletonB.appendChild(btn);
+});
