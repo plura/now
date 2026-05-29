@@ -47,10 +47,10 @@
 
 .plura-lightbox .plura-carousel-item img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
   max-width: var(--plura-lightbox-img-max-width);
-  object-fit: contain;
+  max-height: 100%;
   user-select: none;
   -webkit-user-drag: none;
 }
