@@ -195,7 +195,7 @@ export function createCarousel(container, options = {}) {
 
   // ── Public API ─────────────────────────────────────────────────
 
-  return { root, prev, next, goTo, setItems };
+  return { root, prev, next, goTo, setItems, index: () => index };
 }
 
 // ── Items ─────────────────────────────────────────────────────────
