@@ -1,24 +1,6 @@
 /* carousel testbed styles */
 
-:root {
-  --plura-test-carousel-width:  480px;
-  --plura-test-carousel-height: 240px;
-  --plura-test-slide-width:     var(--plura-test-carousel-width);
-}
-
-/* ── Counter ─────────────────────────────────────────────────────── */
-
-.plura-carousel-counter {
-  font-size: var(--plura-test-font-xs);
-  color: var(--plura-test-color-muted);
-  margin-top: var(--plura-carousel-indicators-margin);
-}
-
-/* ── Carousel size ───────────────────────────────────────────────── */
-
-.plura-carousel {
-  width: var(--plura-test-carousel-width);
-}
+/* ── Carousel size overrides ─────────────────────────────────────── */
 
 .is-multi.plura-carousel,
 .is-auto.plura-carousel {
@@ -34,12 +16,6 @@
 .slide--1-2 { width: calc(var(--plura-test-slide-width) / 2); }
 .slide--1-3 { width: calc(var(--plura-test-slide-width) / 3); }
 .slide--2-3 { width: calc(var(--plura-test-slide-width) / 3 * 2); }
-
-.plura-carousel .plura-carousel-wrapper {
-  height: var(--plura-test-carousel-height);
-  border: var(--plura-test-border-width) solid var(--plura-test-color-border);
-  border-radius: var(--plura-test-radius-card);
-}
 
 /* ── Slide content ───────────────────────────────────────────────── */
 

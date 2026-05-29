@@ -7,16 +7,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="../common.css">
   <link rel="stylesheet" href="../../src/assets/components/carousel/carousel.css">
   <link rel="stylesheet" href="../../src/assets/components/lightbox/lightbox.css">
   <link rel="stylesheet" href="../../src/assets/components/gallery/gallery.css">
+  <link rel="stylesheet" href="../common.css">
+  <link rel="stylesheet" href="../carousel/common.css">
+  <link rel="stylesheet" href="../lightbox/common.css">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
   <main>
-    <div id="gallery-host"></div>
+    <div id="gallery-basic"   data-label="carousel + thumbs"></div>
+    <div id="gallery-arrows"  data-label="carousel + thumbs + arrows"></div>
+    <div id="gallery-counter" data-label="carousel + thumbs + lightbox counter + indicators"></div>
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

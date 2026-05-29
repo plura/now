@@ -1,0 +1,23 @@
+/* test/carousel/common.css — carousel styles shared across testbeds */
+
+:root {
+  --plura-test-carousel-width:  480px;
+  --plura-test-carousel-height: 240px;
+  --plura-test-slide-width:     var(--plura-test-carousel-width);
+}
+
+.plura-carousel:not(.plura-lightbox) {
+  width: var(--plura-test-carousel-width);
+}
+
+.plura-carousel:not(.plura-lightbox) .plura-carousel-wrapper {
+  height: var(--plura-test-carousel-height);
+  border: var(--plura-test-border-width) solid var(--plura-test-color-border);
+  border-radius: var(--plura-test-radius-card);
+}
+
+.plura-carousel:not(.plura-lightbox) .plura-carousel-counter {
+  font-size: var(--plura-test-font-xs);
+  color: var(--plura-test-color-muted);
+  margin-top: var(--plura-carousel-indicators-margin);
+}
