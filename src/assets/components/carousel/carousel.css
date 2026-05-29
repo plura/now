@@ -116,7 +116,6 @@
 .plura-carousel-arrow:disabled {
   opacity: var(--plura-carousel-indicator-opacity);
   cursor: default;
-  pointer-events: none;
 }
 
 /* ── Counter ─────────────────────────────────────────────────────── */
