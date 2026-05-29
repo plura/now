@@ -49,9 +49,3 @@
   line-height: 1.7;
 }
 
-/* ─── Temp ───────────────────────────────────────────────────── */
-
-#plura-projects-carousel {
-  background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
-  backdrop-filter: blur(6px);
-}

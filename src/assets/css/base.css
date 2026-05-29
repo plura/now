@@ -72,6 +72,11 @@ svg.lucide {
   --plura-font-size-xl:        clamp(1.25rem,   1.1rem  + 0.75vw, 1.5rem);
   --plura-letter-spacing-caps: 0.06em;
 
+  /* Opacity */
+  --plura-opacity-low:  30%;
+  --plura-opacity-mid:  50%;
+  --plura-opacity-high: 75%;
+
   /* Motion */
   --plura-dur:  0.4s;
   --plura-ease: cubic-bezier(0.4, 0, 0.2, 1);

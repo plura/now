@@ -3,4 +3,6 @@
 .plura-overlay {
   position: fixed;
   inset: 0;
+  background-color: color-mix(in srgb, var(--plura-color-dark) var(--plura-opacity-mid), transparent);
+  backdrop-filter: blur(6px);
 }
