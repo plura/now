@@ -52,6 +52,9 @@ export function expandOToMain(logo) {
   oPath.setAttribute('stroke-width', LOGO_STROKE_WIDTH);
   oPath.style.stroke = getComputedStyle(logo).color;
 
+  // Plain object used as GSAP target so all 5 path parameters are interpolated together.
+  // The `d` attribute is a computed string from x/y/w/h/r — it can't be animated directly;
+  // onUpdate reconstructs it from the interpolated values on every frame.
   const proxy = {
     x: oLeft,
     y: oTop,
