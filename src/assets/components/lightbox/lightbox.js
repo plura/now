@@ -99,7 +99,10 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   const instance = { open, close, goTo: carouselGoTo, setItems };
 
-  if (id) registry.set(id, instance);
+  if (id) {
+    root.dataset.lightboxId = id;
+    registry.set(id, instance);
+  }
 
   return instance;
 }
