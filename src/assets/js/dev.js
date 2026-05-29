@@ -12,7 +12,7 @@ const needsSettled = [...modes].some(m => NEEDS_SETTLED.has(m));
 
 function apply() {
   if (modes.has('projects-carousel')) {
-    document.querySelector('.plura-projects-carousel')?.classList.add('is-open');
+    document.getElementById('plura-projects-carousel')?.classList.add('is-open');
   }
 }
 
