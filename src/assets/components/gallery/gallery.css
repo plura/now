@@ -1,1 +1,5 @@
 /* ─── Gallery ────────────────────────────────────────────────── */
+
+.plura-gallery .plura-carousel-item--active {
+  cursor: pointer;
+}

@@ -38,7 +38,7 @@ import { el } from '../../js/utils.js';
  * @param {Function}               [options.on.enter]           Fires on incoming slide: (index, el).
  * @param {Function}               [options.on.leave]           Fires on outgoing slide: (index, el).
  * @param {Function}               [options.on.change]          Fires once per navigation: (fromIndex, toIndex).
- * @returns {{ root: Element, prev: Function, next: Function, goTo: Function }}
+ * @returns {{ root: Element, prev: Function, next: Function, goTo: Function, index: Function }}
  */
 export function createCarousel(container, options = {}) {
   const {
@@ -173,7 +173,7 @@ export function createCarousel(container, options = {}) {
 
   // ── Public API ─────────────────────────────────────────────────
 
-  return { root, prev, next, goTo: (i, animate) => goTo(normalizeIndex(i), animate) };
+  return { root, prev, next, goTo: (i, animate) => goTo(normalizeIndex(i), animate), index: () => index };
 }
 
 // ── Items ─────────────────────────────────────────────────────────

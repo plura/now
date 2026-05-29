@@ -30,7 +30,7 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   const container = document.createElement('div');
   const { root, prev, next, goTo: carouselGoTo } = createCarousel(container, {
-    items:      carouselItems,
+    items: carouselItems,
     type:       'fade',
     arrows,
     drag:       true,
