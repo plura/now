@@ -26,6 +26,8 @@ export function createProjectsCarousel({ categories, projects }) {
     on: { enter: onEnter },
   });
 
+  // ── Overlay ──────────────────────────────────────────────────
+
   const { open: overlayOpen, close: overlayClose } = initOverlay(overlay, {
     keepOpenSelector: '.plura-carousel-item',
     onDismiss: close,

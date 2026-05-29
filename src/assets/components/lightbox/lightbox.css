@@ -13,8 +13,6 @@
   --plura-lightbox-counter-font-size:      13px;
   --plura-lightbox-counter-letter-spacing: 0.05em;
 
-  position: fixed;
-  inset: 0;
   z-index: 9999;
   background: var(--plura-lightbox-bg);
   cursor: pointer;

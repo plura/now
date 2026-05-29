@@ -1,17 +1,11 @@
 /* ─── Projects carousel overlay ─────────────────────────────── */
 
 #plura-projects-carousel {
-  position: fixed;
-  inset: 0;
   z-index: 100;
   display: flex;
   align-items: center;
 }
 
-#plura-projects-carousel:not(.is-open) {
-  visibility: hidden;
-  opacity: 0;
-}
 
 /* ─── Slides ─────────────────────────────────────────────────── */
 

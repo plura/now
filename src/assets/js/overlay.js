@@ -8,6 +8,7 @@
  * @returns {{ open: Function, close: Function }}
  */
 export function initOverlay(root, { keepOpenSelector, onDismiss } = {}) {
+  root.classList.add('plura-overlay');
   gsap.set(root, { autoAlpha: 0 });
 
   root.addEventListener('keydown', e => {

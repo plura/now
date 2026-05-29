@@ -60,12 +60,12 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   root.classList.add('plura-lightbox');
 
+  // ── Overlay ────────────────────────────────────────────────────
+
   const { open: overlayOpen, close: overlayClose } = initOverlay(root, {
     keepOpenSelector: '.plura-carousel-item :is(img, video), .plura-carousel-arrow, .plura-carousel-indicators',
     onDismiss: () => close(),
   });
-
-  // ── Open / Close ───────────────────────────────────────────────
 
   function open(i = currentIndex) {
     carouselGoTo(i, false);
@@ -78,6 +78,8 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
     overlayClose(() => root.remove());
     onClose?.(finalIndex);
   }
+
+  // ── Items API ──────────────────────────────────────────────────
 
   let lastItems = null;
 
