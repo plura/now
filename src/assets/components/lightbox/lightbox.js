@@ -67,7 +67,7 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   root.addEventListener('click', e => {
     const actual = document.elementFromPoint(e.clientX, e.clientY);
-    if (!actual?.closest('img, .plura-carousel-arrow, .plura-carousel-indicators')) close();
+    if (!actual?.closest('.plura-carousel-item :is(img, video), .plura-carousel-arrow, .plura-carousel-indicators')) close();
   });
 
   // ── Open / Close ───────────────────────────────────────────────
