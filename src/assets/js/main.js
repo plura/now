@@ -14,13 +14,13 @@ const [, projectsData] = await Promise.all([imgs2svg(), fetchProjects(basePath)]
 const content = document.querySelector('#plura-content');
 renderProjects(projectsData, content);
 initFilter(projectsData, content);
-createProjectsCarousel(projectsData);
+const carousel = createProjectsCarousel(projectsData);
 lucide.createIcons();
 
-if (hasSeenIntro() || dev.has('no-intro') || dev.needsSettled) {
+if (hasSeenIntro() || dev.active) {
   skipIntro();
 } else {
   runIntroAnimation();
 }
 
-dev.apply();
+dev.apply({ carousel });

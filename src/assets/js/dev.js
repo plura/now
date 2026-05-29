@@ -1,24 +1,17 @@
 // Dev/testing tool — activated via ?dev=<mode> or ?dev=<mode1>,<mode2>
+// Any active mode skips the intro automatically.
 // Supported modes:
-//   no-intro          — skip the intro animation
-//   projects-carousel — open the projects carousel overlay (implies no-intro)
+//   projects-carousel — open the projects carousel overlay
 
 const param = new URLSearchParams(location.search).get('dev');
 const modes = new Set(param ? param.split(',') : []);
 
-// Modes that require the page to be in a settled (post-intro) state
-const NEEDS_SETTLED = new Set(['projects-carousel']);
-const needsSettled = [...modes].some(m => NEEDS_SETTLED.has(m));
-
-function apply() {
-  if (modes.has('projects-carousel')) {
-    document.getElementById('plura-projects-carousel')?.classList.add('is-open');
-  }
+function apply({ carousel } = {}) {
+  if (modes.has('projects-carousel')) carousel?.open(0);
 }
 
 export default {
   active: modes.size > 0,
   has: m => modes.has(m),
-  needsSettled,
   apply,
 };
