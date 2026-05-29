@@ -89,7 +89,6 @@ export function createCarousel(container, options = {}) {
   // ── Items ──────────────────────────────────────────────────────
 
   const itemsCtrl = createItems(root, items, type, duration, perView, gap, center, initialIndex);
-  const slideItems = itemsCtrl.items; // [{ el }, ...]
 
   // ── Nav elements ───────────────────────────────────────────────
 
@@ -98,7 +97,7 @@ export function createCarousel(container, options = {}) {
   // ── State ──────────────────────────────────────────────────────
 
   let index = -1;
-  const total = slideItems.length;
+  let total = itemsCtrl.items.length;
 
   function normalizeIndex(value) {
     if (typeof value !== 'number') return 0;
@@ -115,12 +114,13 @@ export function createCarousel(container, options = {}) {
   // ── Navigation ─────────────────────────────────────────────────
 
   function goTo(i, animate = true) {
-    if (index !== -1) on.leave?.(index, slideItems[index].el); // 1. outgoing slide (skipped on init)
+    i = normalizeIndex(i);
+    if (index !== -1) on.leave?.(index, itemsCtrl.items[index].el); // 1. outgoing slide (skipped on init)
     itemsCtrl.animate(index, i, animate);                      // 2. animate (or instant set)
     on.change?.(index, i);                                     // 3. transition starts (fromIndex, toIndex)
     index = i;
     updateState();                                             // 4. active class, arrows, dots, counter
-    on.enter?.(index, slideItems[index].el);                   // 5. incoming slide
+    on.enter?.(index, itemsCtrl.items[index].el);                   // 5. incoming slide
   }
 
   const step = perView === 'auto' ? 1 : perGroup;
@@ -128,11 +128,18 @@ export function createCarousel(container, options = {}) {
   function prev() { goTo(index > 0         ? Math.max(0,          index - step) : loop ? total - 1 : index); }
   function next() { goTo(index < total - 1 ? Math.min(total - 1,  index + step) : loop ? 0         : index); }
 
-  if ((indicators || thumbs) && total > 1) {
-    const thumbSrcs = thumbs ? slideItems.map(item => item.thumb) : null;
+  function initVars() {
+    total = itemsCtrl.items.length;
+    index = -1;
+  }
+
+  function initIndicators() {
+    const thumbSrcs = thumbs ? itemsCtrl.items.map(item => item.thumb) : null;
     indicatorsCtrl = createIndicators(total, { indicatorsStyle, indicatorsMax, thumbs, thumbSrcs }, i => goTo(i));
     root.appendChild(indicatorsCtrl.el);
   }
+
+  if ((indicators || thumbs) && total > 1) initIndicators();
 
   if (arrows && total > 1) {
     arrowsCtrl = createArrows(() => prev(), () => next(), loop);
@@ -166,14 +173,28 @@ export function createCarousel(container, options = {}) {
 
   if (typeof lucide !== 'undefined') lucide.createIcons({ el: root });
 
+  // ── setItems ───────────────────────────────────────────────────
+
+  function setItems(newItems, startIndex = 0) {
+    itemsCtrl.refresh(newItems);
+    initVars();
+
+    if (indicatorsCtrl) {
+      indicatorsCtrl.el.remove();
+      if ((indicators || thumbs) && total > 1) initIndicators();
+    }
+
+    goTo(startIndex);
+  }
+
   // ── Activate ───────────────────────────────────────────────────
   // Single activation path — sets initial index, fires on.enter, syncs all UI elements.
 
-  goTo(normalizeIndex(initialIndex));
+  goTo(initialIndex);
 
   // ── Public API ─────────────────────────────────────────────────
 
-  return { root, prev, next, goTo: (i, animate) => goTo(normalizeIndex(i), animate), index: () => index };
+  return { root, prev, next, goTo, setItems };
 }
 
 // ── Items ─────────────────────────────────────────────────────────
@@ -239,35 +260,35 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
     root.appendChild(wrapper);
   }
 
+  if (type === 'slide') {
+    if (perView === 'auto') root.classList.add('plura-carousel--auto');
+    else if (perView > 1)   itemsEl.style.setProperty('--plura-carousel-per-view', perView);
+    if (gap > 0)            itemsEl.style.setProperty('--plura-carousel-gap', `${gap}px`);
+  }
+
   let items;
 
-  if (rawItems) {
-    if (typeof rawItems === 'number') rawItems = Array.from({ length: rawItems }, () => el('div'));
-
-    items = Array.from(rawItems).map((node, i) => {
-      const item = createItem(node, { type, duration, active: i === initialIndex });
+  function buildItems(raw) {
+    itemsEl.innerHTML = '';
+    if (typeof raw === 'number') raw = Array.from({ length: raw }, () => el('div'));
+    return Array.from(raw ?? itemsEl.querySelectorAll('.plura-carousel-item')).map((node, i) => {
+      const item = createItem(node, { type, duration, active: i === 0 });
       itemsEl.appendChild(item.el);
       return item;
     });
-  } else {
-    items = Array.from(itemsEl.querySelectorAll('.plura-carousel-item')).map((itemEl, i) =>
-      createItem(itemEl, { type, duration, active: i === initialIndex })
-    );
   }
 
-  if (type === 'slide') {
-    if (perView === 'auto') {
-      root.classList.add('plura-carousel--auto');
-    } else {
-      if (perView > 1) itemsEl.style.setProperty('--plura-carousel-per-view', perView);
-    }
-    if (gap > 0) itemsEl.style.setProperty('--plura-carousel-gap', `${gap}px`);
-  }
+
 
   function slideX(index) {
     const x = -items[index].el.offsetLeft;
     if (!center) return x;
     return x + (wrapper.clientWidth - items[index].el.offsetWidth) / 2;
+  }
+
+  function refresh(raw) {
+    items = buildItems(raw);
+    if (type === 'slide') gsap.set(itemsEl, { x: slideX(0) });
   }
 
   function animate(fromIndex, toIndex, animated = true) {
@@ -286,9 +307,9 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
     items.forEach((item, i) => item.update(i === index));
   }
 
-  if (type === 'slide') gsap.set(itemsEl, { x: slideX(initialIndex) });
+  refresh(rawItems);
 
-  return { el: itemsEl, items, animate, update, slideX };
+  return { el: itemsEl, items, animate, update, slideX, refresh };
 }
 
 // ── Nav ──────────────────────────────────────────────────────────
