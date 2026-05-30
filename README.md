@@ -36,7 +36,7 @@ Rollup bundles `src/assets/js/main.js` (and all imports) into a single ES module
 
 1. Inlines all `.svg` `<img>` tags (so GSAP can animate paths)
 2. Fetches `data/projects.json` in parallel
-3. Renders the projects grid and initialises the filter
+3. Renders the projects grid, initialises the filter, and creates the projects carousel overlay
 4. Runs the intro animation — or skips it if the session flag is set
 
 ### Morph pattern
@@ -105,6 +105,7 @@ const carousel = createCarousel(containerEl, {
   // interaction
   arrows,           // boolean  (default: true)
   drag,             // boolean  (default: true)
+  keyboard,         // boolean — arrow key navigation when focused  (default: false)
   // playback
   loop,             // boolean  (default: false)
   autoplay,         // false | true (3 000 ms) | number in ms
@@ -201,6 +202,26 @@ createGallery(containerEl, items, 'carousel', {
 ```
 
 Clicking the active carousel item opens the lightbox at the current index.
+
+---
+
+## Dev mode
+
+Append `?dev=<mode>` to any page URL to activate dev shortcuts. Any active mode skips the intro automatically. Multiple modes can be combined with commas.
+
+| Mode | Description |
+|---|---|
+| `no-intro` | Skip the intro animation |
+| `projects-carousel[:index]` | Open the projects carousel overlay, optionally at a specific slide index (default `0`) |
+
+**Examples**
+
+```
+/?dev=no-intro
+/?dev=projects-carousel
+/?dev=projects-carousel:7
+/?dev=no-intro,projects-carousel:3
+```
 
 ---
 
