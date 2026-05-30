@@ -194,10 +194,8 @@ export function createCarousel(container, options = {}) {
 
   // ── Activate ───────────────────────────────────────────────────
   // Single activation path — sets initial index, fires on.enter, syncs all UI elements.
-  // animate: false — no previous position to animate from; a running tween would conflict
-  // with any goTo call made immediately after createCarousel returns.
 
-  goTo(initialIndex, false);
+  goTo(initialIndex);
 
   // ── Public API ─────────────────────────────────────────────────
 
@@ -303,7 +301,7 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
 
     if (type === 'slide') {
       if (animated) gsap.to(itemsEl,  { x: slideX(toIndex), duration, ease: 'power2.inOut', overwrite: 'auto' });
-      else          gsap.set(itemsEl, { x: slideX(toIndex) });
+      else          { gsap.killTweensOf(itemsEl, 'x'); gsap.set(itemsEl, { x: slideX(toIndex) }); }
     } else {
       if (fromIndex !== -1) items[fromIndex].animate(false, direction, animated);
       items[toIndex].animate(true, direction, animated);
