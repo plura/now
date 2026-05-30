@@ -1,7 +1,10 @@
 /* ─── Overlay ────────────────────────────────────────────────── */
 
 .plura-overlay {
-  position: fixed;
+  /* Intentional !important: overlay is always fullscreen by design. The class is
+     added to existing elements (e.g. .plura-carousel) that carry their own position
+     rule — this guarantees fixed wins regardless of cascade order. */
+  position: fixed !important;
   inset: 0;
   background-color: color-mix(in srgb, var(--plura-color-dark) var(--plura-opacity-mid), transparent);
   backdrop-filter: blur(6px);
