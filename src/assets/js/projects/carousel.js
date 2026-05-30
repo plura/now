@@ -29,18 +29,16 @@ export function createProjectsCarousel({ categories, projects }) {
 
   // ── Overlay ──────────────────────────────────────────────────
 
-  const { open: overlayOpen, close: overlayClose } = initOverlay(overlay, {
+  let _pendingIndex = 0;
+
+  const { open: openOverlay, close } = initOverlay(overlay, {
     keepOpenSelector: '.plura-carousel-item',
-    onDismiss: close,
+    onBeforeOpen: () => goTo(_pendingIndex, false),
   });
 
   function open(index) {
-    goTo(index, false);
-    overlayOpen();
-  }
-
-  function close() {
-    overlayClose();
+    _pendingIndex = index;
+    openOverlay();
   }
 
   return { open, close, goTo };

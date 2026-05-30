@@ -62,21 +62,18 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   // ── Overlay ────────────────────────────────────────────────────
 
-  const { open: overlayOpen, close: overlayClose } = initOverlay(root, {
+  let _pendingIndex = initialIndex;
+
+  const { open: openOverlay, close } = initOverlay(root, {
     keepOpenSelector: '.plura-carousel-item :is(img, video), .plura-carousel-arrow, .plura-carousel-indicators',
-    onDismiss: () => close(),
+    onBeforeOpen:  () => { document.body.appendChild(root); carouselGoTo(_pendingIndex, false); },
+    onClose:       () => { onClose?.(currentIndex); },
+    onAfterClose:  () => root.remove(),
   });
 
   function open(i = currentIndex) {
-    carouselGoTo(i, false);
-    document.body.appendChild(root);
-    overlayOpen();
-  }
-
-  function close() {
-    const finalIndex = currentIndex;
-    overlayClose(() => root.remove());
-    onClose?.(finalIndex);
+    _pendingIndex = i;
+    openOverlay();
   }
 
   // ── Items API ──────────────────────────────────────────────────
