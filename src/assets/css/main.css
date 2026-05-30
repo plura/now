@@ -1,4 +1,14 @@
+/* ─── Foundation ─────────────────────────────────────────────── */
+
 @import 'base.css';
+
+/* ─── Components ─────────────────────────────────────────────── */
+
+@import '../components/carousel/carousel.css';
+@import '../components/lightbox/lightbox.css';
+
+/* ─── Site ───────────────────────────────────────────────────── */
+
 @import 'overlay.css';
 @import 'components.css';
 @import 'badge.css';
@@ -10,6 +20,5 @@
 @import 'form.css';
 @import 'contacts-cta.css';
 @import 'projects-filter.css';
-@import '../components/carousel/carousel.css';
 @import 'projects-carousel.css';
 @import 'project-detail.css';
