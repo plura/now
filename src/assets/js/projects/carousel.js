@@ -32,7 +32,7 @@ export function createProjectsCarousel({ categories, projects }) {
   let _pendingIndex = 0;
 
   const { open: openOverlay, close } = initOverlay(overlay, {
-    keepOpenSelector: '.plura-carousel-item',
+    keepOpenSelector: '.plura-carousel-item, .plura-carousel-arrow',
     onBeforeOpen: () => goTo(_pendingIndex, false),
   });
 
