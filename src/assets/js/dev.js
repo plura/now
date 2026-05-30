@@ -20,4 +20,4 @@ function apply({ carousel } = {}) {
   if (carouselMode) carousel?.open(Number(carouselMode.arg) || 0);
 }
 
-export default { active, get, apply };
+export default { active, apply };
