@@ -36,7 +36,7 @@ export function createProjectsCarousel({ categories, projects }) {
     onBeforeOpen: () => goTo(_pendingIndex, false),
   });
 
-  function open(index) {
+  function open(index) { 
     _pendingIndex = index;
     openOverlay();
   }
