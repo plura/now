@@ -2,23 +2,26 @@
 
 import { el } from '../utils.js';
 import { t } from '../lang.js';
-import { buildProjectMeta } from './meta.js';
+import { buildMeta } from './meta.js';
 
 export function renderCards({ categories, projects }, container, onItemClick) {
+  const itemsByProject = new Map();
   const grid = el('div', { class: 'plura-projects' });
 
   for (const [catKey, catLabel] of Object.entries(categories)) {
     const catProjects = projects.filter(p => p.category.key === catKey);
     if (!catProjects.length) continue;
-    grid.appendChild(buildCategoryCard(catKey, catLabel, catProjects, onItemClick));
+    grid.appendChild(buildCategoryCard(catKey, catLabel, catProjects, onItemClick, itemsByProject));
   }
 
   container.appendChild(grid);
+
+  return { getItem: project => itemsByProject.get(project) };
 }
 
-function buildCategoryCard(catKey, catLabel, projects, onItemClick) {
+function buildCategoryCard(catKey, catLabel, projects, onItemClick, itemsByProject) {
   const list = el('div', { class: 'plura-projects-list', role: 'list' });
-  projects.forEach(p => list.appendChild(buildProjectItem(p, onItemClick)));
+  projects.forEach(p => list.appendChild(buildProjectItem(p, onItemClick, itemsByProject)));
 
   return el('div', { class: 'plura-projects-card', dataset: { category: catKey } },
     el('div', { class: 'plura-projects-card-heading' },
@@ -29,13 +32,14 @@ function buildCategoryCard(catKey, catLabel, projects, onItemClick) {
   );
 }
 
-function buildProjectItem(project, onItemClick) {
+function buildProjectItem(project, onItemClick, itemsByProject) {
   const item = el('div', { class: 'plura-projects-item', role: 'listitem', dataset: { title: project.title } });
+  itemsByProject.set(project, item);
 
   item.appendChild(
     el('div', { class: 'plura-projects-item-row' },
       el('span', { class: 'plura-projects-item-title', text: project.title }),
-      buildProjectMeta(project),
+      buildMeta(project),
       buildProjectActions(project)
     )
   );

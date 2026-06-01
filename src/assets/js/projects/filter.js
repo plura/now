@@ -1,13 +1,13 @@
 import { el } from '../utils.js';
 import { createFloat } from '../float.js';
 import { t } from '../lang.js';
-import { filterProjects } from './filter-logic.js';
+import { filterItems } from './filter-logic.js';
 
-const filterMain    = document.getElementById('plura-projects-filter');
-const filterMorph   = document.getElementById('plura-projects-filter-morph');
-const filterTrigger = document.getElementById('plura-projects-filter-trigger');
-const filterClose   = document.getElementById('plura-projects-filter-close');
-const filterPanel   = document.getElementById('plura-projects-filter-panel');
+const main    = document.getElementById('plura-projects-filter');
+const morph   = document.getElementById('plura-projects-filter-morph');
+const trigger = document.getElementById('plura-projects-filter-trigger');
+const closeBtn = document.getElementById('plura-projects-filter-close');
+const panel   = document.getElementById('plura-projects-filter-panel');
 
 // ─── State ────────────────────────────────────────────────────
 
@@ -30,7 +30,7 @@ export function initFilter(data, projectsContainer) {
   buildPanel(data);
 
   createFloat(
-    { main: filterMain, morph: filterMorph, trigger: filterTrigger, close: filterClose },
+    { main, morph, trigger, close: closeBtn },
     () => ({
       width:  Math.min(320, window.innerWidth  * 0.9),
       height: Math.min(480, window.innerHeight * 0.85),
@@ -84,8 +84,8 @@ function buildPanel(data) {
     content.appendChild(buildGroup(group));
   });
 
-  const panelHeader = filterPanel.querySelector('.plura-panel-header');
-  const panelBody   = filterPanel.querySelector('.plura-panel-body');
+  const panelHeader = panel.querySelector('.plura-panel-header');
+  const panelBody   = panel.querySelector('.plura-panel-body');
 
   panelHeader.appendChild(el('span', { class: 'plura-panel-title', text: t('Filter') }));
   panelBody.appendChild(content);
@@ -136,7 +136,7 @@ function clearFilter() {
   active.tags.clear();
   active.statuses.clear();
 
-  filterPanel.querySelectorAll('.plura-projects-filter-option').forEach(btn => {
+  panel.querySelectorAll('.plura-projects-filter-option').forEach(btn => {
     btn.setAttribute('aria-pressed', 'false');
     btn.classList.remove('plura-badge--active');
   });
@@ -147,7 +147,7 @@ function clearFilter() {
 function applyFilter() {
   clearBtn.hidden = !hasActive();
 
-  const passing = filterProjects(_projects, active);
+  const passing = filterItems(_projects, active);
 
   _container.querySelectorAll('.plura-projects-item').forEach(item => {
     item.classList.toggle('plura-projects-item--filtered', !passing.has(item.dataset.title));

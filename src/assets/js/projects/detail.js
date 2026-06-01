@@ -1,7 +1,7 @@
 // ─── Project detail overlay ───────────────────────────────────
 
 import { openMorph, closeMorph } from '../morph.js';
-import { buildProjectMeta } from './meta.js';
+import { buildMeta } from './meta.js';
 import { el } from '../utils.js';
 
 const detailMain    = document.getElementById('plura-project-detail');
@@ -37,7 +37,7 @@ function populateContent(project) {
     el('div', { class: 'plura-project-detail-header' },
       el('h2', { class: 'plura-project-detail-title', text: project.title }),
       el('span', { class: 'plura-project-detail-category', text: project.category.label }),
-      buildProjectMeta(project)
+      buildMeta(project)
     )
   );
 

@@ -2,7 +2,7 @@
 
 import { fetchLang } from './lang.js';
 import { renderCards } from './projects/cards.js';
-import { createProjectsCarousel } from './projects/carousel.js';
+import { createCarousel } from './projects/carousel.js';
 import { initFilter } from './projects/filter.js';
 
 // ─── Fetch + normalise ────────────────────────────────────────
@@ -43,11 +43,12 @@ export function flattenProjects({ categories, projects }) {
 // ─── Init ─────────────────────────────────────────────────────
 
 export function initProjects(data, container) {
-  const flat      = flattenProjects(data);
-  const indexMap  = new Map(flat.map((p, i) => [p, i]));
-  const carousel  = createProjectsCarousel(flat);
+  const flat     = flattenProjects(data);
+  const indexMap = new Map(flat.map((p, i) => [p, i]));
 
-  renderCards(data, container, project => carousel.open(indexMap.get(project)));
+  const { getItem } = renderCards(data, container, project => carousel.open(indexMap.get(project)));
+  const carousel    = createCarousel(flat, index => getItem(flat[index]));
+
   initFilter(data, container);
 
   return { open: index => carousel.open(index) };

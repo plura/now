@@ -1,20 +1,20 @@
 // ─── Projects carousel overlay ────────────────────────────────
 
 import { createCarousel } from '../../components/carousel/carousel.js';
-import { createProjectsCarouselItem } from './carousel-item.js';
+import { createCarouselItem } from './carousel-item.js';
 import { initOverlay } from '../overlay.js';
 
 const overlay = document.getElementById('plura-projects-carousel');
 
 // ─── Init ─────────────────────────────────────────────────────
 
-export function createProjectsCarousel(flat) {
+export function createCarousel(flat) {
   const populated = new Set();
 
-  function onEnter(index, slideEl) {
+  function onEnter(index, slide) {
     if (populated.has(index)) return;
     populated.add(index);
-    slideEl.appendChild(createProjectsCarouselItem(flat[index]));
+    slide.appendChild(createCarouselItem(flat[index]));
   }
 
   const { goTo } = createCarousel(overlay, {
@@ -28,15 +28,15 @@ export function createProjectsCarousel(flat) {
 
   // ── Overlay ──────────────────────────────────────────────────
 
-  let _pendingIndex = 0;
+  let pendingIndex = 0;
 
   const { open: openOverlay, close } = initOverlay(overlay, {
     keepOpenSelector: '.plura-carousel-item, .plura-carousel-arrow',
-    onBeforeOpen: () => goTo(_pendingIndex, false),
+    onBeforeOpen: () => goTo(pendingIndex, false),
   });
 
-  function open(index) { 
-    _pendingIndex = index;
+  function open(index) {
+    pendingIndex = index;
     openOverlay();
   }
 

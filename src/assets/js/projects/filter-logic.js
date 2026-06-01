@@ -1,4 +1,4 @@
-export function filterProjects(projects, { categories, tags, statuses }) {
+export function filterItems(projects, { categories, tags, statuses }) {
   return new Set(
     projects
       .filter(p =>

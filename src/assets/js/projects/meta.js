@@ -2,7 +2,7 @@
 
 import { el } from '../utils.js';
 
-export function buildProjectMeta(project) {
+export function buildMeta(project) {
   const meta = el('div', { class: 'plura-projects-item-meta' });
 
   if (project.status) {
