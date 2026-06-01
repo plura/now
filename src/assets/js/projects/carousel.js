@@ -9,7 +9,8 @@ const overlay = document.getElementById('plura-projects-carousel');
 
 // ─── Init ─────────────────────────────────────────────────────
 
-export function createCarousel(flat) {
+export function createCarousel(initialFlat) {
+  let flat      = initialFlat;
   const populated = new Set();
 
   function onEnter(index, slide) {
@@ -18,7 +19,7 @@ export function createCarousel(flat) {
     slide.appendChild(createCarouselItem(flat[index]));
   }
 
-  const { goTo } = createBaseCarousel(overlay, {
+  const { goTo, setItems: baseSetItems } = createBaseCarousel(overlay, {
     items:   flat.length,
     perView: 'auto',
     center:  true,
@@ -41,6 +42,12 @@ export function createCarousel(flat) {
     openOverlay();
   }
 
-  return { open, close, goTo };
+  function setItems(filtered) {
+    flat = filtered;
+    populated.clear();
+    baseSetItems(flat.length);
+  }
+
+  return { open, close, goTo, setItems };
 }
 

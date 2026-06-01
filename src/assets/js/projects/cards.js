@@ -16,7 +16,25 @@ export function renderCards({ categories, projects }, container, onItemClick) {
 
   container.appendChild(grid);
 
-  return { getItem: project => itemsByProject.get(project) };
+  function setItems(filtered) {
+    const passing = new Set(filtered);
+    const cards   = new Set();
+
+    itemsByProject.forEach((el, project) => {
+      el.classList.toggle('plura-projects-item--filtered', !passing.has(project));
+      cards.add(el.closest('.plura-projects-card'));
+    });
+
+    cards.forEach(card => {
+      const visible = card.querySelectorAll('.plura-projects-item:not(.plura-projects-item--filtered)').length;
+      card.classList.toggle('plura-projects-card--filtered', !visible);
+    });
+  }
+
+  return {
+    getItem:  project => itemsByProject.get(project),
+    setItems,
+  };
 }
 
 function buildCategoryCard(catKey, catLabel, projects, onItemClick, itemsByProject) {

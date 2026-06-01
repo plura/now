@@ -17,8 +17,8 @@ const active = {
   statuses:   new Set(),
 };
 
-let _container;
 let _projects;
+let _onFilter;
 
 function hasActive() {
   return active.categories.size || active.tags.size || active.statuses.size;
@@ -26,7 +26,7 @@ function hasActive() {
 
 // ─── Init ─────────────────────────────────────────────────────
 
-export function initFilter(data, projectsContainer) {
+export function initFilter(data, flat, onFilter) {
   buildPanel(data);
 
   createFloat(
@@ -37,8 +37,8 @@ export function initFilter(data, projectsContainer) {
     })
   );
 
-  _container = projectsContainer;
-  _projects  = data.projects;
+  _projects = flat;
+  _onFilter = onFilter;
 }
 
 // ─── Panel ────────────────────────────────────────────────────
@@ -146,15 +146,5 @@ function clearFilter() {
 
 function applyFilter() {
   clearBtn.hidden = !hasActive();
-
-  const passing = filterItems(_projects, active);
-
-  _container.querySelectorAll('.plura-projects-item').forEach(item => {
-    item.classList.toggle('plura-projects-item--filtered', !passing.has(item.dataset.title));
-  });
-
-  _container.querySelectorAll('.plura-projects-card').forEach(card => {
-    const visible = card.querySelectorAll('.plura-projects-item:not(.plura-projects-item--filtered)').length;
-    card.classList.toggle('plura-projects-card--filtered', !visible);
-  });
+  _onFilter(filterItems(_projects, active));
 }

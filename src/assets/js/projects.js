@@ -43,13 +43,19 @@ export function flattenProjects({ categories, projects }) {
 // ─── Init ─────────────────────────────────────────────────────
 
 export function initProjects(data, container) {
-  const flat     = flattenProjects(data);
-  const indexMap = new Map(flat.map((p, i) => [p, i]));
+  const flat = flattenProjects(data);
+  let currentFlat     = flat;
+  let currentIndexMap = new Map(flat.map((p, i) => [p, i]));
 
-  const { getItem } = renderCards(data, container, project => carousel.open(indexMap.get(project)));
-  const carousel    = createCarousel(flat, index => getItem(flat[index]));
+  const cards    = renderCards(data, container, project => carousel.open(currentIndexMap.get(project)));
+  const carousel = createCarousel(flat);
 
-  initFilter(data, container);
+  initFilter(data, flat, filtered => {
+    currentFlat     = filtered;
+    currentIndexMap = new Map(filtered.map((p, i) => [p, i]));
+    cards.setItems(filtered);
+    carousel.setItems(filtered);
+  });
 
   return { open: index => carousel.open(index) };
 }
