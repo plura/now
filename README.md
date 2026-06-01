@@ -43,10 +43,11 @@ Rollup bundles `src/assets/js/main.js` (and all imports) into a single ES module
 
 Three panels share a common expand/collapse animation: the **contact form**, the **project filter**, and the **project detail** overlay. Each starts as a circular floating button and morphs into a centred panel via GSAP.
 
-The shared logic lives in two files:
+The shared logic lives in three files:
 
-- `morph.js` — `openMorph` / `closeMorph`: GSAP animates position, size, and opacity from the trigger's bounding rect to a centred panel
-- `float.js` — `createFloat`: wires up trigger click, close button, and backdrop click for the two floating-button panels (CTA and filter). Project detail is opened programmatically via `openDetail`.
+- `morph.js` — `openMorph` / `closeMorph`: GSAP animates the frame from the trigger's bounding rect to a centred panel and back
+- `float.js` — `createFloat`: wires trigger click, close button, and backdrop click for the two floating-button panels (CTA and filter)
+- `overlay.js` — `initOverlay`: manages fullscreen backdrop lifecycle (open/close fade, Escape, click-outside). Used directly by the projects carousel; the float/morph pattern uses `.plura-overlay--backdrop` for the same backdrop appearance via CSS transitions instead
 
 ### Project filter
 
@@ -58,7 +59,7 @@ Client-side, real-time. State is three `Set`s — `categories`, `tags`, `statuse
 
 Visibility is toggled via CSS classes (`--filtered`, `--card-filtered`). A "Clear" button appears when any filter is active.
 
-Filter logic is separated from the UI in `projects/filter-logic.js` (`filterProjects(projects, active) → Set<title>`).
+Filter logic is separated from the UI in `projects/filter-logic.js` (`filterItems(projects, active) → project[]`). The result is distributed by `projects.js` to both the cards grid and the carousel, keeping both in sync with the current filtered set.
 
 ### Internationalisation
 
@@ -79,7 +80,7 @@ On first visit (no session flag), the logo draws in via SVG path animation, then
 
 Source lives in `src/`. The build outputs to `dist/`.
 
-CSS is modular — `main.css` is an `@import` chain. Design tokens are centralised in `base.css`; each concern (morph, float, form, badge, button, projects, filter, detail) has its own file.
+CSS is modular — `main.css` is an `@import` chain. Design tokens are centralised in `base.css`; each concern (overlay, morph, float, form, badge, button, projects, filter, detail) has its own file.
 
 JS follows the same pattern: `main.js` bootstraps everything; feature modules live alongside a subfolder for sub-modules (`anim/`, `projects/`). Shared primitives (`morph.js`, `float.js`, `utils.js`, `lang.js`) are imported where needed.
 

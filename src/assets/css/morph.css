@@ -1,25 +1,11 @@
-/* ─── Morph / overlay base ───────────────────────────────────── */
+/* ─── Morph frame ────────────────────────────────────────────── */
 
-
-/* ─── Main (backdrop) ────────────────────────────────────────── */
-
-.plura-morph-main {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  transition:
-    background-color var(--plura-dur) var(--plura-ease),
-    backdrop-filter  var(--plura-dur) var(--plura-ease);
-}
-
-.plura-morph-main.active {
-  pointer-events: all;
-  background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
-  backdrop-filter: blur(6px);
+:root {
+  --plura-morph-pad: var(--plura-pad);
 }
 
 
-/* ─── Morph element ──────────────────────────────────────────── */
+/* ─── Frame ──────────────────────────────────────────────────── */
 
 .plura-morph-element {
   /* absolute inside fixed inset-0 parent = same as fixed, avoids backdrop-filter containing-block quirk */
@@ -54,7 +40,7 @@
   transition: opacity var(--plura-dur) var(--plura-ease);
 }
 
-.plura-morph-main.active .plura-morph-close {
+.active .plura-morph-close {
   opacity: 1;
   pointer-events: all;
 }
@@ -71,7 +57,7 @@
   transition: opacity var(--plura-dur) var(--plura-ease);
 }
 
-.plura-morph-main.active .plura-morph-content {
+.active .plura-morph-content {
   opacity: 1;
   pointer-events: all;
 }
@@ -80,4 +66,12 @@
 .plura-morph-content .plura-panel {
   border-radius: 0;
   min-height: 100%;
+}
+
+
+/* ─── Panel title ────────────────────────────────────────────── */
+
+.plura-panel-title {
+  font-size: var(--plura-font-size-base);
+  font-weight: var(--plura-font-weight-semi);
 }

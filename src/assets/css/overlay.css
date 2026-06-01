@@ -9,3 +9,22 @@
   background-color: color-mix(in srgb, var(--plura-color-dark) var(--plura-opacity-mid), transparent);
   backdrop-filter: blur(6px);
 }
+
+
+/* ─── Backdrop variant ───────────────────────────────────────── */
+/* Used when the overlay root must stay visible (e.g. float trigger lives inside).
+   Backdrop fades in/out via CSS transition on .active rather than GSAP autoAlpha. */
+
+.plura-overlay--backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  transition: background-color var(--plura-dur) var(--plura-ease),
+              backdrop-filter   var(--plura-dur) var(--plura-ease);
+}
+
+.plura-overlay--backdrop.active {
+  pointer-events: all;
+  background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
+  backdrop-filter: blur(6px);
+}
