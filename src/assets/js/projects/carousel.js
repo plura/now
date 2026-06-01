@@ -1,6 +1,7 @@
 // ─── Projects carousel overlay ────────────────────────────────
 
-import { createCarousel } from '../../components/carousel/carousel.js';
+// aliased to avoid collision with the exported createCarousel below
+import { createCarousel as createBaseCarousel } from '../../components/carousel/carousel.js';
 import { createCarouselItem } from './carousel-item.js';
 import { initOverlay } from '../overlay.js';
 
@@ -17,7 +18,7 @@ export function createCarousel(flat) {
     slide.appendChild(createCarouselItem(flat[index]));
   }
 
-  const { goTo } = createCarousel(overlay, {
+  const { goTo } = createBaseCarousel(overlay, {
     items:   flat.length,
     perView: 'auto',
     center:  true,
