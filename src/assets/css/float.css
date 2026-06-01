@@ -30,7 +30,7 @@
   transition: opacity var(--plura-dur) var(--plura-ease);
 }
 
-.plura-float-main.active .plura-float-trigger {
+.plura-float-main:has(.plura-morph-element.active) .plura-float-trigger {
   opacity: 0;
   pointer-events: none;
 }
@@ -44,7 +44,7 @@
   height: var(--plura-float-btn-size);
 }
 
-.plura-float-main:not(.active) .plura-float-morph {
+.plura-float-morph:not(.active) {
   border-radius: 50%;
 }
 

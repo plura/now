@@ -40,7 +40,7 @@
   transition: opacity var(--plura-dur) var(--plura-ease);
 }
 
-.active .plura-morph-close {
+.plura-morph-element.active .plura-morph-close {
   opacity: 1;
   pointer-events: all;
 }
@@ -57,7 +57,7 @@
   transition: opacity var(--plura-dur) var(--plura-ease);
 }
 
-.active .plura-morph-content {
+.plura-morph-element.active .plura-morph-content {
   opacity: 1;
   pointer-events: all;
 }

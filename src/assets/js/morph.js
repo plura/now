@@ -1,14 +1,14 @@
-// ─── Morph / overlay animation ───────────────────────────────
-// Shared open/close FLIP animation for overlay panels.
-// Consumer calls openMorph with the trigger's bounding rect;
-// closeMorph returns to that same rect automatically.
+// ─── Morph frame animation ────────────────────────────────────
+// Animates a frame element between two rects via GSAP.
+// openMorph snaps the frame to fromRect then animates to targetSize centred.
+// closeMorph returns to the stored fromRect.
 //
-// hideOnClose — set autoAlpha: 0 after close animation
+// options.hideOnClose — set autoAlpha: 0 after close animation
 //   (use for overlays with no persistent resting state)
 
 const state = new WeakMap();
 
-export function openMorph(container, frame, fromRect, targetSize, options = {}) {
+export function openMorph(frame, fromRect, targetSize, options = {}) {
   const { hideOnClose = false } = options;
   state.set(frame, { fromRect, hideOnClose });
 
@@ -25,7 +25,7 @@ export function openMorph(container, frame, fromRect, targetSize, options = {}) 
     autoAlpha: 1,
   });
 
-  container.classList.add('active');
+  frame.classList.add('active');
 
   gsap.to(frame, {
     x:        toX - fromRect.x,
@@ -37,7 +37,7 @@ export function openMorph(container, frame, fromRect, targetSize, options = {}) 
   });
 }
 
-export function closeMorph(container, frame) {
+export function closeMorph(frame) {
   const { fromRect, hideOnClose } = state.get(frame) ?? {};
   if (!fromRect) return;
 
@@ -49,7 +49,7 @@ export function closeMorph(container, frame) {
     duration: 0.45,
     ease:     'power3.inOut',
     onComplete: () => {
-      container.classList.remove('active');
+      frame.classList.remove('active');
       if (hideOnClose) gsap.set(frame, { autoAlpha: 0 });
     },
   });

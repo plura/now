@@ -21,11 +21,11 @@ export function openDetail(project, fromRect) {
     height: Math.min(600, window.innerHeight * 0.85),
   };
 
-  openMorph(detailContainer, detailFrame, fromRect, targetSize, { hideOnClose: true });
+  openMorph(detailFrame, fromRect, targetSize, { hideOnClose: true });
 }
 
 export function closeDetail() {
-  closeMorph(detailContainer, detailFrame);
+  closeMorph(detailFrame);
 }
 
 // ─── Content ──────────────────────────────────────────────────

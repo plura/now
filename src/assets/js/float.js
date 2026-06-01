@@ -2,12 +2,12 @@ import { openMorph, closeMorph } from './morph.js';
 
 export function createFloat({ container, frame, trigger, closeBtn }, getSize, options = {}) {
   function open() {
-    openMorph(container, frame, trigger.getBoundingClientRect(), getSize(), options);
+    openMorph(frame, trigger.getBoundingClientRect(), getSize(), options);
     trigger.setAttribute('aria-expanded', 'true');
   }
 
   function close() {
-    closeMorph(container, frame);
+    closeMorph(frame);
     trigger.setAttribute('aria-expanded', 'false');
   }
 

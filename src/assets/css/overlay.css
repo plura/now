@@ -23,7 +23,7 @@
               backdrop-filter   var(--plura-dur) var(--plura-ease);
 }
 
-.plura-overlay--backdrop.active {
+.plura-overlay--backdrop:has(.plura-morph-element.active) {
   pointer-events: all;
   background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
   backdrop-filter: blur(6px);
