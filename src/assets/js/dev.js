@@ -15,9 +15,9 @@ function get(name) {
   return modeEntries.find(m => m.name === name);
 }
 
-function apply({ carousel } = {}) {
+function apply({ projects } = {}) {
   const carouselMode = get('projects-carousel');
-  if (carouselMode) carousel?.open(Number(carouselMode.arg) || 0);
+  if (carouselMode) projects?.open(Number(carouselMode.arg) || 0);
 }
 
 export default { active, apply };

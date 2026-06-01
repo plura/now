@@ -8,8 +8,7 @@ const overlay = document.getElementById('plura-projects-carousel');
 
 // ─── Init ─────────────────────────────────────────────────────
 
-export function createProjectsCarousel({ categories, projects }) {
-  const flat      = flattenProjects(categories, projects);
+export function createProjectsCarousel(flat) {
   const populated = new Set();
 
   function onEnter(index, slideEl) {
@@ -44,10 +43,3 @@ export function createProjectsCarousel({ categories, projects }) {
   return { open, close, goTo };
 }
 
-// ─── Helpers ──────────────────────────────────────────────────
-
-function flattenProjects(categories, projects) {
-  return Object.keys(categories).flatMap(catKey =>
-    projects.filter(p => p.category.key === catKey)
-  );
-}

@@ -1,7 +1,7 @@
 // ─── Projects carousel item ───────────────────────────────────
 
 import { el } from '../utils.js';
-import { buildProjectMeta } from '../projects.js';
+import { buildProjectMeta } from './meta.js';
 
 export function createProjectsCarouselItem(project) {
   return el('div', { class: 'plura-projects-carousel-item plura-panel' },

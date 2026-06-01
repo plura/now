@@ -1,6 +1,11 @@
-import { el } from './utils.js';
-import { openDetail } from './projects/detail.js';
-import { t, fetchLang } from './lang.js';
+// ─── Projects orchestrator ─────────────────────────────────────
+
+import { fetchLang } from './lang.js';
+import { renderCards } from './projects/cards.js';
+import { createProjectsCarousel } from './projects/carousel.js';
+import { initFilter } from './projects/filter.js';
+
+// ─── Fetch + normalise ────────────────────────────────────────
 
 export async function fetchProjects(base = '.') {
   const [data, trans] = await Promise.all([
@@ -29,97 +34,21 @@ function normalize({ statuses, tags, categories, projects }, trans = null) {
   };
 }
 
-export function renderProjects({ categories, projects }, container) {
-  const grid = el('div', { class: 'plura-projects' });
-
-  for (const [catKey, catLabel] of Object.entries(categories)) {
-    const catProjects = projects.filter(p => p.category.key === catKey);
-    if (!catProjects.length) continue;
-
-    const card = buildCategoryCard(catKey, catLabel, catProjects);
-    grid.appendChild(card);
-  }
-
-  container.appendChild(grid);
-}
-
-function buildCategoryCard(catKey, catLabel, projects) {
-  const list = el('div', { class: 'plura-projects-list', role: 'list' });
-  projects.forEach(p => list.appendChild(buildProjectItem(p)));
-
-  return el('div', { class: 'plura-projects-card', dataset: { category: catKey } },
-    el('div', { class: 'plura-projects-card-heading' },
-      el('span', { class: 'plura-projects-card-label', text: catLabel }),
-      el('span', { class: 'plura-projects-card-count', text: projects.length })
-    ),
-    list
+export function flattenProjects({ categories, projects }) {
+  return Object.keys(categories).flatMap(catKey =>
+    projects.filter(p => p.category.key === catKey)
   );
 }
 
-function buildProjectItem(project) {
-  const item = el('div', { class: 'plura-projects-item', role: 'listitem', dataset: { title: project.title } });
+// ─── Init ─────────────────────────────────────────────────────
 
-  const row = el('div', { class: 'plura-projects-item-row' },
-    el('span', { class: 'plura-projects-item-title', text: project.title }),
-    buildProjectMeta(project),
-    buildProjectActions(project)
-  );
+export function initProjects(data, container) {
+  const flat      = flattenProjects(data);
+  const indexMap  = new Map(flat.map((p, i) => [p, i]));
+  const carousel  = createProjectsCarousel(flat);
 
-  item.appendChild(row);
+  renderCards(data, container, project => carousel.open(indexMap.get(project)));
+  initFilter(data, container);
 
-  if (project.summary) {
-    item.appendChild(
-      el('p', { class: 'plura-projects-item-desc', text: project.summary })
-    );
-  }
-
-  item.addEventListener('click', e => {
-    if (!e.target.closest('.plura-projects-item-url')) {
-      openDetail(project, item.getBoundingClientRect());
-    }
-  });
-
-  return item;
-}
-
-export function buildProjectMeta(project) {
-  const meta = el('div', { class: 'plura-projects-item-meta' });
-
-  if (project.status) {
-    meta.appendChild(
-      el('span', { class: `plura-badge plura-badge--outline plura-projects-status plura-projects-status--${project.status.key}`, text: project.status.label })
-    );
-  }
-
-  if (project.tags.length) {
-    const tagsGroup = el('div', { class: 'plura-projects-tags' });
-    project.tags.forEach(tag => {
-      tagsGroup.appendChild(
-        el('span', { class: `plura-badge plura-badge--fill plura-projects-tag plura-projects-tag--${tag.key}`, text: tag.label })
-      );
-    });
-    meta.appendChild(tagsGroup);
-  }
-
-  return meta;
-}
-
-function buildProjectActions(project) {
-  const actions = el('div', { class: 'plura-projects-item-actions' });
-
-  if (project.url) {
-    actions.appendChild(
-      el('a', { class: 'plura-projects-item-url', href: project.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': t('Visit {title}', { title: project.title }) },
-        el('i', { 'data-lucide': 'external-link' })
-      )
-    );
-  }
-
-  actions.appendChild(
-    el('button', { class: 'plura-projects-item-expand', 'aria-expanded': 'false', 'aria-label': t('About {title}', { title: project.title }) },
-      el('i', { 'data-lucide': 'maximize-2' })
-    )
-  );
-
-  return actions;
+  return { open: index => carousel.open(index) };
 }

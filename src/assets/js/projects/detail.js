@@ -1,7 +1,7 @@
 // ─── Project detail overlay ───────────────────────────────────
 
 import { openMorph, closeMorph } from '../morph.js';
-import { buildProjectMeta } from '../projects.js';
+import { buildProjectMeta } from './meta.js';
 import { el } from '../utils.js';
 
 const detailMain    = document.getElementById('plura-project-detail');
