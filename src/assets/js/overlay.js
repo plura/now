@@ -1,41 +1,60 @@
 // ─── Overlay ──────────────────────────────────────────────────
+// Two modes:
+//   'overlay'  (default) — GSAP autoAlpha shows/hides the whole root.
+//   'backdrop'           — root stays visible (e.g. float trigger lives inside).
+//                          CSS :has() handles visuals; JS adds Escape, click-outside, focus.
 
 /**
  * @param {Element} root
  * @param {object}  options
- * @param {string}   [options.keepOpenSelector]  CSS selector — clicks inside won't dismiss.
- * @param {Function} [options.onBeforeOpen]      Runs synchronously before the open animation.
- * @param {Function} [options.onClose]           Fires immediately when close is triggered (capture state here).
- * @param {Function} [options.onAfterClose]      Runs after the close animation completes (DOM cleanup etc.).
+ * @param {'overlay'|'backdrop'} [options.mode]  default: 'overlay'
+ * @param {string|Element} [options.keepOpenSelector]  Clicks inside won't dismiss.
+ * @param {Function} [options.onBeforeOpen]   Runs synchronously before open.
+ * @param {Function} [options.onClose]        Fires immediately when close is triggered.
+ * @param {Function} [options.onAfterClose]   Runs after close animation completes.
  * @returns {{ open: Function, close: Function }}
  */
-export function initOverlay(root, { keepOpenSelector, onBeforeOpen, onClose, onAfterClose } = {}) {
+export function initOverlay(root, { mode = 'overlay', keepOpenSelector, onBeforeOpen, onClose, onAfterClose } = {}) {
+  const isBackdrop = mode === 'backdrop';
+
   root.classList.add('plura-overlay');
-  gsap.set(root, { autoAlpha: 0 });
+  if (isBackdrop) root.classList.add('plura-overlay--backdrop');
   root.setAttribute('tabindex', '-1');
 
-  // Both Escape and backdrop click route through close() — overlay owns dismissal.
+  if (!isBackdrop) {
+    gsap.set(root, { autoAlpha: 0 });
+  }
+
   root.addEventListener('keydown', e => {
     if (e.key === 'Escape') close();
   });
 
-  // elementFromPoint is used instead of e.target because carousel's drag handler
-  // calls setPointerCapture, routing all pointer events to the items element.
+  // elementFromPoint instead of e.target — carousel drag uses setPointerCapture
+  // which routes pointer events to the items element regardless of actual position.
   root.addEventListener('click', e => {
     const actual = document.elementFromPoint(e.clientX, e.clientY);
-    if (!actual?.closest(keepOpenSelector)) close();
+    const inside = typeof keepOpenSelector === 'string'
+      ? actual?.closest(keepOpenSelector)
+      : keepOpenSelector?.contains(actual);
+    if (!inside) close();
   });
 
   function open() {
     onBeforeOpen?.();
-    gsap.set(root, { visibility: 'visible' });
+    if (!isBackdrop) {
+      gsap.set(root, { visibility: 'visible' });
+      gsap.to(root, { opacity: 1, duration: 0.25 });
+    }
     root.focus();
-    gsap.to(root, { opacity: 1, duration: 0.25 });
   }
 
   function close() {
     onClose?.();
-    gsap.to(root, { autoAlpha: 0, duration: 0.2, onComplete: onAfterClose });
+    if (!isBackdrop) {
+      gsap.to(root, { autoAlpha: 0, duration: 0.2, onComplete: onAfterClose });
+    } else {
+      onAfterClose?.();
+    }
   }
 
   return { open, close };

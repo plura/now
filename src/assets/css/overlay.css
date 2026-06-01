@@ -1,23 +1,27 @@
-/* ─── Overlay ────────────────────────────────────────────────── */
+/* ─── Overlay base ───────────────────────────────────────────── */
+/* Intentional !important: overlay is always fullscreen by design. The class is
+   added to existing elements (e.g. .plura-carousel) that carry their own position
+   rule — this guarantees fixed wins regardless of cascade order. */
 
 .plura-overlay {
-  /* Intentional !important: overlay is always fullscreen by design. The class is
-     added to existing elements (e.g. .plura-carousel) that carry their own position
-     rule — this guarantees fixed wins regardless of cascade order. */
   position: fixed !important;
   inset: 0;
+}
+
+
+/* ─── Default: always visible with bg/blur ───────────────────── */
+
+.plura-overlay:not(.plura-overlay--backdrop) {
   background-color: color-mix(in srgb, var(--plura-color-dark) var(--plura-opacity-mid), transparent);
   backdrop-filter: blur(6px);
 }
 
 
 /* ─── Backdrop variant ───────────────────────────────────────── */
-/* Used when the overlay root must stay visible (e.g. float trigger lives inside).
-   Backdrop fades in/out via CSS transition on .active rather than GSAP autoAlpha. */
+/* Root stays visible (e.g. float trigger lives inside).
+   Bg/blur transition in via CSS :has(); GSAP autoAlpha not used. */
 
 .plura-overlay--backdrop {
-  position: fixed;
-  inset: 0;
   pointer-events: none;
   transition: background-color var(--plura-dur) var(--plura-ease),
               backdrop-filter   var(--plura-dur) var(--plura-ease);

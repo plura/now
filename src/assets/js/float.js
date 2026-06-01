@@ -1,19 +1,22 @@
 import { openMorph, closeMorph } from './morph.js';
+import { initOverlay } from './overlay.js';
 
 export function createFloat({ container, frame, trigger, closeBtn }, getSize, options = {}) {
-  function open() {
-    openMorph(frame, trigger.getBoundingClientRect(), getSize(), options);
-    trigger.setAttribute('aria-expanded', 'true');
-  }
+  const overlay = initOverlay(container, {
+    mode:             'backdrop',
+    keepOpenSelector: frame,
+    onBeforeOpen: () => {
+      openMorph(frame, trigger.getBoundingClientRect(), getSize(), options);
+      trigger.setAttribute('aria-expanded', 'true');
+    },
+    onClose: () => {
+      closeMorph(frame);
+      trigger.setAttribute('aria-expanded', 'false');
+    },
+  });
 
-  function close() {
-    closeMorph(frame);
-    trigger.setAttribute('aria-expanded', 'false');
-  }
+  trigger.addEventListener('click', overlay.open);
+  closeBtn.addEventListener('click', overlay.close);
 
-  trigger.addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
-  container.addEventListener('click', e => { if (e.target === container) close(); });
-
-  return { open, close };
+  return overlay;
 }
