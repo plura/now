@@ -1,4 +1,6 @@
 // ─── Projects orchestrator ─────────────────────────────────────
+// Fetches and normalises data, then wires cards, carousel, and filter together.
+// Cards and carousel both expose setItems — the filter callback keeps them in sync.
 
 import { fetchLang } from './lang.js';
 import { renderCards } from './projects/cards.js';
@@ -44,15 +46,17 @@ export function flattenProjects({ categories, projects }) {
 
 export function initProjects(data, container) {
   const flat = flattenProjects(data);
-  let currentFlat     = flat;
-  let currentIndexMap = new Map(flat.map((p, i) => [p, i]));
 
-  const cards    = renderCards(data, container, project => carousel.open(currentIndexMap.get(project)));
+  // Both updated on each filter change so card clicks always open the correct carousel index.
+  let currentFlat    = flat;
+  let indexByProject = new Map(flat.map((p, i) => [p, i]));
+
+  const cards    = renderCards(data, container, project => carousel.open(indexByProject.get(project)));
   const carousel = createCarousel(flat);
 
   initFilter(data, flat, filtered => {
     currentFlat     = filtered;
-    currentIndexMap = new Map(filtered.map((p, i) => [p, i]));
+    indexByProject = new Map(filtered.map((p, i) => [p, i]));
     cards.setItems(filtered);
     carousel.setItems(filtered);
   });

@@ -1,3 +1,5 @@
+// ─── DOM + asset helpers ───────────────────────────────────────
+
 export function el(tag, props = {}, ...children) {
   const node = document.createElement(tag);
   for (const [k, v] of Object.entries(props)) {

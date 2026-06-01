@@ -1,4 +1,6 @@
 // ─── Projects carousel overlay ────────────────────────────────
+// Fullscreen overlay carousel for browsing projects.
+// Slides are empty shells — content is injected lazily via onEnter only when a slide becomes active.
 
 // aliased to avoid collision with the exported createCarousel below
 import { createCarousel as createBaseCarousel } from '../../components/carousel/carousel.js';

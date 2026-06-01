@@ -1,13 +1,17 @@
+// ─── Projects filter panel ─────────────────────────────────────
+// Builds the filter UI and manages active filter state (Sets per group).
+// DOM updates are handled externally via the onFilter callback.
+
 import { el } from '../utils.js';
 import { createFloat } from '../float.js';
 import { t } from '../lang.js';
 import { filterItems } from './filter-logic.js';
 
-const main    = document.getElementById('plura-projects-filter');
-const morph   = document.getElementById('plura-projects-filter-morph');
-const trigger = document.getElementById('plura-projects-filter-trigger');
-const closeBtn = document.getElementById('plura-projects-filter-close');
-const panel   = document.getElementById('plura-projects-filter-panel');
+const container = document.getElementById('plura-projects-filter');
+const frame     = document.getElementById('plura-projects-filter-morph');
+const trigger   = document.getElementById('plura-projects-filter-trigger');
+const closeBtn  = document.getElementById('plura-projects-filter-close');
+const panel     = document.getElementById('plura-projects-filter-panel');
 
 // ─── State ────────────────────────────────────────────────────
 
@@ -30,7 +34,7 @@ export function initFilter(data, flat, onFilter) {
   buildPanel(data);
 
   createFloat(
-    { main, morph, trigger, close: closeBtn },
+    { container, frame, trigger, closeBtn },
     () => ({
       width:  Math.min(320, window.innerWidth  * 0.9),
       height: Math.min(480, window.innerHeight * 0.85),

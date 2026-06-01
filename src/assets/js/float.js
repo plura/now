@@ -1,19 +1,19 @@
 import { openMorph, closeMorph } from './morph.js';
 
-export function createFloat({ main, morph, trigger, close }, getSize, options = {}) {
+export function createFloat({ container, frame, trigger, closeBtn }, getSize, options = {}) {
   function open() {
-    openMorph(main, morph, trigger.getBoundingClientRect(), getSize(), options);
+    openMorph(container, frame, trigger.getBoundingClientRect(), getSize(), options);
     trigger.setAttribute('aria-expanded', 'true');
   }
 
-  function close_() {
-    closeMorph(main, morph);
+  function close() {
+    closeMorph(container, frame);
     trigger.setAttribute('aria-expanded', 'false');
   }
 
   trigger.addEventListener('click', open);
-  close.addEventListener('click', close_);
-  main.addEventListener('click', e => { if (e.target === main) close_(); });
+  closeBtn.addEventListener('click', close);
+  container.addEventListener('click', e => { if (e.target === container) close(); });
 
-  return { open, close: close_ };
+  return { open, close };
 }

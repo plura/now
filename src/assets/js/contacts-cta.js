@@ -3,10 +3,10 @@
 import { createFloat } from './float.js';
 import { t, basePath } from './lang.js';
 
-const ctaMain    = document.getElementById('plura-contacts-cta');
-const ctaMorph   = document.getElementById('plura-contacts-cta-morph');
-const ctaTrigger = document.getElementById('plura-contacts-cta-trigger');
-const ctaClose   = document.getElementById('plura-contacts-cta-close');
+const ctaContainer = document.getElementById('plura-contacts-cta');
+const ctaFrame     = document.getElementById('plura-contacts-cta-morph');
+const ctaTrigger   = document.getElementById('plura-contacts-cta-trigger');
+const ctaCloseBtn  = document.getElementById('plura-contacts-cta-close');
 
 // ─── Toggle ──────────────────────────────────────────────────
 
@@ -25,7 +25,7 @@ const ro = new ResizeObserver(entries => {
 ro.observe(ctaContent);
 
 createFloat(
-  { main: ctaMain, morph: ctaMorph, trigger: ctaTrigger, close: ctaClose },
+  { container: ctaContainer, frame: ctaFrame, trigger: ctaTrigger, closeBtn: ctaCloseBtn },
   () => ({ width: formW, height: formH })
 );
 
@@ -34,7 +34,7 @@ lucide.createIcons();
 // ─── Form submission ──────────────────────────────────────────
 
 const ctaForm  = document.getElementById('plura-contacts-cta-form');
-const ctaAlert = ctaMain.querySelector('.plura-contacts-cta-alert');
+const ctaAlert = ctaContainer.querySelector('.plura-contacts-cta-alert');
 
 function showAlert(message, type = 'error') {
   ctaAlert.textContent  = message;

@@ -5,22 +5,26 @@ import { t } from '../lang.js';
 import { buildMeta } from './meta.js';
 
 export function renderCards({ categories, projects }, container, onItemClick) {
-  const itemsByProject = new Map();
+  const elementByProject = new Map(); // project → card item DOM element, used by getItem and setItems
+
   const grid = el('div', { class: 'plura-projects' });
 
   for (const [catKey, catLabel] of Object.entries(categories)) {
     const catProjects = projects.filter(p => p.category.key === catKey);
     if (!catProjects.length) continue;
-    grid.appendChild(buildCategoryCard(catKey, catLabel, catProjects, onItemClick, itemsByProject));
+    grid.appendChild(buildCategoryCard(catKey, catLabel, catProjects, onItemClick, elementByProject));
   }
 
   container.appendChild(grid);
 
+  // Updates visible items to match the filtered set.
+  // Two passes: first toggle items, then hide cards that have no visible items.
+  // Separated because a card's visibility depends on all its items being processed first.
   function setItems(filtered) {
-    const passing = new Set(filtered);
-    const cards   = new Set();
+    const passing = new Set(filtered); // O(1) lookup
+    const cards   = new Set();         // deduplicated parent cards
 
-    itemsByProject.forEach((el, project) => {
+    elementByProject.forEach((el, project) => {
       el.classList.toggle('plura-projects-item--filtered', !passing.has(project));
       cards.add(el.closest('.plura-projects-card'));
     });
@@ -32,14 +36,14 @@ export function renderCards({ categories, projects }, container, onItemClick) {
   }
 
   return {
-    getItem:  project => itemsByProject.get(project),
+    getItem:  project => elementByProject.get(project), // used by morph transition
     setItems,
   };
 }
 
-function buildCategoryCard(catKey, catLabel, projects, onItemClick, itemsByProject) {
+function buildCategoryCard(catKey, catLabel, projects, onItemClick, elementByProject) {
   const list = el('div', { class: 'plura-projects-list', role: 'list' });
-  projects.forEach(p => list.appendChild(buildProjectItem(p, onItemClick, itemsByProject)));
+  projects.forEach(p => list.appendChild(buildProjectItem(p, onItemClick, elementByProject)));
 
   return el('div', { class: 'plura-projects-card', dataset: { category: catKey } },
     el('div', { class: 'plura-projects-card-heading' },
@@ -50,9 +54,9 @@ function buildCategoryCard(catKey, catLabel, projects, onItemClick, itemsByProje
   );
 }
 
-function buildProjectItem(project, onItemClick, itemsByProject) {
+function buildProjectItem(project, onItemClick, elementByProject) {
   const item = el('div', { class: 'plura-projects-item', role: 'listitem', dataset: { title: project.title } });
-  itemsByProject.set(project, item);
+  elementByProject.set(project, item);
 
   item.appendChild(
     el('div', { class: 'plura-projects-item-row' },
@@ -68,6 +72,7 @@ function buildProjectItem(project, onItemClick, itemsByProject) {
     );
   }
 
+  // URL link is excluded from the expand click to allow independent navigation
   item.addEventListener('click', e => {
     if (!e.target.closest('.plura-projects-item-url')) {
       onItemClick(project);

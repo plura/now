@@ -4,28 +4,28 @@ import { openMorph, closeMorph } from '../morph.js';
 import { buildMeta } from './meta.js';
 import { el } from '../utils.js';
 
-const detailMain    = document.getElementById('plura-project-detail');
-const detailMorph   = document.getElementById('plura-project-detail-morph');
-const detailClose   = document.getElementById('plura-project-detail-close');
-const detailContent = document.getElementById('plura-project-detail-content');
+const detailContainer = document.getElementById('plura-project-detail');
+const detailFrame     = document.getElementById('plura-project-detail-morph');
+const detailClose     = document.getElementById('plura-project-detail-close');
+const detailContent   = document.getElementById('plura-project-detail-content');
 
-gsap.set(detailMorph, { autoAlpha: 0 });
+gsap.set(detailFrame, { autoAlpha: 0 });
 
 // ─── Open / close ─────────────────────────────────────────────
 
 export function openDetail(project, fromRect) {
   populateContent(project);
 
-  const toSize = {
+  const targetSize = {
     width:  Math.min(640, window.innerWidth  * 0.9),
     height: Math.min(600, window.innerHeight * 0.85),
   };
 
-  openMorph(detailMain, detailMorph, fromRect, toSize, { hideOnClose: true });
+  openMorph(detailContainer, detailFrame, fromRect, targetSize, { hideOnClose: true });
 }
 
 export function closeDetail() {
-  closeMorph(detailMain, detailMorph);
+  closeMorph(detailContainer, detailFrame);
 }
 
 // ─── Content ──────────────────────────────────────────────────
@@ -53,4 +53,4 @@ function populateContent(project) {
 // ─── Events ───────────────────────────────────────────────────
 
 detailClose.addEventListener('click', closeDetail);
-detailMain.addEventListener('click', e => { if (e.target === detailMain) closeDetail(); });
+detailContainer.addEventListener('click', e => { if (e.target === detailContainer) closeDetail(); });
