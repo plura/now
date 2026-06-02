@@ -9,11 +9,11 @@ import { el } from './utils.js';
 
 const ghost = el('div', { class: 'plura-morph-element plura-transition-ghost' });
 document.body.appendChild(ghost);
-gsap.set(ghost, { autoAlpha: 0 });
 
-const morph = initMorph(ghost);
+const morph = initMorph(ghost, { fade: true });
 
-// Morph the ghost from one element/rect to another, hiding it on arrival.
+// Morph the ghost from one element/rect to another. The fade lifecycle
+// (start hidden, fade in, fade out on arrival) is handled by initMorph.
 export function transition(from, to, { onComplete } = {}) {
-  morph.open(from, to, { hideOnComplete: true, onComplete });
+  morph.open(from, to, { onComplete });
 }

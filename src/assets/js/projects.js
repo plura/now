@@ -3,6 +3,7 @@
 // Cards and carousel both expose setItems — the filter callback keeps them in sync.
 
 import { fetchLang } from './lang.js';
+import { transition } from './transition.js';
 import { renderCards } from './projects/cards.js';
 import { createCarousel } from './projects/carousel.js';
 import { initFilter } from './projects/filter.js';
@@ -51,8 +52,8 @@ export function initProjects(data, container) {
   let currentFlat    = flat;
   let indexByProject = new Map(flat.map((p, i) => [p, i]));
 
-  const cards    = renderCards(data, container, project => carousel.open(indexByProject.get(project)));
-  const carousel = createCarousel(flat);
+  const cards    = renderCards(data, container, project => openProject(indexByProject.get(project)));
+  const carousel = createCarousel(flat, { onDismiss: closeProject });
 
   initFilter(data, flat, filtered => {
     currentFlat     = filtered;
@@ -61,5 +62,21 @@ export function initProjects(data, container) {
     carousel.setItems(filtered);
   });
 
-  return { open: index => carousel.open(index) };
+  // Open: position the slide (hidden), morph the ghost from the card to the
+  // slide, then reveal the carousel the instant the ghost lands (seamless swap).
+  function openProject(index) {
+    carousel.goTo(index, false);
+    transition(cards.getItem(currentFlat[index]), carousel.slideAt(index), {
+      onComplete: carousel.reveal,
+    });
+  }
+
+  // Close: dismissal fades the overlay out (via carousel's onDismiss); here we
+  // morph the ghost from the current slide back to the current project's card.
+  function closeProject() {
+    const i = carousel.currentIndex();
+    transition(carousel.slideAt(i), cards.getItem(currentFlat[i]));
+  }
+
+  return { open: openProject };
 }

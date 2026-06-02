@@ -2,13 +2,13 @@ import { initMorph } from './morph.js';
 import { initOverlay } from './overlay.js';
 
 export function createFloat({ container, frame, trigger, closeBtn }, getSize, options = {}) {
-  const morph = initMorph(frame);
+  const morph = initMorph(frame, options);
 
   const overlay = initOverlay(container, {
     static:           true,
     keepOpenSelector: frame,
     onBeforeOpen: () => {
-      morph.open(trigger, centerRect(getSize()), options);
+      morph.open(trigger, centerRect(getSize()));
       trigger.setAttribute('aria-expanded', 'true');
     },
     onClose: () => {

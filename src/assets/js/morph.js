@@ -1,15 +1,18 @@
 // ─── Morph frame animation ────────────────────────────────────
-// initMorph(frame) returns { open, close } for one frame element.
-// open animates the frame from `from` to `to`; close returns it to
-// the stored from-rect. `from`/`to` may each be a DOM element or a
-// rect — caller decides; morph never computes position itself.
+// initMorph(frame, { fade }) returns { open, close } for one frame element.
+// open animates the frame from `from` to `to`; close returns it to the
+// stored from-rect. `from`/`to` may each be a DOM element or a rect —
+// caller decides; morph never computes position itself.
 //
-// open/close options:
-//   hideOnComplete — set autoAlpha: 0 when that animation finishes
-//                    (use for frames with no persistent resting state)
-//   onComplete     — fires when that animation lands
+// fade — declares the frame transient (no resting state): it starts hidden,
+//        fades in on open, and fades out when any animation completes.
+//        Omit for persistent frames (e.g. floats) that stay visible at rest.
+//
+// open/close option:
+//   onComplete — fires when that animation lands
 
 const DURATION = 0.45;
+const FADE     = 0.25;
 const EASE     = 'power3.inOut';
 
 // Accept either a DOM element (read its rect) or a rect-like object.
@@ -17,14 +20,17 @@ function resolveRect(target) {
   return target instanceof Element ? target.getBoundingClientRect() : target;
 }
 
-export function initMorph(frame) {
+export function initMorph(frame, { fade = false } = {}) {
   let fromRect;
 
-  function open(from, to, { hideOnComplete = false, onComplete } = {}) {
+  frame.classList.add('plura-morph-element');
+  if (fade) gsap.set(frame, { autoAlpha: 0 });
+
+  function open(from, to, { onComplete } = {}) {
     fromRect     = resolveRect(from);
     const toRect = resolveRect(to);
 
-    frame.classList.add('plura-morph-element');
+    gsap.killTweensOf(frame);  // cancel any in-flight fade from a prior cycle
 
     gsap.set(frame, {
       left:      fromRect.x,
@@ -33,10 +39,12 @@ export function initMorph(frame) {
       height:    fromRect.height,
       x:         0,
       y:         0,
-      autoAlpha: 1,
+      autoAlpha: fade ? 0 : 1,
     });
 
     frame.classList.add('active');
+
+    if (fade) gsap.to(frame, { autoAlpha: 1, duration: FADE });
 
     gsap.to(frame, {
       x:        toRect.x - fromRect.x,
@@ -46,13 +54,13 @@ export function initMorph(frame) {
       duration: DURATION,
       ease:     EASE,
       onComplete: () => {
-        if (hideOnComplete) gsap.set(frame, { autoAlpha: 0 });
+        if (fade) gsap.to(frame, { autoAlpha: 0, duration: FADE });
         onComplete?.();
       },
     });
   }
 
-  function close({ hideOnComplete = false, onComplete } = {}) {
+  function close({ onComplete } = {}) {
     if (!fromRect) return;
 
     gsap.to(frame, {
@@ -64,7 +72,7 @@ export function initMorph(frame) {
       ease:     EASE,
       onComplete: () => {
         frame.classList.remove('active');
-        if (hideOnComplete) gsap.set(frame, { autoAlpha: 0 });
+        if (fade) gsap.to(frame, { autoAlpha: 0, duration: FADE });
         onComplete?.();
       },
     });
