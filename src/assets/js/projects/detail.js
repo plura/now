@@ -16,12 +16,16 @@ gsap.set(detailFrame, { autoAlpha: 0 });
 export function openDetail(project, fromRect) {
   populateContent(project);
 
-  const targetSize = {
-    width:  Math.min(640, window.innerWidth  * 0.9),
-    height: Math.min(600, window.innerHeight * 0.85),
+  const width  = Math.min(640, window.innerWidth  * 0.9);
+  const height = Math.min(600, window.innerHeight * 0.85);
+  const toRect = {
+    x: (window.innerWidth  - width)  / 2,
+    y: (window.innerHeight - height) / 2,
+    width,
+    height,
   };
 
-  openMorph(detailFrame, fromRect, targetSize, { hideOnClose: true });
+  openMorph(detailFrame, fromRect, toRect, { hideOnClose: true });
 }
 
 export function closeDetail() {

@@ -6,7 +6,7 @@ export function createFloat({ container, frame, trigger, closeBtn }, getSize, op
     static:           true,
     keepOpenSelector: frame,
     onBeforeOpen: () => {
-      openMorph(frame, trigger.getBoundingClientRect(), getSize(), options);
+      openMorph(frame, trigger.getBoundingClientRect(), centerRect(getSize()), options);
       trigger.setAttribute('aria-expanded', 'true');
     },
     onClose: () => {
@@ -19,4 +19,14 @@ export function createFloat({ container, frame, trigger, closeBtn }, getSize, op
   closeBtn.addEventListener('click', overlay.close);
 
   return overlay;
+}
+
+// Centre a { width, height } in the viewport, returning a full rect.
+function centerRect({ width, height }) {
+  return {
+    x:      (window.innerWidth  - width)  / 2,
+    y:      (window.innerHeight - height) / 2,
+    width,
+    height,
+  };
 }
