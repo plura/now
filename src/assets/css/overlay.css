@@ -6,6 +6,7 @@
 .plura-overlay {
   position: fixed !important;
   inset: 0;
+  z-index: var(--plura-z-overlay);
 }
 
 

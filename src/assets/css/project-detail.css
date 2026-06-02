@@ -1,7 +1,7 @@
 /* ─── Project detail overlay ─────────────────────────────────── */
 
 .plura-project-detail {
-  z-index: 200;
+  z-index: var(--plura-z-overlay);
 }
 
 

@@ -1,7 +1,7 @@
 /* ─── Projects carousel overlay ─────────────────────────────── */
 
 #plura-projects-carousel {
-  z-index: 100;
+  z-index: var(--plura-z-overlay);
   display: flex;
   align-items: center;
 }
