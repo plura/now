@@ -13,6 +13,8 @@ export function openMorph(frame, fromRect, toRect, options = {}) {
   const { hideOnClose = false } = options;
   state.set(frame, { fromRect, hideOnClose });
 
+  frame.classList.add('plura-morph-element');
+
   gsap.set(frame, {
     left:      fromRect.x,
     top:       fromRect.y,
