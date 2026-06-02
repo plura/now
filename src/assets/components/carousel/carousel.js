@@ -101,7 +101,7 @@ export function createCarousel(container, options = {}) {
   let index, total;
 
   function initVars() {
-    total = itemsCtrl.items.length;
+    total = itemsCtrl.items().length;
     index = -1;
   }
 
@@ -123,12 +123,12 @@ export function createCarousel(container, options = {}) {
 
   function goTo(i, animate = true) {
     i = normalizeIndex(i);
-    if (index !== -1) on.leave?.(index, itemsCtrl.items[index].el); // 1. outgoing slide (skipped on init)
+    if (index !== -1) on.leave?.(index, itemsCtrl.itemAt(index)); // 1. outgoing slide (skipped on init)
     itemsCtrl.animate(index, i, animate);                      // 2. animate (or instant set)
     on.change?.(index, i);                                     // 3. transition starts (fromIndex, toIndex)
     index = i;
     updateState();                                             // 4. active class, arrows, dots, counter
-    on.enter?.(index, itemsCtrl.items[index].el);                   // 5. incoming slide
+    on.enter?.(index, itemsCtrl.itemAt(index));                   // 5. incoming slide
   }
 
   const step = perView === 'auto' ? 1 : perGroup;
@@ -137,7 +137,7 @@ export function createCarousel(container, options = {}) {
   function next() { goTo(index < total - 1 ? Math.min(total - 1,  index + step) : loop ? 0         : index); }
 
   function initIndicators() {
-    const thumbSrcs = thumbs ? itemsCtrl.items.map(item => item.thumb) : null;
+    const thumbSrcs = thumbs ? itemsCtrl.items().map(item => item.thumb) : null;
     indicatorsCtrl = createIndicators(total, { indicatorsStyle, indicatorsMax, thumbs, thumbSrcs }, i => goTo(i));
     root.appendChild(indicatorsCtrl.el);
   }
@@ -314,7 +314,7 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
 
   refresh(rawItems);
 
-  return { el: itemsEl, items, animate, update, slideX, refresh, itemAt: i => items[i].el };
+  return { el: itemsEl, items: () => items, animate, update, slideX, refresh, itemAt: i => items[i].el };
 }
 
 // ── Nav ──────────────────────────────────────────────────────────
