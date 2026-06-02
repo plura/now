@@ -1,5 +1,9 @@
 /* ─── Projects carousel overlay ─────────────────────────────── */
 
+:root {
+  --plura-projects-carousel-item-w: 600px;
+}
+
 #plura-projects-carousel {
   z-index: var(--plura-z-overlay);
   display: flex;
@@ -10,7 +14,7 @@
 /* ─── Slides ─────────────────────────────────────────────────── */
 
 #plura-projects-carousel .plura-carousel-item {
-  width: 600px;
+  width: min(var(--plura-projects-carousel-item-w), 90vw);
   background: transparent;
 }
 
