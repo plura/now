@@ -9,10 +9,11 @@ export function createFloat({ container, frame, trigger, closeBtn }, getSize, op
     keepOpenSelector: frame,
     onBeforeOpen: () => {
       morph.open(trigger, centerRect(getSize()));
+      trigger.disabled = true;
       trigger.setAttribute('aria-expanded', 'true');
     },
     onClose: () => {
-      morph.close();
+      morph.close({ onComplete: () => { trigger.disabled = false; } });
       trigger.setAttribute('aria-expanded', 'false');
     },
   });

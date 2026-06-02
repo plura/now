@@ -30,7 +30,7 @@
   transition: opacity var(--plura-dur) var(--plura-ease);
 }
 
-.plura-float-main:has(.plura-morph-element.active) .plura-float-trigger {
+.plura-float-trigger:disabled {
   opacity: 0;
   pointer-events: none;
 }
