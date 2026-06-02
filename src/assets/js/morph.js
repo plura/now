@@ -1,16 +1,25 @@
 // ─── Morph frame animation ────────────────────────────────────
-// Animates a frame element between two rects via GSAP.
-// openMorph snaps the frame to fromRect then animates to toRect.
-// closeMorph returns to the stored fromRect.
-// Caller decides both rects — morph never computes position itself.
+// Animates a frame element between two positions via GSAP.
+// openMorph snaps the frame to `from` then animates to `to`.
+// closeMorph returns to the stored from-rect.
+// `from`/`to` may each be a DOM element or a rect — caller decides;
+// morph never computes position itself.
 //
 // options.hideOnClose — set autoAlpha: 0 after close animation
 //   (use for overlays with no persistent resting state)
 
 const state = new WeakMap();
 
-export function openMorph(frame, fromRect, toRect, options = {}) {
+// Accept either a DOM element (read its rect) or a rect-like object.
+function resolveRect(target) {
+  return target instanceof Element ? target.getBoundingClientRect() : target;
+}
+
+export function openMorph(frame, from, to, options = {}) {
   const { hideOnClose = false } = options;
+  const fromRect = resolveRect(from);
+  const toRect   = resolveRect(to);
+
   state.set(frame, { fromRect, hideOnClose });
 
   frame.classList.add('plura-morph-element');

@@ -6,7 +6,7 @@ export function createFloat({ container, frame, trigger, closeBtn }, getSize, op
     static:           true,
     keepOpenSelector: frame,
     onBeforeOpen: () => {
-      openMorph(frame, trigger.getBoundingClientRect(), centerRect(getSize()), options);
+      openMorph(frame, trigger, centerRect(getSize()), options);
       trigger.setAttribute('aria-expanded', 'true');
     },
     onClose: () => {
