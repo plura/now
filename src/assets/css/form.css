@@ -68,5 +68,5 @@
   color: var(--plura-color-muted);
 }
 
-.plura-alert[data-type="error"]   { color: #c0392b; }
-.plura-alert[data-type="success"] { color: #27ae60; }
+.plura-alert[data-type="error"]   { color: var(--plura-color-error); }
+.plura-alert[data-type="success"] { color: var(--plura-color-success); }

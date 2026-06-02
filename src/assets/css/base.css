@@ -44,6 +44,8 @@ svg.lucide {
   --plura-color-muted:   #9a9a9a;
   --plura-color-light:   #ffffff;
   --plura-color-border:  #e0e0e0;
+  --plura-color-error:   #9b4040;
+  --plura-color-success: #3d7055;
   --plura-color-surface: #f4f4f4;
 
   /* Spacing */
