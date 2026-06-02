@@ -1,27 +1,24 @@
 // ─── Overlay ──────────────────────────────────────────────────
-// Two modes:
-//   'overlay'  (default) — GSAP autoAlpha shows/hides the whole root.
-//   'backdrop'           — root stays visible (e.g. float trigger lives inside).
-//                          CSS :has() handles visuals; JS adds Escape, click-outside, focus.
+// static: false (default) — GSAP autoAlpha shows/hides the whole root.
+// static: true            — root stays visible (e.g. float trigger lives inside).
+//                           CSS :has() handles visuals; JS adds Escape, click-outside, focus.
 
 /**
  * @param {Element} root
  * @param {object}  options
- * @param {'overlay'|'backdrop'} [options.mode]  default: 'overlay'
- * @param {string|Element} [options.keepOpenSelector]  Clicks inside won't dismiss.
- * @param {Function} [options.onBeforeOpen]   Runs synchronously before open.
- * @param {Function} [options.onClose]        Fires immediately when close is triggered.
- * @param {Function} [options.onAfterClose]   Runs after close animation completes.
+ * @param {boolean}        [options.static]           default: false
+ * @param {string|Element} [options.keepOpenSelector] Clicks inside won't dismiss.
+ * @param {Function}       [options.onBeforeOpen]     Runs synchronously before open.
+ * @param {Function}       [options.onClose]          Fires immediately when close is triggered.
+ * @param {Function}       [options.onAfterClose]     Runs after close animation completes.
  * @returns {{ open: Function, close: Function }}
  */
-export function initOverlay(root, { mode = 'overlay', keepOpenSelector, onBeforeOpen, onClose, onAfterClose } = {}) {
-  const isBackdrop = mode === 'backdrop';
-
+export function initOverlay(root, { static: isStatic = false, keepOpenSelector, onBeforeOpen, onClose, onAfterClose } = {}) {
   root.classList.add('plura-overlay');
-  if (isBackdrop) root.classList.add('plura-overlay--backdrop');
+  if (isStatic) root.classList.add('plura-overlay--static');
   root.setAttribute('tabindex', '-1');
 
-  if (!isBackdrop) {
+  if (!isStatic) {
     gsap.set(root, { autoAlpha: 0 });
   }
 
@@ -41,7 +38,7 @@ export function initOverlay(root, { mode = 'overlay', keepOpenSelector, onBefore
 
   function open() {
     onBeforeOpen?.();
-    if (!isBackdrop) {
+    if (!isStatic) {
       gsap.set(root, { visibility: 'visible' });
       gsap.to(root, { opacity: 1, duration: 0.25 });
     }
@@ -50,7 +47,7 @@ export function initOverlay(root, { mode = 'overlay', keepOpenSelector, onBefore
 
   function close() {
     onClose?.();
-    if (!isBackdrop) {
+    if (!isStatic) {
       gsap.to(root, { autoAlpha: 0, duration: 0.2, onComplete: onAfterClose });
     } else {
       onAfterClose?.();

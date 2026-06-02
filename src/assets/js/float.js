@@ -3,7 +3,7 @@ import { initOverlay } from './overlay.js';
 
 export function createFloat({ container, frame, trigger, closeBtn }, getSize, options = {}) {
   const overlay = initOverlay(container, {
-    mode:             'backdrop',
+    static:           true,
     keepOpenSelector: frame,
     onBeforeOpen: () => {
       openMorph(frame, trigger.getBoundingClientRect(), getSize(), options);

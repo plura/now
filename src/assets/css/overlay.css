@@ -9,25 +9,25 @@
 }
 
 
-/* ─── Default: always visible with bg/blur ───────────────────── */
+/* ─── Default: GSAP controls visibility, bg/blur always on ──── */
 
-.plura-overlay:not(.plura-overlay--backdrop) {
+.plura-overlay:not(.plura-overlay--static) {
   background-color: color-mix(in srgb, var(--plura-color-dark) var(--plura-opacity-mid), transparent);
   backdrop-filter: blur(6px);
 }
 
 
-/* ─── Backdrop variant ───────────────────────────────────────── */
-/* Root stays visible (e.g. float trigger lives inside).
-   Bg/blur transition in via CSS :has(); GSAP autoAlpha not used. */
+/* ─── Static variant: root persists, CSS controls appearance ── */
+/* Used when the root must stay visible (e.g. float trigger lives inside the frame).
+   GSAP autoAlpha is not used — bg/blur transition in via CSS :has() instead. */
 
-.plura-overlay--backdrop {
+.plura-overlay--static {
   pointer-events: none;
   transition: background-color var(--plura-dur) var(--plura-ease),
               backdrop-filter   var(--plura-dur) var(--plura-ease);
 }
 
-.plura-overlay--backdrop:has(.plura-morph-element.active) {
+.plura-overlay--static:has(.plura-morph-element.active) {
   pointer-events: all;
   background-color: color-mix(in srgb, var(--plura-color-dark) 50%, transparent);
   backdrop-filter: blur(6px);
