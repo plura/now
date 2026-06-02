@@ -62,7 +62,7 @@ svg.lucide {
   --plura-layout-width:    calc(100dvw - 2 * var(--plura-layout-pad));
 
   /* Z-index scale */
-  --plura-z-overlay:    100;  /* overlays above content (carousel, detail) */
+  --plura-z-overlay:    100;  /* overlays above content (carousel) */
   --plura-z-float:      200;  /* floats above overlays (CTA, filter) */
   --plura-z-transition: 300;  /* morph ghost above all during travel */
 
