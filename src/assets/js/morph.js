@@ -1,65 +1,74 @@
 // ─── Morph frame animation ────────────────────────────────────
-// Animates a frame element between two positions via GSAP.
-// openMorph snaps the frame to `from` then animates to `to`.
-// closeMorph returns to the stored from-rect.
-// `from`/`to` may each be a DOM element or a rect — caller decides;
-// morph never computes position itself.
+// initMorph(frame) returns { open, close } for one frame element.
+// open animates the frame from `from` to `to`; close returns it to
+// the stored from-rect. `from`/`to` may each be a DOM element or a
+// rect — caller decides; morph never computes position itself.
 //
-// options.hideOnClose — set autoAlpha: 0 after close animation
-//   (use for overlays with no persistent resting state)
+// open/close options:
+//   hideOnComplete — set autoAlpha: 0 when that animation finishes
+//                    (use for frames with no persistent resting state)
+//   onComplete     — fires when that animation lands
 
-const state = new WeakMap();
+const DURATION = 0.45;
+const EASE     = 'power3.inOut';
 
 // Accept either a DOM element (read its rect) or a rect-like object.
 function resolveRect(target) {
   return target instanceof Element ? target.getBoundingClientRect() : target;
 }
 
-export function openMorph(frame, from, to, options = {}) {
-  const { hideOnClose = false } = options;
-  const fromRect = resolveRect(from);
-  const toRect   = resolveRect(to);
+export function initMorph(frame) {
+  let fromRect;
 
-  state.set(frame, { fromRect, hideOnClose });
+  function open(from, to, { hideOnComplete = false, onComplete } = {}) {
+    fromRect     = resolveRect(from);
+    const toRect = resolveRect(to);
 
-  frame.classList.add('plura-morph-element');
+    frame.classList.add('plura-morph-element');
 
-  gsap.set(frame, {
-    left:      fromRect.x,
-    top:       fromRect.y,
-    width:     fromRect.width,
-    height:    fromRect.height,
-    x:         0,
-    y:         0,
-    autoAlpha: 1,
-  });
+    gsap.set(frame, {
+      left:      fromRect.x,
+      top:       fromRect.y,
+      width:     fromRect.width,
+      height:    fromRect.height,
+      x:         0,
+      y:         0,
+      autoAlpha: 1,
+    });
 
-  frame.classList.add('active');
+    frame.classList.add('active');
 
-  gsap.to(frame, {
-    x:        toRect.x - fromRect.x,
-    y:        toRect.y - fromRect.y,
-    width:    toRect.width,
-    height:   toRect.height,
-    duration: 0.45,
-    ease:     'power3.inOut',
-  });
-}
+    gsap.to(frame, {
+      x:        toRect.x - fromRect.x,
+      y:        toRect.y - fromRect.y,
+      width:    toRect.width,
+      height:   toRect.height,
+      duration: DURATION,
+      ease:     EASE,
+      onComplete: () => {
+        if (hideOnComplete) gsap.set(frame, { autoAlpha: 0 });
+        onComplete?.();
+      },
+    });
+  }
 
-export function closeMorph(frame) {
-  const { fromRect, hideOnClose } = state.get(frame) ?? {};
-  if (!fromRect) return;
+  function close({ hideOnComplete = false, onComplete } = {}) {
+    if (!fromRect) return;
 
-  gsap.to(frame, {
-    x:        0,
-    y:        0,
-    width:    fromRect.width,
-    height:   fromRect.height,
-    duration: 0.45,
-    ease:     'power3.inOut',
-    onComplete: () => {
-      frame.classList.remove('active');
-      if (hideOnClose) gsap.set(frame, { autoAlpha: 0 });
-    },
-  });
+    gsap.to(frame, {
+      x:        0,
+      y:        0,
+      width:    fromRect.width,
+      height:   fromRect.height,
+      duration: DURATION,
+      ease:     EASE,
+      onComplete: () => {
+        frame.classList.remove('active');
+        if (hideOnComplete) gsap.set(frame, { autoAlpha: 0 });
+        onComplete?.();
+      },
+    });
+  }
+
+  return { open, close };
 }

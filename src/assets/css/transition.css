@@ -1,0 +1,10 @@
+/* ─── Transition ghost ───────────────────────────────────────── */
+/* Reused frame for element-to-element morphs. Lives on <body>, so it
+   needs fixed positioning (not the absolute it inherits from
+   .plura-morph-element) for left/top to map to viewport coords. */
+
+.plura-transition-ghost {
+  position: fixed;
+  z-index: var(--plura-z-transition);
+  pointer-events: none;
+}
