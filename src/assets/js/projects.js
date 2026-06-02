@@ -3,7 +3,7 @@
 // Cards and carousel both expose setItems — the filter callback keeps them in sync.
 
 import { fetchLang } from './lang.js';
-import { transition } from './transition.js';
+import { transition } from './layers/transition.js';
 import { renderCards } from './projects/cards.js';
 import { createCarousel } from './projects/carousel.js';
 import { initFilter } from './projects/filter.js';

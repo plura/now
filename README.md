@@ -39,15 +39,14 @@ Rollup bundles `src/assets/js/main.js` (and all imports) into a single ES module
 3. Renders the projects grid, initialises the filter, and creates the projects carousel overlay
 4. Runs the intro animation — or skips it if the session flag is set
 
-### Morph pattern
+### Layers (overlay / morph primitives)
 
-Three panels share a common expand/collapse animation: the **contact form**, the **project filter**, and the **project detail** overlay. Each starts as a circular floating button and morphs into a centred panel via GSAP.
+The reusable building blocks for content that sits *over* the layout live in `assets/js/layers/`:
 
-The shared logic lives in three files:
-
-- `morph.js` — `openMorph` / `closeMorph`: GSAP animates the frame from the trigger's bounding rect to a centred panel and back
-- `float.js` — `createFloat`: wires trigger click, close button, and backdrop click for the two floating-button panels (CTA and filter)
-- `overlay.js` — `initOverlay`: manages fullscreen backdrop lifecycle (open/close fade, Escape, click-outside). Used directly by the projects carousel; the float/morph pattern uses `.plura-overlay--backdrop` for the same backdrop appearance via CSS transitions instead
+- `morph.js` — `initMorph(frame, { fade })` → `{ open, close }`: GSAP animates a frame between two rects (each given as an element or a rect). `fade` declares the frame transient (starts hidden, fades in on open, fades out on complete) for frames with no resting state.
+- `overlay.js` — `initOverlay(root, { static })`: fullscreen overlay lifecycle (Escape, click-outside, focus). Default mode fades the whole root via GSAP; `static: true` keeps the root visible and lets CSS `:has()` drive the backdrop (used by floats, whose trigger lives inside).
+- `float.js` — `createFloat`: a floating circular trigger that morphs into a centred panel — composes `morph` + `overlay`. Used by the **contact form** and **project filter**.
+- `transition.js` — `transition(from, to)`: a one-shot element-to-element morph using a single reusable ghost frame. Used for the card → carousel-slide morph (and back).
 
 ### Project filter
 
@@ -80,9 +79,9 @@ On first visit (no session flag), the logo draws in via SVG path animation, then
 
 Source lives in `src/`. The build outputs to `dist/`.
 
-CSS is modular — `main.css` is an `@import` chain. Design tokens are centralised in `base.css`; each concern (overlay, morph, float, form, badge, button, projects, filter, detail) has its own file.
+CSS is modular — `main.css` is an `@import` chain. Design tokens are centralised in `base.css`; each concern (overlay, morph, transition, float, form, badge, button, projects, filter) has its own file.
 
-JS follows the same pattern: `main.js` bootstraps everything; feature modules live alongside a subfolder for sub-modules (`anim/`, `projects/`). Shared primitives (`morph.js`, `float.js`, `utils.js`, `lang.js`) are imported where needed.
+JS mirrors that: `main.js` bootstraps everything; feature modules pair an entry file with a sub-module folder (`anim.js` + `anim/`, `projects.js` + `projects/`). The overlay/morph primitives are grouped in `layers/`, and small helpers (`utils.js`, `lang.js`, `session.js`, `dev.js`) sit at the root.
 
 Content lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings.
 

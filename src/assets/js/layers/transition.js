@@ -5,7 +5,7 @@
 // fade content in/out underneath in parallel without a double image.
 
 import { initMorph } from './morph.js';
-import { el } from './utils.js';
+import { el } from '../utils.js';
 
 const ghost = el('div', { class: 'plura-morph-element plura-transition-ghost' });
 document.body.appendChild(ghost);

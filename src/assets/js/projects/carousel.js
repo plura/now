@@ -7,7 +7,7 @@
 // aliased to avoid collision with the exported createCarousel below
 import { createCarousel as createBaseCarousel } from '../../components/carousel/carousel.js';
 import { createCarouselItem } from './carousel-item.js';
-import { initOverlay } from '../overlay.js';
+import { initOverlay } from '../layers/overlay.js';
 
 const overlay = document.getElementById('plura-projects-carousel');
 

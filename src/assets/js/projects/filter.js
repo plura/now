@@ -3,7 +3,7 @@
 // DOM updates are handled externally via the onFilter callback.
 
 import { el } from '../utils.js';
-import { createFloat } from '../float.js';
+import { createFloat } from '../layers/float.js';
 import { t } from '../lang.js';
 import { filterItems } from './filter-logic.js';
 

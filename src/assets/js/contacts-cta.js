@@ -1,6 +1,6 @@
 // ─── CTA / Contact ───────────────────────────────────────────
 
-import { createFloat } from './float.js';
+import { createFloat } from './layers/float.js';
 import { t, basePath } from './lang.js';
 
 const ctaContainer = document.getElementById('plura-contacts-cta');
