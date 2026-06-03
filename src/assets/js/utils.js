@@ -8,8 +8,15 @@ export function el(tag, props = {}, ...children) {
     else if (k === 'text')    node.textContent = v;
     else                      node.setAttribute(k, v);
   }
-  children.forEach(c => node.appendChild(c));
+  children.filter(Boolean).forEach(c => node.appendChild(c));
   return node;
+}
+
+export function createLink(href, label, { className, icon, target = '_blank', rel = 'noopener noreferrer' } = {}) {
+  const a = el('a', { ...(className && { class: className }), href, target, rel });
+  if (label) a.appendChild(document.createTextNode(label));
+  if (icon)  a.appendChild(el('i', { 'data-lucide': icon }));
+  return a;
 }
 
 export async function img2svg(img) {
