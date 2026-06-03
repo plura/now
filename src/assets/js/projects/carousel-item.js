@@ -1,21 +1,35 @@
 // ─── Projects carousel item ───────────────────────────────────
 
-import { el } from '../utils.js';
+import { el, createLink } from '../utils.js';
 import { buildMeta } from './meta.js';
 import { basePath } from '../config.js';
 import { createGallery } from '../../components/gallery/gallery.js';
 
 export function createCarouselItem(project) {
-  const item = el('div', { class: 'plura-projects-carousel-item plura-panel' },
-    el('div', { class: 'plura-projects-carousel-item-header plura-panel-header' },
-      el('h2',  { class: 'plura-projects-carousel-item-title plura-panel-title', text: project.title }),
-      el('span', { class: 'plura-projects-carousel-item-category', text: project.category.label }),
-      buildMeta(project)
-    ),
-    project.summary && el('div', { class: 'plura-projects-carousel-item-body plura-panel-body' },
-      el('p', { class: 'plura-projects-carousel-item-desc', text: project.summary })
-    )
+
+  // ── Header ────────────────────────────────────────────────────
+
+  const header = el('div', { class: 'plura-projects-carousel-item-header plura-panel-header' },
+    el('h2',  { class: 'plura-projects-carousel-item-title plura-panel-title', text: project.title }),
+    el('span', { class: 'plura-projects-carousel-item-category', text: project.category.label }),
+    buildMeta(project),
+    project.url && createLink(project.url, new URL(project.url).hostname.replace(/^www\./, ''), {
+      className: 'plura-projects-carousel-item-link plura-badge plura-badge--outline',
+      icon:      'external-link',
+    })
   );
+
+  // ── Body ──────────────────────────────────────────────────────
+
+  const body = el('div', { class: 'plura-projects-carousel-item-body plura-panel-body' },
+    project.summary && el('p', { class: 'plura-projects-carousel-item-summary', text: project.summary })
+  );
+
+  // ── Item ──────────────────────────────────────────────────────
+
+  const item = el('div', { class: 'plura-projects-carousel-item plura-panel' }, header, body);
+
+  // ── Gallery ───────────────────────────────────────────────────
 
   if (project.media.length) {
     const mediaItems = project.media.map(m => ({
