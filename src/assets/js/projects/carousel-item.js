@@ -21,8 +21,9 @@ export function createCarouselItem(project) {
     const mediaItems = project.media.map(m =>
       `${basePath}/assets/media/projects/${project.slug}/${m.file}`
     );
-    const { root } = createGallery(document.createElement('div'), mediaItems);
-    root.classList.add('plura-projects-carousel-item-gallery');
+    const { root } = createGallery(document.createElement('div'), mediaItems, 'carousel', {
+      carousel: { className: 'plura-projects-carousel-item-gallery' },
+    });
     item.appendChild(root);
   }
 
