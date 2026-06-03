@@ -1,7 +1,8 @@
 // ─── CTA / Contact ───────────────────────────────────────────
 
 import { createFloat } from './layers/float.js';
-import { t, basePath } from './lang.js';
+import { t } from './lang.js';
+import { basePath } from './config.js';
 
 const ctaContainer = document.getElementById('plura-contacts-cta');
 const ctaFrame     = document.getElementById('plura-contacts-cta-morph');

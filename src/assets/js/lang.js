@@ -1,7 +1,4 @@
-// lang — ISO 639-1 code from <html lang="…">, e.g. "en", "pt"
-export const lang     = document.documentElement.lang.split('-')[0];
-// basePath — from <meta name="base-path"> so /pt/ can resolve assets relative to root
-export const basePath = document.querySelector('meta[name="base-path"]')?.content ?? '.';
+import { lang, basePath } from './config.js';
 
 // UI strings for non-EN locales. Fetched at module load (top-level await) so t() is
 // synchronous everywhere. Degrades to {} on fetch/parse failure — missing keys fall
@@ -23,10 +20,10 @@ export function t(key, vars = {}) {
 
 // fetchLang — fetch a per-feature lang file (e.g. pt.projects.json).
 // Returns null for EN or on failure; callers merge the result into their data.
-export async function fetchLang(base, name) {
+export async function fetchLang(name) {
   if (lang === 'en') return null;
   try {
-    const r = await fetch(`${base}/data/lang/${lang}.${name}.json`);
+    const r = await fetch(`${basePath}/data/lang/${lang}.${name}.json`);
     return r.ok ? r.json() : null;
   } catch {
     return null;

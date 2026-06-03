@@ -3,6 +3,7 @@
 // Cards and carousel both expose setItems — the filter callback keeps them in sync.
 
 import { fetchLang } from './lang.js';
+import { basePath } from './config.js';
 import { transition } from './layers/transition.js';
 import { renderCards } from './projects/cards.js';
 import { createCarousel } from './projects/carousel.js';
@@ -10,10 +11,10 @@ import { initFilter } from './projects/filter.js';
 
 // ─── Fetch + normalise ────────────────────────────────────────
 
-export async function fetchProjects(base = '.') {
+export async function fetchProjects() {
   const [data, trans] = await Promise.all([
-    fetch(`${base}/data/projects.json`).then(r => r.json()),
-    fetchLang(base, 'projects')
+    fetch(`${basePath}/data/projects.json`).then(r => r.json()),
+    fetchLang('projects')
   ]);
   return normalize(data, trans);
 }
