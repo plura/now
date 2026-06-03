@@ -18,9 +18,10 @@ export function createCarouselItem(project) {
   );
 
   if (project.media.length) {
-    const mediaItems = project.media.map(m =>
-      `${basePath}/assets/media/projects/${project.slug}/${m.file}`
-    );
+    const mediaItems = project.media.map(m => ({
+      src: `${basePath}/assets/media/projects/${project.slug}/${m.file}`,
+      alt: m.alt ?? '',
+    }));
     const { root } = createGallery(document.createElement('div'), mediaItems, 'carousel', {
       carousel: { className: 'plura-projects-carousel-item-gallery' },
     });
