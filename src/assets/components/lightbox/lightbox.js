@@ -33,7 +33,7 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
 
   function buildCarouselItems(raw) {
     return Array.from(raw).map(item =>
-      typeof item === 'string' ? el('img', { src: item, alt: '' }) : item.cloneNode(true)
+      item instanceof Node ? item.cloneNode(true) : item
     );
   }
 

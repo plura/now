@@ -1,6 +1,5 @@
 // gallery.js — requires window.gsap (CDN global)
 
-import { el } from '../../js/utils.js';
 import { createCarousel } from '../carousel/carousel.js';
 import { createLightbox } from '../lightbox/lightbox.js';
 
@@ -17,12 +16,6 @@ import { createLightbox } from '../lightbox/lightbox.js';
  */
 export function createGallery(container, items, type = 'carousel', options = {}) {
   const { id, className, carousel: carouselOptions = {}, lightbox: lightboxOptions = {} } = options;
-
-  // ── Normalise items ────────────────────────────────────────────
-
-  items = Array.from(items).map(item =>
-    typeof item === 'string' ? el('img', { src: item }) : item
-  );
 
   // ── Layout ─────────────────────────────────────────────────────
 
