@@ -55,16 +55,17 @@ export function initProjects(data, container) {
   const cards    = renderCards(data, container, project => openProject(indexByProject.get(project)));
   const carousel = createCarousel(flat, { onDismiss: closeProject });
 
-  initFilter(data, flat, filtered => {
+  const filter = initFilter(data, flat, filtered => {
     currentFlat     = filtered;
     indexByProject = new Map(filtered.map((p, i) => [p, i]));
     cards.setItems(filtered);
     carousel.setItems(filtered);
   });
 
-  // Open: position the slide (hidden), morph the ghost from the card to the
-  // slide, then reveal the carousel the instant the ghost lands (seamless swap).
+  // Open: hide the filter widget, position the slide (hidden), morph the ghost
+  // from the card to the slide, then reveal the carousel when the ghost lands.
   function openProject(index) {
+    filter.hide();
     carousel.goTo(index, false);
     transition(cards.getItem(currentFlat[index]), carousel.slideAt(index), {
       onComplete: carousel.reveal,
@@ -72,10 +73,12 @@ export function initProjects(data, container) {
   }
 
   // Close: dismissal fades the overlay out (via carousel's onDismiss); here we
-  // morph the ghost from the current slide back to the current project's card.
+  // morph the ghost from the current slide back to the current project's card
+  // and restore the filter widget.
   function closeProject() {
     const i = carousel.currentIndex();
     transition(carousel.slideAt(i), cards.getItem(currentFlat[i]));
+    filter.show();
   }
 
   return { open: openProject };

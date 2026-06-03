@@ -33,7 +33,7 @@ function hasActive() {
 export function initFilter(data, flat, onFilter) {
   buildPanel(data);
 
-  createFloat(
+  const float = createFloat(
     { container, frame, trigger, closeBtn },
     () => ({
       width:  Math.min(320, window.innerWidth  * 0.9),
@@ -43,6 +43,8 @@ export function initFilter(data, flat, onFilter) {
 
   _projects = flat;
   _onFilter = onFilter;
+
+  return float;  // exposes show/hide to toggle the whole filter widget
 }
 
 // ─── Panel ────────────────────────────────────────────────────

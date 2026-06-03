@@ -11,7 +11,7 @@
  * @param {Function}       [options.onBeforeOpen]     Runs synchronously before open.
  * @param {Function}       [options.onClose]          Fires immediately when close is triggered.
  * @param {Function}       [options.onAfterClose]     Runs after close animation completes.
- * @returns {{ open: Function, close: Function }}
+ * @returns {{ open: Function, close: Function, show: Function, hide: Function }}
  */
 export function initOverlay(root, { static: isStatic = false, keepOpenSelector, onBeforeOpen, onClose, onAfterClose } = {}) {
   root.classList.add('plura-overlay');
@@ -54,5 +54,10 @@ export function initOverlay(root, { static: isStatic = false, keepOpenSelector, 
     }
   }
 
-  return { open, close };
+  // show / hide toggle the whole root's visibility — distinct from open/close
+  // (the panel lifecycle). Used to hide a static overlay's widget entirely,
+  // e.g. the filter float while the projects carousel is open.
+  function setVisible(v) { gsap.to(root, { autoAlpha: v ? 1 : 0, duration: 0.2 }); }
+
+  return { open, close, show: () => setVisible(true), hide: () => setVisible(false) };
 }
