@@ -30,7 +30,7 @@ export function initMorph(frame, { fade = false } = {}) {
     fromRect     = resolveRect(from);
     const toRect = resolveRect(to);
 
-    gsap.killTweensOf(frame);  // cancel any in-flight fade from a prior cycle
+    gsap.killTweensOf(frame);  // cancel any in-flight tween from a prior cycle (fade or morph)
 
     gsap.set(frame, {
       left:      fromRect.x,

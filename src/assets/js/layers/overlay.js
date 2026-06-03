@@ -57,7 +57,7 @@ export function initOverlay(root, { static: isStatic = false, keepOpenSelector, 
   // show / hide toggle the whole root's visibility — distinct from open/close
   // (the panel lifecycle). Used to hide a static overlay's widget entirely,
   // e.g. the filter float while the projects carousel is open.
-  function setVisible(v) { gsap.to(root, { autoAlpha: v ? 1 : 0, duration: 0.2 }); }
+  function setVisible(v) { gsap.to(root, { autoAlpha: v ? 1 : 0, duration: 0.2, overwrite: 'auto' }); }
 
   return { open, close, show: () => setVisible(true), hide: () => setVisible(false) };
 }

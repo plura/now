@@ -73,12 +73,13 @@ export function initProjects(data, container) {
   }
 
   // Close: dismissal fades the overlay out (via carousel's onDismiss); here we
-  // morph the ghost from the current slide back to the current project's card
-  // and restore the filter widget.
+  // morph the ghost from the current slide back to the current project's card,
+  // restoring the filter widget once the morph lands.
   function closeProject() {
     const i = carousel.currentIndex();
-    transition(carousel.slideAt(i), cards.getItem(currentFlat[i]));
-    filter.show();
+    transition(carousel.slideAt(i), cards.getItem(currentFlat[i]), {
+      onComplete: filter.show,
+    });
   }
 
   return { open: openProject };
