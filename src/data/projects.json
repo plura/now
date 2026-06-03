@@ -29,7 +29,10 @@
       "url": "https://amaro-vanveggel.com",
       "summary": "Website for a consultancy specialising in REITs, construction, and real estate.",
       "category": "corporate",
-      "tags": ["real-estate"]
+      "tags": [
+        "real-estate"
+      ],
+      "media": []
     },
     {
       "title": "NovaSotecma",
@@ -37,7 +40,8 @@
       "url": "https://novasotecma.com",
       "summary": "Website for an Angolan industrial distributor supplying equipment, tools, and technical solutions across multiple sectors.",
       "category": "corporate",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "J. Justino das Neves",
@@ -45,7 +49,8 @@
       "url": "https://jjustinodasneves.pt",
       "summary": "Corporate website for a steel products manufacturer and supplier.",
       "category": "corporate",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "IME Engineering",
@@ -53,7 +58,8 @@
       "url": "https://ime-engineering.pt",
       "summary": "Website for an engineering firm specialising in consulting, equipment, and production planning solutions.",
       "category": "corporate",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "Eduardo Paz Ferreira & Associados",
@@ -61,7 +67,10 @@
       "url": "https://eduardopazferreira.pt",
       "summary": "Website for a law firm founded by Professor Eduardo Paz Ferreira, a leading figure in Portuguese tax law, public finance, and civic life.",
       "category": "corporate",
-      "tags": ["legal"]
+      "tags": [
+        "legal"
+      ],
+      "media": []
     },
     {
       "title": "Livrecampo",
@@ -69,7 +78,8 @@
       "url": "https://livrecampo.com",
       "summary": "Website for an authorised distributor and repair specialist for agricultural, forestry, garden, and construction machinery.",
       "category": "corporate",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "JoMI – Santa Maria",
@@ -77,7 +87,11 @@
       "url": "https://jomi-santamaria.pt",
       "summary": "Event website for the Internal Medicine conference series at Hospital de Santa Maria.",
       "category": "institutional",
-      "tags": ["health", "events"]
+      "tags": [
+        "health",
+        "events"
+      ],
+      "media": []
     },
     {
       "title": "Confiar",
@@ -86,6 +100,7 @@
       "summary": "Website for a Portuguese non-profit dedicated to the social reintegration of people with histories of incarceration and their families.",
       "category": "institutional",
       "tags": [],
+      "media": [],
       "status": "dev"
     },
     {
@@ -94,7 +109,8 @@
       "url": "https://cpsb.pt",
       "summary": "Website for a parish community centre serving its local congregation.",
       "category": "institutional",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "LUMU",
@@ -102,7 +118,10 @@
       "url": "https://lumu.pt",
       "summary": "Website for a non-profit platform promoting culture, solidarity, and knowledge-sharing among the Guinean diaspora.",
       "category": "institutional",
-      "tags": ["arts-culture"]
+      "tags": [
+        "arts-culture"
+      ],
+      "media": []
     },
     {
       "title": "Lisbon Geographical Society",
@@ -110,7 +129,8 @@
       "url": "https://socgeografialisboa.pt",
       "summary": "Institutional website for one of Portugal's oldest scientific and cultural societies.",
       "category": "institutional",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "LGS – Museum",
@@ -118,7 +138,8 @@
       "url": "https://museu.socgeografialisboa.pt",
       "summary": "Dedicated museum site showcasing the Society's collections and exhibitions.",
       "category": "institutional",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "InnovPlantProtect",
@@ -126,7 +147,10 @@
       "url": "http://iplantprotect.pt",
       "summary": "Website for a collaborative laboratory focused on plant protection research and innovation.",
       "category": "institutional",
-      "tags": ["science"]
+      "tags": [
+        "science"
+      ],
+      "media": []
     },
     {
       "title": "Portuguese Society for Spine Pathology",
@@ -134,7 +158,10 @@
       "url": "https://sppcv.org",
       "summary": "Institutional website for a medical society specialising in spine pathology.",
       "category": "institutional",
-      "tags": ["health"]
+      "tags": [
+        "health"
+      ],
+      "media": []
     },
     {
       "title": "Biotechnology Information Centre",
@@ -142,7 +169,10 @@
       "url": "https://cibpt.org",
       "summary": "Institutional website for a centre dedicated to biotechnology information and outreach.",
       "category": "institutional",
-      "tags": ["science"]
+      "tags": [
+        "science"
+      ],
+      "media": []
     },
     {
       "title": "Cetera – AIDFM",
@@ -150,7 +180,11 @@
       "url": "https://aidfm-cetera.com",
       "summary": "Website for a research initiative linked to the Faculty of Medicine, University of Lisbon.",
       "category": "institutional",
-      "tags": ["health", "science"]
+      "tags": [
+        "health",
+        "science"
+      ],
+      "media": []
     },
     {
       "title": "CCUL",
@@ -158,7 +192,11 @@
       "url": "https://ccul.pt",
       "summary": "Institutional website for the cardiovascular research centre of the University of Lisbon.",
       "category": "institutional",
-      "tags": ["health", "science"]
+      "tags": [
+        "health",
+        "science"
+      ],
+      "media": []
     },
     {
       "title": "3 Wheeler",
@@ -166,7 +204,10 @@
       "url": "https://3e-cargo.com",
       "summary": "E-commerce and showcase for a cargo bike and light electric vehicle brand.",
       "category": "ecommerce",
-      "tags": ["sustainability"]
+      "tags": [
+        "sustainability"
+      ],
+      "media": []
     },
     {
       "title": "Basecamp",
@@ -174,7 +215,8 @@
       "url": "https://basecamportugal.com",
       "summary": "Website for a production services company supplying equipment, crew, and logistics to the film and advertising industry in Portugal.",
       "category": "ecommerce",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "Portugalocations",
@@ -182,7 +224,10 @@
       "url": "https://portugalocations.com",
       "summary": "Real estate and holiday rental platform focused on properties in Portugal.",
       "category": "ecommerce",
-      "tags": ["real-estate"]
+      "tags": [
+        "real-estate"
+      ],
+      "media": []
     },
     {
       "title": "DrawNext",
@@ -190,7 +235,8 @@
       "url": "http://osaka.toyno.com/",
       "summary": "Custom React web app with integrated admin system, built for the Portuguese Pavilion at Expo Osaka 2025.",
       "category": "webapps",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "Cardio Genomics 2025",
@@ -198,7 +244,11 @@
       "url": "http://dev.plura.pt/esc/cardio-genomics-2025/",
       "summary": "Conference platform with abstract submission, author registration, and presentation upload modules.",
       "category": "webapps",
-      "tags": ["health", "events"]
+      "tags": [
+        "health",
+        "events"
+      ],
+      "media": []
     },
     {
       "title": "Galeria Reverso",
@@ -206,7 +256,10 @@
       "url": "https://galeriareverso.com",
       "summary": "Website for a contemporary art gallery.",
       "category": "arts",
-      "tags": ["arts-culture"]
+      "tags": [
+        "arts-culture"
+      ],
+      "media": []
     },
     {
       "title": "Diogo Stilwell",
@@ -214,7 +267,10 @@
       "url": "https://www.diogostilwell.com",
       "summary": "Personal portfolio for an award-winning copywriter with experience at Ogilvy, Wunderman Thompson, and Dentsu Creative.",
       "category": "arts",
-      "tags": ["arts-culture"]
+      "tags": [
+        "arts-culture"
+      ],
+      "media": []
     },
     {
       "title": "Cri.Ar.Te",
@@ -222,7 +278,10 @@
       "url": "https://cri-ar-te.com",
       "summary": "Website for a children's arts and wellbeing studio promoting emotional development through creative and sensory activities.",
       "category": "arts",
-      "tags": ["arts-culture"]
+      "tags": [
+        "arts-culture"
+      ],
+      "media": []
     },
     {
       "title": "Agnes Kolignan",
@@ -230,7 +289,10 @@
       "url": "https://agneskolignan.com",
       "summary": "Personal portfolio website for a fashion artist and creative professional.",
       "category": "arts",
-      "tags": ["arts-culture"]
+      "tags": [
+        "arts-culture"
+      ],
+      "media": []
     },
     {
       "title": "Mangu",
@@ -238,7 +300,8 @@
       "url": "https://mangu.buscardini.net",
       "summary": "Website for a B2B exporter of fresh fruit from Guinea-Bissau, representing local farmers in international distribution networks.",
       "category": "other",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "Matize Atelier",
@@ -247,6 +310,7 @@
       "summary": "Website for an interior design studio.",
       "category": "other",
       "tags": [],
+      "media": [],
       "status": "dev"
     },
     {
@@ -255,7 +319,8 @@
       "url": "https://vetocular.com",
       "summary": "Website for a specialist clinic dedicated exclusively to veterinary ophthalmology.",
       "category": "other",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "Comunica",
@@ -263,7 +328,8 @@
       "url": "https://comunica.global",
       "summary": "Website for a communications consultancy firm with international reach.",
       "category": "other",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "Toyno",
@@ -271,7 +337,8 @@
       "url": "https://toyno.com",
       "summary": "Website for a design studio specialising in experiences for public, work, education, and leisure spaces.",
       "category": "other",
-      "tags": []
+      "tags": [],
+      "media": []
     },
     {
       "title": "Publibalão",
@@ -279,7 +346,10 @@
       "url": "https://publibalao.com",
       "summary": "Website for Portugal's pioneering hot air balloon company, active since 1994 — covering flights, events, and training. Includes FIBAQ, one of Europe's largest ballooning festivals.",
       "category": "other",
-      "tags": ["events"]
+      "tags": [
+        "events"
+      ],
+      "media": []
     },
     {
       "title": "Hotel Convento de São Paulo",
@@ -287,7 +357,10 @@
       "url": "http://hotelconventosaopaulo.com",
       "summary": "Website for a historic convent hotel in Portugal.",
       "category": "other",
-      "tags": ["hospitality"]
+      "tags": [
+        "hospitality"
+      ],
+      "media": []
     }
   ]
 }
