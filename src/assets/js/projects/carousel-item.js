@@ -2,6 +2,7 @@
 
 import { el } from '../utils.js';
 import { buildMeta } from './meta.js';
+import { basePath } from '../config.js';
 
 export function createCarouselItem(project) {
   return el('div', { class: 'plura-projects-carousel-item plura-panel' },
