@@ -9,12 +9,14 @@ import { createLightbox } from '../lightbox/lightbox.js';
  * @param {string[]|Element[]|NodeList} items              Image URLs or DOM nodes.
  * @param {'carousel'|'grid'}           [type='carousel']  Gallery layout type.
  * @param {object}  [options={}]
+ * @param {string}  [options.id]           Sets id on the root element.
+ * @param {string}  [options.className]    Extra class(es) added to the root element.
  * @param {object}  [options.carousel={}]  Options forwarded to createCarousel.
  * @param {object}  [options.lightbox={}]  Options forwarded to createLightbox.
  * @returns {{ root: Element }}
  */
 export function createGallery(container, items, type = 'carousel', options = {}) {
-  const { carousel: carouselOptions = {}, lightbox: lightboxOptions = {} } = options;
+  const { id, className, carousel: carouselOptions = {}, lightbox: lightboxOptions = {} } = options;
 
   // ── Normalise items ────────────────────────────────────────────
 
@@ -34,6 +36,8 @@ export function createGallery(container, items, type = 'carousel', options = {})
     });
     ({ root } = carousel);
     root.classList.add('plura-gallery');
+    if (id)        root.id = id;
+    if (className) root.classList.add(...className.split(' '));
   } else {
     throw new Error(`Gallery type '${type}' is not yet implemented.`);
   }

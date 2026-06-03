@@ -10,7 +10,8 @@ const registry = new Map();
  * @param {string[]|Element[]|NodeList} items           Image URLs or existing DOM nodes.
  * @param {number}                      [initialIndex=0] Initial image index.
  * @param {object}                      [options={}]
- * @param {string}    [options.id]              Registry id — reuses the same instance across calls.
+ * @param {string}    [options.id]              Registry id — reuses the same instance across calls; also sets root element id.
+ * @param {string}    [options.className]       Extra class(es) added to the root element.
  * @param {Function}  [options.onClose]         Called with final index when lightbox closes.
  * @param {boolean}   [options.counter=false]   Show slide counter.
  * @param {boolean}   [options.arrows=false]    Show prev/next arrows.
@@ -19,7 +20,7 @@ const registry = new Map();
  * @returns {{ open: Function, close: Function, goTo: Function, setItems: Function }}
  */
 export function createLightbox(items, initialIndex = 0, options = {}) {
-  const { id, onClose, counter = false, arrows = false, indicators = false, thumbs = false } = options;
+  const { id, className, onClose, counter = false, arrows = false, indicators = false, thumbs = false } = options;
 
   // ── Singleton registry ─────────────────────────────────────────
   // If an id is given and an instance already exists, swap items and return it.
@@ -59,6 +60,8 @@ export function createLightbox(items, initialIndex = 0, options = {}) {
   });
 
   root.classList.add('plura-lightbox');
+  if (id)        root.id = id;
+  if (className) root.classList.add(...className.split(' '));
 
   // ── Overlay ────────────────────────────────────────────────────
 
