@@ -18,8 +18,10 @@ export function t(key, vars = {}) {
   return str;
 }
 
-// langs — ordered fallback chain for per-language file resolution.
-export const langs = lang !== 'en' ? [lang, 'en'] : ['en'];
+const DEFAULT_LANG = 'en';
+
+// langs — ordered fallback chain: current lang first, default lang second (if different).
+export const langs = lang !== DEFAULT_LANG ? [lang, DEFAULT_LANG] : [DEFAULT_LANG];
 
 // fetchLang — fetch a per-feature lang file (e.g. pt.projects.json).
 // Returns null for EN or on failure; callers merge the result into their data.

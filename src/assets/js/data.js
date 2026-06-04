@@ -16,13 +16,19 @@ export function fetchCached(url) {
   return cache.get(url);
 }
 
-// fetchDescription — fetch and parse a per-project markdown description.
-// Tries the current language first, falls back to EN.
-// Returns parsed HTML string, or null if no file exists.
-export async function fetchDescription(slug) {
+// fetchContent — fetch a localised file, trying each lang in the fallback chain.
+// path may contain a {lang} placeholder which is replaced per attempt.
+// Pass markdown: true to parse the result with marked.js.
+export async function fetchContent(path, { markdown = false } = {}) {
   for (const l of langs) {
-    const text = await fetchCached(`${basePath}/data/descriptions/${l}/${slug}.md`);
-    if (text) return marked.parse(text);
+    const url = `${basePath}/${path.replace('{lang}', l)}`;
+    const text = await fetchCached(url);
+    if (text) return markdown ? marked.parse(text) : text;
   }
   return null;
+}
+
+// fetchDescription — fetch and parse a per-project markdown description.
+export function fetchDescription(slug) {
+  return fetchContent(`data/descriptions/{lang}/${slug}.md`, { markdown: true });
 }
