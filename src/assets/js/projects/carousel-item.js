@@ -3,6 +3,7 @@
 import { el, createLink } from '../utils.js';
 import { buildMeta } from './meta.js';
 import { basePath } from '../config.js';
+import { fetchDescription } from '../data.js';
 import { createGallery } from '../../components/gallery/gallery.js';
 
 export function createCarouselItem(project) {
@@ -21,9 +22,17 @@ export function createCarouselItem(project) {
 
   // ── Body ──────────────────────────────────────────────────────
 
-  const body = el('div', { class: 'plura-projects-carousel-item-body plura-panel-body' },
-    project.summary && el('p', { class: 'plura-projects-carousel-item-summary', text: project.summary })
-  );
+  const descSlot = el('div', { class: 'plura-projects-carousel-item-description' });
+  const body     = el('div', { class: 'plura-projects-carousel-item-body plura-panel-body' }, descSlot);
+
+  // Try description first; fall back to summary if none found.
+  fetchDescription(project.slug).then(html => {
+    if (html) {
+      descSlot.innerHTML = html;
+    } else if (project.summary) {
+      descSlot.appendChild(el('p', { class: 'plura-projects-carousel-item-summary', text: project.summary }));
+    }
+  });
 
   // ── Item ──────────────────────────────────────────────────────
 
