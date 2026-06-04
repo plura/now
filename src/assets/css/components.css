@@ -3,10 +3,10 @@
 .plura-panel {
   background:    var(--plura-color-light);
   border-radius: var(--plura-radius);
-  padding:       var(--plura-pad);
+  padding:       var(--plura-gap-lg);
   display:       flex;
   flex-direction: column;
-  gap:           var(--plura-pad);
+  gap:           var(--plura-gap-lg);
 }
 
 .plura-panel-header {
@@ -22,5 +22,5 @@
 .plura-panel-body {
   display:        flex;
   flex-direction: column;
-  gap:            var(--plura-pad);
+  gap:            var(--plura-gap-lg);
 }

@@ -26,7 +26,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--plura-gap-xs);
-  padding-bottom: var(--plura-morph-pad);
+  padding-bottom: var(--plura-gap-md);
   border-bottom: 1px solid var(--plura-color-border);
 }
 
@@ -42,6 +42,20 @@
   letter-spacing: var(--plura-letter-spacing-caps);
   text-transform: uppercase;
   color: var(--plura-color-muted);
+}
+
+/* ─── Item layout ────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .plura-projects-carousel-item {
+    max-height: 85dvh;
+    overflow: hidden;
+  }
+
+  .plura-projects-carousel-item-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 
 /* ─── Item body ──────────────────────────────────────────────── */

@@ -10,7 +10,7 @@
 .plura-projects-filter-content {
   display: flex;
   flex-direction: column;
-  gap: var(--plura-pad);
+  gap: var(--plura-gap-lg);
 }
 
 

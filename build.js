@@ -67,14 +67,21 @@ async function buildHTML() {
   }
 }
 
-function buildJSON() {
+function buildData() {
   const files = readdirSync(join(SRC, 'data'), { recursive: true, withFileTypes: true });
   for (const f of files) {
-    if (!f.name.endsWith('.json')) continue;
+    if (f.isDirectory()) continue;
     const rel = join(f.parentPath ?? f.path, f.name).slice(join(SRC, 'data').length + 1);
-    const minified = JSON.stringify(JSON.parse(read(join('data', rel))));
-    write(join('data', rel), minified);
-    console.log(`  JSON data/${rel}`);
+    if (f.name.endsWith('.json')) {
+      const minified = JSON.stringify(JSON.parse(read(join('data', rel))));
+      write(join('data', rel), minified);
+      console.log(`  JSON data/${rel}`);
+    } else {
+      const dest = join(DIST, 'data', rel);
+      mkdirSync(dirname(dest), { recursive: true });
+      copyFileSync(join(SRC, 'data', rel), dest);
+      console.log(`  COPY data/${rel}`);
+    }
   }
 }
 
@@ -85,7 +92,7 @@ async function build() {
   await buildJS();
   await buildCSS();
   await buildHTML();
-  buildJSON();
+  buildData();
 
   for (const dir of COPY_DIRS) {
     cpSync(join(SRC, dir), join(DIST, dir), { recursive: true });
