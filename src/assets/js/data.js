@@ -3,8 +3,7 @@
 // Storing Promises (not resolved values) means concurrent fetches for the same
 // URL don't race — the second caller awaits the same Promise.
 
-import { basePath } from './config.js';
-import { langs } from './lang.js';
+import { basePath, langs } from './config.js';
 
 const cache = new Map();
 

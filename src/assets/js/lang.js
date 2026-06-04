@@ -1,6 +1,5 @@
-import { lang, basePath } from './config.js';
-
-const DEFAULT_LANG = 'en';
+import { lang, basePath, DEFAULT_LANG } from './config.js';
+import { fetchCached } from './data.js';
 
 // UI strings for non-EN locales. Fetched at module load (top-level await) so t() is
 // synchronous everywhere. Degrades to {} on fetch/parse failure — missing keys fall
@@ -20,19 +19,10 @@ export function t(key, vars = {}) {
   return str;
 }
 
-const DEFAULT_LANG = 'en';
-
-// langs — ordered fallback chain: current lang first, default lang second (if different).
-export const langs = lang !== DEFAULT_LANG ? [lang, DEFAULT_LANG] : [DEFAULT_LANG];
-
 // fetchLang — fetch a per-feature lang file (e.g. pt.projects.json).
 // Returns null for EN or on failure; callers merge the result into their data.
 export async function fetchLang(name) {
   if (lang === DEFAULT_LANG) return null;
-  try {
-    const r = await fetch(`${basePath}/data/lang/${lang}.${name}.json`);
-    return r.ok ? r.json() : null;
-  } catch {
-    return null;
-  }
+  const text = await fetchCached(`${basePath}/data/lang/${lang}.${name}.json`);
+  return text ? JSON.parse(text) : null;
 }
