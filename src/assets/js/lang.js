@@ -5,9 +5,7 @@ import { fetchCached } from './data.js';
 // synchronous everywhere. Degrades to {} on fetch/parse failure — missing keys fall
 // back to the key string itself, so the page never breaks on a bad or missing file.
 const _ui = lang !== DEFAULT_LANG
-  ? await fetch(`${basePath}/data/lang/${lang}.ui.json`)
-      .then(r => r.ok ? r.json() : {})
-      .catch(() => ({}))
+  ? await fetchCached(`${basePath}/data/lang/${lang}.ui.json`, { as: 'json' }) ?? {}
   : {};
 
 // t(key) — translate a UI string. Falls back to the key itself so untranslated strings
@@ -23,6 +21,5 @@ export function t(key, vars = {}) {
 // Returns null for EN or on failure; callers merge the result into their data.
 export async function fetchLang(name) {
   if (lang === DEFAULT_LANG) return null;
-  const text = await fetchCached(`${basePath}/data/lang/${lang}.${name}.json`);
-  return text ? JSON.parse(text) : null;
+  return fetchCached(`${basePath}/data/lang/${lang}.${name}.json`, { as: 'json' });
 }

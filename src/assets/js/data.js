@@ -5,14 +5,22 @@
 
 import { basePath, langs } from './config.js';
 
+// Raw text cache — always stores text; callers parse as needed.
 const cache = new Map();
 
-// fetchCached — fetch a URL, cache and return the text, or null on failure.
-export function fetchCached(url) {
+// fetchCached — fetch a URL and cache the result.
+// as: 'text' (default) returns raw string; 'json' parses and returns an object.
+// Returns null on fetch failure or (for 'json') on parse failure.
+export async function fetchCached(url, { as = 'text' } = {}) {
   if (!cache.has(url)) {
     cache.set(url, fetch(url).then(r => r.ok ? r.text() : null).catch(() => null));
   }
-  return cache.get(url);
+  const text = await cache.get(url);
+  if (!text) return null;
+  if (as === 'json') {
+    try { return JSON.parse(text); } catch { return null; }
+  }
+  return text;
 }
 
 // fetchContent — fetch a localised file, trying each lang in the fallback chain.
