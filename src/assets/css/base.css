@@ -51,6 +51,10 @@ svg.lucide {
   /* Spacing */
   --plura-pad:       1.5rem;
   --plura-gap-xs:    3px;
+  --plura-gap-sm:    0.5rem;
+  --plura-gap-md:    1rem;
+  --plura-gap-lg:    1.5rem;
+  --plura-gap-xl:    2rem;
   --plura-badge-pad: 2px 5px;
 
   /* Shape */
@@ -78,6 +82,7 @@ svg.lucide {
   --plura-font-size-lg:        clamp(1.125rem,  1.05rem + 0.4vw,  1.25rem);
   --plura-font-size-xl:        clamp(1.25rem,   1.1rem  + 0.75vw, 1.5rem);
   --plura-letter-spacing-caps: 0.06em;
+  --plura-line-height-prose:   1.7;
 
   /* Opacity */
   --plura-opacity-low:  30%;

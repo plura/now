@@ -46,10 +46,15 @@
 
 /* ─── Item body ──────────────────────────────────────────────── */
 
-.plura-projects-carousel-item-desc {
+.plura-projects-carousel-item-description {
   font-size: var(--plura-font-size-sm);
   font-weight: var(--plura-font-weight-light);
   color: var(--plura-color-muted);
-  line-height: 1.7;
+  line-height: var(--plura-line-height-prose);
 }
+
+.plura-projects-carousel-item-description p:not(:last-child) {
+  margin-bottom: var(--plura-gap-sm);
+}
+
 
