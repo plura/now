@@ -14,6 +14,7 @@ Minimal and light. Mostly text, generous whitespace, a strict grid. The logo ani
 
 - **GSAP** — intro and UI animations
 - **Lucide** — icons (CDN, UMD)
+- **marked.js** — markdown rendering for per-project descriptions (CDN)
 - **Rollup + Terser** — JS bundle
 - **CleanCSS** — CSS bundle
 - **PHPMailer** — contact form backend (`api/`)
@@ -83,7 +84,9 @@ CSS is modular — `main.css` is an `@import` chain. Design tokens are centralis
 
 JS mirrors that: `main.js` bootstraps everything; feature modules pair an entry file with a sub-module folder (`anim.js` + `anim/`, `projects.js` + `projects/`). The overlay/morph primitives are grouped in `layers/`, and small helpers (`utils.js`, `lang.js`, `session.js`, `dev.js`) sit at the root.
 
-Content lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings.
+Content lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings; a `descriptions/` subfolder holds per-project markdown files fetched lazily and rendered in the carousel overlay.
+
+`data.js` provides a centralised, promise-cached fetch layer (`fetchCached`, `fetchContent`, `fetchDescription`). `fetchContent` walks a language fallback chain so PT content is tried before falling back to EN.
 
 ### Carousel component
 
@@ -96,7 +99,7 @@ import { createCarousel } from './src/assets/components/carousel/carousel.js';
 
 const carousel = createCarousel(containerEl, {
   // identity / content
-  items,            // Element[] | NodeList | number — omit for static HTML mode
+  items,            // string[] | {src,alt?,thumb?}[] | Element[] | NodeList | number — omit for static HTML mode
   id,               // string — sets id on root element
   className,        // string — extra class(es) on root element
   // core behaviour
@@ -235,15 +238,17 @@ Append `?dev=<mode>` to any page URL to activate dev shortcuts. Any active mode 
   "projects": [
     {
       "title":       "",
+      "slug":        "",
       "url":         "",
       "summary":     "",
       "category":    "<key>",
       "tags":        ["<key>"],
       "status":      "<key>",
-      "featured":    true
+      "featured":    true,
+      "media":       [{ "file": "image.jpg", "alt": "" }]
     }
   ]
 }
 ```
 
-`status` and `featured` are optional. PT overrides in `pt.projects.json` are merged by `title` — only the fields present in the override file are replaced.
+`status`, `featured`, and `media` are optional. `slug` is used to locate per-project media (`assets/media/projects/{slug}/`) and markdown descriptions (`data/descriptions/{lang}/{slug}.md`). PT overrides in `pt.projects.json` are merged by `title` — only the fields present in the override file are replaced.
