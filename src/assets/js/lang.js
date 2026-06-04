@@ -1,9 +1,11 @@
 import { lang, basePath } from './config.js';
 
+const DEFAULT_LANG = 'en';
+
 // UI strings for non-EN locales. Fetched at module load (top-level await) so t() is
 // synchronous everywhere. Degrades to {} on fetch/parse failure — missing keys fall
 // back to the key string itself, so the page never breaks on a bad or missing file.
-const _ui = lang !== 'en'
+const _ui = lang !== DEFAULT_LANG
   ? await fetch(`${basePath}/data/lang/${lang}.ui.json`)
       .then(r => r.ok ? r.json() : {})
       .catch(() => ({}))
@@ -26,7 +28,7 @@ export const langs = lang !== DEFAULT_LANG ? [lang, DEFAULT_LANG] : [DEFAULT_LAN
 // fetchLang — fetch a per-feature lang file (e.g. pt.projects.json).
 // Returns null for EN or on failure; callers merge the result into their data.
 export async function fetchLang(name) {
-  if (lang === 'en') return null;
+  if (lang === DEFAULT_LANG) return null;
   try {
     const r = await fetch(`${basePath}/data/lang/${lang}.${name}.json`);
     return r.ok ? r.json() : null;
