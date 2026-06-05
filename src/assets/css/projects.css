@@ -4,16 +4,28 @@ main {
   overflow-y: auto;
 }
 
+/* Mobile-first: one category card per row, items in a 2-col grid inside each */
 .plura-projects {
-  columns: 3;
-  column-gap: 10px;
+  columns: 1;
   padding: 10px;
 }
 
+.plura-projects-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+}
+
+/* Desktop: masonry category cards, items as a vertical list */
 @media (min-width: 768px) {
   .plura-projects {
+    columns: 3;
     column-gap: 12px;
     padding: 12px;
+  }
+
+  .plura-projects-list {
+    display: block;
   }
 }
 
@@ -21,28 +33,32 @@ main {
 /* ─── Project item ──────────────────────────────────────────── */
 
 .plura-projects-item {
-  padding: 8px 0;
   cursor: default;
 }
 
-.plura-projects-item + .plura-projects-item {
-  border-top: 1px solid var(--plura-color-border);
+/* Desktop: vertical list with hairline separators */
+@media (min-width: 768px) {
+  .plura-projects-item {
+    padding: 8px 0;
+  }
+
+  .plura-projects-item + .plura-projects-item {
+    border-top: 1px solid var(--plura-color-border);
+  }
 }
 
 .plura-projects-item-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
 
 .plura-projects-item-title {
-  flex: 1;
+  flex: 0 0 100%;
   min-width: 0;
   font-size: var(--plura-font-size-sm);
   font-weight: var(--plura-font-weight-regular);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .plura-projects-item-desc {
@@ -56,11 +72,18 @@ main {
 
 /* ─── Item actions ──────────────────────────────────────────── */
 
+/* Hidden on mobile — tapping the item opens the project (URL lives there) */
 .plura-projects-item-actions {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 2px;
   flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .plura-projects-item-actions {
+    display: flex;
+  }
 }
 
 .plura-projects-item-url,
