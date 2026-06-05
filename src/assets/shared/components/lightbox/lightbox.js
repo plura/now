@@ -1,8 +1,8 @@
 // lightbox.js — requires window.gsap (CDN global)
 
-import { el } from '../../js/utils.js';
+import { el } from '../../../js/utils.js';
 import { createCarousel } from '../carousel/carousel.js';
-import { initOverlay } from '../../js/layers/overlay.js';
+import { initOverlay } from '../../../js/layers/overlay.js';
 
 const registry = new Map();
 

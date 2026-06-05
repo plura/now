@@ -82,7 +82,9 @@ Source lives in `src/`. The build outputs to `dist/`.
 
 CSS is modular — `main.css` is an `@import` chain. Design tokens are centralised in `base.css`; each concern (overlay, morph, transition, float, form, badge, button, projects, filter) has its own file.
 
-JS mirrors that: `main.js` bootstraps everything; feature modules pair an entry file with a sub-module folder (`anim.js` + `anim/`, `projects.js` + `projects/`). The overlay/morph primitives are grouped in `layers/`, and small helpers (`utils.js`, `lang.js`, `session.js`, `dev.js`) sit at the root.
+JS mirrors that: `main.js` bootstraps everything; feature modules pair an entry file with a sub-module folder (`anim.js` + `anim/`, `projects.js` + `projects/`). The overlay/morph primitives are grouped in `js/layers/`, and small helpers (`utils.js`, `lang.js`, `session.js`, `dev.js`) sit at the root.
+
+Portable, site-agnostic code lives under `assets/shared/`: `components/` (self-contained widgets that own their DOM + CSS — carousel, lightbox, gallery) and `behaviors/` (utilities applied to existing elements — masonry). The dividing line is dependency: anything that relies on `base.css` tokens (e.g. the `js/layers/` primitives) is site-specific and stays under `js/` / `css/`; anything that doesn't can live in `shared/` and be lifted into another project (the one allowed exception is the generic `el()` helper from `utils.js`).
 
 Content lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings; a `descriptions/` subfolder holds per-project markdown files fetched lazily and rendered in the carousel overlay.
 
@@ -90,12 +92,12 @@ Content lives in `data/` — one JSON file drives the projects grid; a `lang/` s
 
 ### Carousel component
 
-A reusable vanilla JS + GSAP carousel in `src/assets/components/carousel/`. Import the JS module and link the CSS, then customise via CSS custom properties.
+A reusable vanilla JS + GSAP carousel in `src/assets/shared/components/carousel/`. Import the JS module and link the CSS, then customise via CSS custom properties.
 
 **Usage**
 
 ```js
-import { createCarousel } from './src/assets/components/carousel/carousel.js';
+import { createCarousel } from './src/assets/shared/components/carousel/carousel.js';
 
 const carousel = createCarousel(containerEl, {
   // identity / content
@@ -165,10 +167,10 @@ A testbed lives in `test/carousel/`.
 
 ### Lightbox component
 
-A fullscreen image viewer in `src/assets/components/lightbox/`. Wraps a carousel internally.
+A fullscreen image viewer in `src/assets/shared/components/lightbox/`. Wraps a carousel internally.
 
 ```js
-import { createLightbox } from './src/assets/components/lightbox/lightbox.js';
+import { createLightbox } from './src/assets/shared/components/lightbox/lightbox.js';
 
 const lb = createLightbox(items, initialIndex, {
   id,           // string — registry key for singleton reuse
@@ -193,10 +195,10 @@ A testbed lives in `test/lightbox/`.
 
 ### Gallery component
 
-Combines a carousel with a lightbox in `src/assets/components/gallery/`.
+Combines a carousel with a lightbox in `src/assets/shared/components/gallery/`.
 
 ```js
-import { createGallery } from './src/assets/components/gallery/gallery.js';
+import { createGallery } from './src/assets/shared/components/gallery/gallery.js';
 
 createGallery(containerEl, items, 'carousel', {
   carousel: { /* createCarousel options */ },

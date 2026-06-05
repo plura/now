@@ -4,7 +4,7 @@ import { el, createLink } from '../utils.js';
 import { buildMeta } from './meta.js';
 import { basePath } from '../config.js';
 import { fetchDescription } from '../data.js';
-import { createGallery } from '../../components/gallery/gallery.js';
+import { createGallery } from '../../shared/components/gallery/gallery.js';
 
 export function createCarouselItem(project) {
 

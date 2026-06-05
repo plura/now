@@ -1,4 +1,4 @@
-import { createCarousel } from '../../src/assets/components/carousel/carousel.js';
+import { createCarousel } from '../../src/assets/shared/components/carousel/carousel.js';
 import { el } from '../../src/assets/js/utils.js';
 
 const { projects, categories, tags } = await fetch('../../src/data/projects.json').then(r => r.json());

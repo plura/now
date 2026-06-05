@@ -5,7 +5,7 @@
 // the card↔slide transition; dismissal (Escape/click-outside) routes up via onDismiss.
 
 // aliased to avoid collision with the exported createCarousel below
-import { createCarousel as createBaseCarousel } from '../../components/carousel/carousel.js';
+import { createCarousel as createBaseCarousel } from '../../shared/components/carousel/carousel.js';
 import { createCarouselItem } from './carousel-item.js';
 import { initOverlay } from '../layers/overlay.js';
 

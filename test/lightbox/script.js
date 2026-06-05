@@ -1,4 +1,4 @@
-import { createLightbox } from '../../src/assets/components/lightbox/lightbox.js';
+import { createLightbox } from '../../src/assets/shared/components/lightbox/lightbox.js';
 import { el } from '../../src/assets/js/utils.js';
 
 const mediaImages = await fetch('../media/images.json').then(r => r.json());

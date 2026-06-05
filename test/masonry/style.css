@@ -1,0 +1,29 @@
+/* test/masonry/style.css — masonry testbed styles */
+
+/* Override common.css's flex main: show the examples side by side */
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: start;
+}
+
+.plura-masonry {
+  --plura-masonry-gap: 12px;
+}
+
+/* ── Test items (positioned absolutely by masonry.js) ── */
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--plura-test-radius-card);
+  color: #fff;
+  font-size: var(--plura-test-font-sm);
+  font-weight: var(--plura-test-font-weight-semibold);
+}
+
+.r-1-1  { aspect-ratio: 1 / 1;  background: #4a6fa5; }
+.r-4-3  { aspect-ratio: 4 / 3;  background: #5a9367; }
+.r-3-4  { aspect-ratio: 3 / 4;  background: #a5644a; }
+.r-16-9 { aspect-ratio: 16 / 9; background: #7a5a93; }

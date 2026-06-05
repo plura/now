@@ -4,9 +4,9 @@
 
 /* ─── Components ─────────────────────────────────────────────── */
 
-@import '../components/carousel/carousel.css';
-@import '../components/lightbox/lightbox.css';
-@import '../components/gallery/gallery.css';
+@import '../shared/components/carousel/carousel.css';
+@import '../shared/components/lightbox/lightbox.css';
+@import '../shared/components/gallery/gallery.css';
 
 /* ─── Site ───────────────────────────────────────────────────── */
 

@@ -1,6 +1,6 @@
 // carousel.js — requires window.gsap (CDN global)
 
-import { el } from '../../js/utils.js';
+import { el } from '../../../js/utils.js';
 
 /**
  * @param {Element} container  Host element. If it already has .plura-carousel it is used directly; otherwise a .plura-carousel is created inside it.

@@ -1,4 +1,4 @@
-import { createGallery } from '../../src/assets/components/gallery/gallery.js';
+import { createGallery } from '../../src/assets/shared/components/gallery/gallery.js';
 
 const mediaImages = await fetch('../media/images.json').then(r => r.json());
 const images = mediaImages.map(name => `../media/${name}`);
