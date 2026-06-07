@@ -132,6 +132,7 @@ const carousel = createCarousel(containerEl, {
   index,            // initial active slide index  (default: 0)
   // events
   on: {
+    create,         // (index, el) — fires synchronously after each slide is built, before any navigation
     enter,          // (index, el) — fires on incoming slide
     leave,          // (index, el) — fires on outgoing slide
     change,         // (fromIndex, toIndex) — fires once per navigation

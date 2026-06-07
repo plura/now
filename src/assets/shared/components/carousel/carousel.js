@@ -290,7 +290,7 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
 	if (type === 'slide') {
 		if (perView === 'auto') root.classList.add('plura-carousel--auto');
 		else if (perView > 1)   itemsEl.style.setProperty('--plura-carousel-per-view', perView);
-		if (gap > 0)            itemsEl.style.setProperty('--plura-carousel-gap', `${gap}px`);
+		itemsEl.style.setProperty('--plura-carousel-gap', `${gap}px`);
 	}
 
 	let items;
