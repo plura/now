@@ -215,10 +215,10 @@ function resolveItem(item) {
 	let node;
 	if (isVideo) {
 		const ext = src.split('?')[0].split('.').pop().toLowerCase();
-		node = el('video', { muted: true, playsinline: true });
+		node = el('video', { muted: true, playsinline: true, class: 'plura-carousel-item--video' });
 		node.appendChild(el('source', { src, type: mimes[ext] ?? 'video/mp4' }));
 	} else {
-		node = el('img', { src, alt });
+		node = el('img', { src, alt, class: 'plura-carousel-item--image' });
 	}
 	if (thumb) node.thumb = thumb;
 	return node;

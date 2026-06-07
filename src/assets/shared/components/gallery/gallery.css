@@ -3,3 +3,10 @@
 .plura-gallery .plura-carousel-item--active {
   cursor: pointer;
 }
+
+.plura-gallery .plura-carousel-item--image,
+.plura-gallery .plura-carousel-item--video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
