@@ -281,7 +281,12 @@
       "tags": [
         "arts-culture"
       ],
-      "media": []
+      "media": [
+        { "file": "test-desktop-laptop.png", "alt": "Desktop / Laptop" },
+        { "file": "test-ipad.png", "alt": "iPad" },
+        { "file": "test-mockup.png", "alt": "Mockup" },
+        { "file": "test-smartphone.png", "alt": "Smartphone" }
+      ]
     },
     {
       "title": "Agnes Kolignan",
