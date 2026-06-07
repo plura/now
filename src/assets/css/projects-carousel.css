@@ -14,14 +14,15 @@
 
 /* ─── Slides ─────────────────────────────────────────────────── */
 
-/* All slides same height — consistent track for drag/swipe */
-#plura-projects-carousel .plura-carousel-item {
+/* All slides same height — consistent track for drag/swipe.
+   Full chain to avoid targeting nested gallery slides. */
+#plura-projects-carousel > .plura-carousel > .plura-carousel-wrapper > .plura-carousel-items > .plura-carousel-item {
   width: min(var(--plura-projects-carousel-item-panel-w), 90vw);
   height: 85dvh;
   background: transparent;
 }
 
-#plura-projects-carousel .plura-carousel-item:has(.plura-gallery) {
+#plura-projects-carousel > .plura-carousel > .plura-carousel-wrapper > .plura-carousel-items > .plura-carousel-item:has(.plura-gallery) {
   width: min(var(--plura-projects-carousel-item-w), 90vw);
 }
 
