@@ -2,7 +2,7 @@
 
 import { el, createLink } from '../utils.js';
 import { buildMeta } from './meta.js';
-import { basePath } from '../config.js';
+import { mediaPath } from '../config.js';
 import { fetchDescription } from '../data.js';
 import { createGallery } from '../../shared/components/gallery/gallery.js';
 
@@ -42,7 +42,7 @@ export function createCarouselItem(project) {
 
   if (project.media.length) {
     const mediaItems = project.media.map(m => ({
-      src: `${basePath}/assets/media/projects/${project.slug}/${m.file}`,
+      src: `${mediaPath}/projects/${project.slug}/${m.file}`,
       alt: m.alt ?? '',
     }));
     const { root } = createGallery(document.createElement('div'), mediaItems, 'carousel', {

@@ -9,3 +9,9 @@ api/config.php
 # Build
 node_modules/
 dist/
+
+# Content media (FTP'd separately, not version-controlled)
+public/media/*
+!public/media/projects/
+public/media/projects/*
+!public/media/projects/.gitkeep
