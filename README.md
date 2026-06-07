@@ -25,7 +25,7 @@ Minimal and light. Mostly text, generous whitespace, a strict grid. The logo ani
 npm run build   # outputs to dist/
 ```
 
-Rollup bundles `src/assets/js/main.js` (and all imports) into a single ES module. CSS files are concatenated and minified via CleanCSS. HTML is minified. `data/`, `api/`, and `assets/media/` are copied as-is.
+Rollup bundles `src/assets/js/main.js` (and all imports) into a single ES module. CSS files are concatenated and minified via CleanCSS. HTML is minified. `data/`, `api/`, and `assets/media/` are copied as-is. `public/` is not touched by the build — it is FTP'd separately.
 
 ---
 
@@ -84,9 +84,11 @@ CSS is modular — `main.css` is an `@import` chain. Design tokens are centralis
 
 JS mirrors that: `main.js` bootstraps everything; feature modules pair an entry file with a sub-module folder (`anim.js` + `anim/`, `projects.js` + `projects/`). The overlay/morph primitives are grouped in `js/layers/`, and small helpers (`utils.js`, `lang.js`, `session.js`, `dev.js`) sit at the root.
 
-Portable, site-agnostic code lives under `assets/shared/`: `components/` (self-contained widgets that own their DOM + CSS — carousel, lightbox, gallery) and `behaviors/` (utilities applied to existing elements — masonry). The dividing line is dependency: anything that relies on `base.css` tokens (e.g. the `js/layers/` primitives) is site-specific and stays under `js/` / `css/`; anything that doesn't can live in `shared/` and be lifted into another project (the one allowed exception is the generic `el()` helper from `utils.js`).
+Portable, site-agnostic code lives under `assets/shared/`: `components/` (self-contained widgets that own their DOM + CSS — carousel, lightbox, gallery) and `behaviors/` (utilities applied to existing elements — `masonry.js` absolute-positions items into columns, reads column count and gap from CSS vars, supports nesting via `observe: false` + `onMeasure`). The dividing line is dependency: anything that relies on `base.css` tokens (e.g. the `js/layers/` primitives) is site-specific and stays under `js/` / `css/`; anything that doesn't can live in `shared/` and be lifted into another project (the one allowed exception is the generic `el()` helper from `utils.js`).
 
-Content lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings; a `descriptions/` subfolder holds per-project markdown files fetched lazily and rendered in the carousel overlay.
+Structured data lives in `data/` — one JSON file drives the projects grid; a `lang/` subfolder holds PT override files for both project content and UI strings.
+
+Project content lives in `public/projects/{slug}/` — `{lang}.md` for descriptions and `media/` for images. This folder is outside the build pipeline and FTP'd independently. The base URL is resolved at runtime from `config.js` (`projectsPath`, overridable via `<meta name="projects-path">`).
 
 `data.js` provides a centralised, promise-cached fetch layer (`fetchCached`, `fetchContent`, `fetchDescription`). `fetchContent` walks a language fallback chain so PT content is tried before falling back to EN.
 
@@ -253,4 +255,4 @@ Append `?dev=<mode>` to any page URL to activate dev shortcuts. Any active mode 
 }
 ```
 
-`status`, `featured`, and `media` are optional. `slug` is used to locate per-project media (`assets/media/projects/{slug}/`) and markdown descriptions (`data/descriptions/{lang}/{slug}.md`). PT overrides in `pt.projects.json` are merged by `title` — only the fields present in the override file are replaced.
+`status`, `featured`, and `media` are optional. `slug` is used to locate per-project content in `public/projects/{slug}/` — images under `media/` and descriptions as `{lang}.md`. PT overrides in `pt.projects.json` are merged by `title` — only the fields present in the override file are replaced.
