@@ -4,28 +4,31 @@ main {
   overflow-y: auto;
 }
 
-/* Mobile-first: one category card per row, items in a 2-col grid inside each */
+/* Mobile-first: cards in a single masonry column; items 2-col masonry inside each.
+   Both the card grid and each item list are laid out by initMasonry. */
 .plura-projects {
-  columns: 1;
+  --plura-masonry-columns: 1;
+  --plura-masonry-gap: 12px;
   padding: 10px;
 }
 
+/* Item list is laid out as masonry (absolute positioning via initMasonry).
+   Columns drop from 2 (full-width mobile card) to 1 (narrow desktop card). */
 .plura-projects-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 12px;
+  --plura-masonry-columns: 2;
+  --plura-masonry-gap: 0.5rem;
 }
 
-/* Desktop: masonry category cards, items as a vertical list */
+/* Desktop: cards in 3 masonry columns; each card's items go single-column */
 @media (min-width: 768px) {
   .plura-projects {
-    columns: 3;
-    column-gap: 12px;
+    --plura-masonry-columns: 3;
     padding: 12px;
   }
 
   .plura-projects-list {
-    display: block;
+    --plura-masonry-columns: 1;
+    --plura-masonry-gap: 0;
   }
 }
 
@@ -34,16 +37,18 @@ main {
 
 .plura-projects-item {
   cursor: default;
+  padding: 8px 0;
 }
 
-/* Desktop: vertical list with hairline separators */
+/* Desktop: hairline separator between items; trimmed at each column's end */
 @media (min-width: 768px) {
   .plura-projects-item {
-    padding: 8px 0;
+    border-bottom: 1px solid var(--plura-color-border);
   }
 
-  .plura-projects-item + .plura-projects-item {
-    border-top: 1px solid var(--plura-color-border);
+  .plura-projects-item.plura-masonry-col-end {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 }
 
@@ -59,6 +64,17 @@ main {
   min-width: 0;
   font-size: var(--plura-font-size-sm);
   font-weight: var(--plura-font-weight-regular);
+}
+
+/* Desktop: single-line row — title shares the line with meta + actions
+   (title stays under ~half width, so it fits without wrapping) */
+@media (min-width: 768px) {
+  .plura-projects-item-title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .plura-projects-item-desc {
@@ -130,11 +146,9 @@ main {
 /* ─── Category card ─────────────────────────────────────────── */
 
 .plura-projects-card {
-  break-inside: avoid;
   border: 1px solid var(--plura-color-border);
   border-radius: calc(var(--plura-radius) - 2px);
   padding: 14px 16px;
-  margin-bottom: 10px;
 }
 
 .plura-projects-card-heading {
@@ -166,8 +180,4 @@ main {
 .plura-projects-item--filtered,
 .plura-projects-card--filtered {
   display: none;
-}
-
-.plura-projects-item--filtered + .plura-projects-item {
-  border-top: none;
 }
