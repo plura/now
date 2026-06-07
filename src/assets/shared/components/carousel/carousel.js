@@ -302,6 +302,7 @@ function createItems(root, rawItems, type, duration, perView, gap, center, initi
 		return raw.map((node, i) => {
 			const item = createItem(node, { type, duration, active: i === 0 });
 			itemsEl.appendChild(item.el);
+			on.create?.(i, item.el);
 			return item;
 		});
 	}

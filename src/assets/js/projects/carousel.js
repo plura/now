@@ -29,7 +29,12 @@ export function createCarousel(initialFlat, { onDismiss } = {}) {
     center:   true,
     gap:      100,
     keyboard: true,
-    on: { enter: onEnter },
+    on: {
+      create: (index, slide) => {
+        if (flat[index]?.media.length) slide.classList.add('plura-has-gallery');
+      },
+      enter: onEnter,
+    },
   });
 
   const { open: reveal } = initOverlay(overlay, {

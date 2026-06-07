@@ -22,7 +22,7 @@
   background: transparent;
 }
 
-#plura-projects-carousel > .plura-carousel > .plura-carousel-wrapper > .plura-carousel-items > .plura-carousel-item:has(.plura-gallery) {
+#plura-projects-carousel > .plura-carousel > .plura-carousel-wrapper > .plura-carousel-items > .plura-carousel-item.plura-has-gallery {
   width: min(var(--plura-projects-carousel-item-w), 90vw);
 }
 
