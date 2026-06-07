@@ -3,7 +3,7 @@
 // Storing Promises (not resolved values) means concurrent fetches for the same
 // URL don't race — the second caller awaits the same Promise.
 
-import { basePath, langs } from './config.js';
+import { basePath, langs, projectsPath } from './config.js';
 
 // Raw text cache — always stores text; callers parse as needed.
 const cache = new Map();
@@ -25,10 +25,11 @@ export async function fetchCached(url, { as = 'text' } = {}) {
 
 // fetchContent — fetch a localised file, trying each lang in the fallback chain.
 // path may contain a {lang} placeholder which is replaced per attempt.
+// Pass base to override the default basePath root.
 // Pass markdown: true to parse the result with marked.js.
-export async function fetchContent(path, { markdown = false } = {}) {
+export async function fetchContent(path, { markdown = false, base } = {}) {
   for (const l of langs) {
-    const url = `${basePath}/${path.replace('{lang}', l)}`;
+    const url = `${base ?? basePath}/${path.replace('{lang}', l)}`;
     const text = await fetchCached(url);
     if (text) return markdown ? marked.parse(text) : text;
   }
@@ -36,6 +37,7 @@ export async function fetchContent(path, { markdown = false } = {}) {
 }
 
 // fetchDescription — fetch and parse a per-project markdown description.
+// Looks for public/projects/{slug}/{lang}.md with lang fallback.
 export function fetchDescription(slug) {
-  return fetchContent(`data/descriptions/{lang}/${slug}.md`, { markdown: true });
+  return fetchContent('{lang}.md', { markdown: true, base: `${projectsPath}/${slug}` });
 }

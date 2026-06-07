@@ -8,9 +8,9 @@ export const lang = document.documentElement.lang.split('-')[0];
 // /pt/ and other sub-paths can resolve URLs relative to the site root.
 export const basePath = document.querySelector('meta[name="base-path"]')?.content ?? '.';
 
-// Media path for content assets (project images, etc.) — served from public/,
-// outside the build pipeline. Override via <meta name="media-path"> for prod.
-export const mediaPath = document.querySelector('meta[name="media-path"]')?.content ?? '/public/media';
+// Projects content path — served from public/, outside the build pipeline.
+// Override via <meta name="projects-path"> for prod.
+export const projectsPath = document.querySelector('meta[name="projects-path"]')?.content ?? '/public/projects';
 
 // Default language for fallback resolution.
 export const DEFAULT_LANG = 'en';
