@@ -10,6 +10,5 @@ api/config.php
 node_modules/
 dist/
 
-# Project content (FTP'd separately, not version-controlled)
-public/projects/*
-!public/projects/.gitkeep
+# Project media (FTP'd separately, not version-controlled)
+public/projects/*/media/
