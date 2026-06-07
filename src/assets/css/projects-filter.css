@@ -10,7 +10,7 @@
 .plura-projects-filter-content {
   display: flex;
   flex-direction: column;
-  gap: var(--plura-gap-lg);
+  gap: var(--plura-space-lg);
 }
 
 
@@ -19,7 +19,7 @@
 .plura-projects-filter-group {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--plura-gap-xs) * 2);
+  gap: calc(var(--plura-space-xs) * 2);
 }
 
 .plura-projects-filter-group-label {
@@ -35,7 +35,7 @@
 .plura-projects-filter-options {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--plura-gap-xs);
+  gap: var(--plura-space-xs);
 }
 
 .plura-projects-filter-option {

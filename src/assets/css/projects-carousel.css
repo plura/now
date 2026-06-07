@@ -30,8 +30,8 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--plura-gap-xs);
-  padding-bottom: var(--plura-gap-md);
+  gap: var(--plura-space-xs);
+  padding-bottom: var(--plura-space-md);
   border-bottom: 1px solid var(--plura-color-border);
 }
 
@@ -93,7 +93,7 @@
 }
 
 .plura-projects-carousel-item-description p:not(:last-child) {
-  margin-bottom: var(--plura-gap-sm);
+  margin-bottom: var(--plura-space-sm);
 }
 
 

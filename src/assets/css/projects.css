@@ -16,7 +16,7 @@ main {
    Columns drop from 2 (full-width mobile card) to 1 (narrow desktop card). */
 .plura-projects-list {
   --plura-masonry-columns: 2;
-  --plura-masonry-gap: 0.5rem;
+  --plura-masonry-gap: var(--plura-space-sm);
 }
 
 /* Desktop: cards in 3 masonry columns; each card's items go single-column */
@@ -37,7 +37,7 @@ main {
 
 .plura-projects-item {
   cursor: default;
-  padding: 8px 0;
+  padding: var(--plura-space-sm) 0;
 }
 
 /* Desktop: hairline separator between items; trimmed at each column's end */
@@ -56,7 +56,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--plura-space-sm);
 }
 
 .plura-projects-item-title {
@@ -132,13 +132,13 @@ main {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: calc(var(--plura-gap-xs) * 2);
+  gap: calc(var(--plura-space-xs) * 2);
 }
 
 .plura-projects-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--plura-gap-xs);
+  gap: var(--plura-space-xs);
 }
 
 
@@ -155,7 +155,7 @@ main {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--plura-space-sm);
   padding-bottom: 10px;
   border-bottom: 1px solid var(--plura-color-border);
   margin-bottom: 2px;

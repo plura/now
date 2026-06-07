@@ -1,7 +1,7 @@
 /* ─── Morph frame ────────────────────────────────────────────── */
 
 :root {
-  --plura-morph-pad: var(--plura-gap-lg);
+  --plura-morph-pad: var(--plura-space-lg);
 }
 
 

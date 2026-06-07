@@ -44,6 +44,6 @@
 /* ─── Small variant ──────────────────────────────────────────── */
 
 .plura-btn--sm {
-  padding: calc(var(--plura-gap-xs) * 2) var(--plura-gap-lg);
+  padding: calc(var(--plura-space-xs) * 2) var(--plura-space-lg);
   font-size: var(--plura-font-size-2xs);
 }

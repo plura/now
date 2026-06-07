@@ -6,7 +6,7 @@
   letter-spacing: var(--plura-letter-spacing-caps);
   text-transform: uppercase;
   padding: var(--plura-badge-pad);
-  border-radius: var(--plura-gap-xs);
+  border-radius: 3px;
   white-space: nowrap;
 }
 

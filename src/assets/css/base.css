@@ -49,11 +49,11 @@ svg.lucide {
   --plura-color-surface: #f4f4f4;
 
   /* Spacing */
-  --plura-gap-xs:    3px;
-  --plura-gap-sm:    0.5rem;
-  --plura-gap-md:    1rem;
-  --plura-gap-lg:    1.5rem;
-  --plura-gap-xl:    2rem;
+  --plura-space-xs:    0.25rem;
+  --plura-space-sm:    0.5rem;
+  --plura-space-md:    1rem;
+  --plura-space-lg:    1.5rem;
+  --plura-space-xl:    2rem;
   --plura-badge-pad: 2px 5px;
 
   /* Shape */

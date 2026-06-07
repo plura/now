@@ -27,7 +27,7 @@ header {
 .plura-social {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--plura-space-xs);
 }
 
 .plura-social a {
