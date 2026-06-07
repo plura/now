@@ -90,7 +90,7 @@ export function createCarousel(container, options = {}) {
 
 	// ── Items ──────────────────────────────────────────────────────
 
-	const itemsCtrl = createItems(root, items, type, duration, perView, gap, center, initialIndex);
+	const itemsCtrl = createItems(root, items, type, duration, perView, gap, center, initialIndex, on);
 
 	// ── Nav elements ───────────────────────────────────────────────
 
@@ -275,7 +275,7 @@ function createItem(node, { type, duration, active = false } = {}) {
 	};
 }
 
-function createItems(root, rawItems, type, duration, perView, gap, center, initialIndex = 0) {
+function createItems(root, rawItems, type, duration, perView, gap, center, initialIndex = 0, on = {}) {
 	let wrapper, itemsEl;
 
 	if (root.querySelector('.plura-carousel-wrapper')) {
